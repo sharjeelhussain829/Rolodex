@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import Button from "../ui/Button";
+import GalleryImg from "./image-gallery.png"
 import { IoMdImages } from "react-icons/io";
 import { useDropzone } from "react-dropzone";
 const FileInput = ({
@@ -80,7 +81,12 @@ const FileInput = ({
               }}
               className={"!rounded-full !bg-none !text-sm !bg-gray-100 flex items-center flex-col justify-center"}
             >
-              <IoMdImages className="text-4xl text-black" />
+              <Image
+              className="h-10 w-10"
+            src={GalleryImg}
+            alt="Gallery-Icon"
+            
+          />
             </Button>
             <p className="text-[#25AEE1] text-sm text-center">Upload your business card and company Logo here</p>
           </div>

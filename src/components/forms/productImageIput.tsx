@@ -3,6 +3,7 @@ import Image from "next/image";
 import Button from "../ui/Button";
 import { IoMdImages } from "react-icons/io";
 import { useDropzone } from "react-dropzone";
+import GalleryImg from "./image-gallery.png"
 const ProductImageInput = ({
   index,
   selectedImage,
@@ -82,7 +83,12 @@ const ProductImageInput = ({
               <span className="text-black">Drag a photo here</span>
               <span className="text-black font-semibold">OR</span>
             <span className="text-black text-md text-center flex items-center font-semibold">
-            <IoMdImages className="text-4xl text-black me-2" /> Select a photo
+            <Image
+              className="h-8 w-8 mr-2" 
+            src={GalleryImg}
+            alt="Gallery-Icon"
+            
+          /> Select a photo
             </span>
             </Button>
           </div>
