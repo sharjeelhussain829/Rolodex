@@ -130,9 +130,9 @@ function BusinessHours({
 
   return (
     <div className="">
-      <h2 className="text-lg font-bold">Opening Hours</h2>
+      <h2 className="text-3xl font-bold mb-8">Opening Hours</h2>
       {days.map((day: any, dayIndex: any) => (
-        <div key={dayIndex}>
+        <div key={dayIndex} className="ms-6">
           <h2 className="mt-2 font-bold">{day.day}</h2>
           <div className="flex justify-between flex-wrap mt-2">
             <div className="flex mb-4">
@@ -146,14 +146,14 @@ function BusinessHours({
                 Closed
               </label>
             </div>
-            <div className="flex justify-between min-w-96 ">
+            <div className="flex justify-between min-w-96 gap-4">
               {!day.isChecked && (
                 <div className="flex flex-col">
                   {day.timing.map((timingItem: any, timingIndex: any) => (
-                    <div className="flex mt-4 " key={timingIndex}>
-                      <div className="flex flex-col ">
+                    <div className="flex mt-4 flex-wrap" key={timingIndex}>
+                      <div className="flex flex-col">
                         <TextField
-                        focused
+                          focused
                           onChange={(event: any) => {
                             const updatedDays = [...days];
                             updatedDays[dayIndex].timing[
@@ -176,9 +176,9 @@ function BusinessHours({
                       </div>
                       {timingItem.openingHours !== "24:00" &&
                         timingItem.openingHours !== "" && (
-                          <div className="flex flex-col ms-4">
+                          <div className="flex flex-col mt-4 md:mt-0 md:ms-4">
                             <TextField
-                            focused
+                              focused
                               onChange={(event: any) => {
                                 const updatedDays = [...days];
                                 updatedDays[dayIndex].timing[
@@ -220,7 +220,7 @@ function BusinessHours({
                   day.timing[0].openingHours != "24:00" &&
                   day.timing[0].openingHours !== "" && (
                     <div className="mt-8 text-[25px] cursor-pointer">
-                      <IoMdAdd  onClick={() => addDropdown(dayIndex)} />
+                      <IoMdAdd onClick={() => addDropdown(dayIndex)} />
                     </div>
                   )}
               </div>
