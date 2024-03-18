@@ -355,9 +355,12 @@ function BasicInfo({
                 onChange={() => handleOptionClick("Registered business")}
               />
               <button
+              style={ selectedOption === "Registered business" ? {
+                boxShadow: "2px 2px 8px #444444 inset"
+              } : undefined}
                 type="button"
                 onClick={() => handleOptionClick("Registered business")}
-                className={`px-4 py-1 rounded w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-4 py-1 rounded w-40 text-sm  sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedOption === "Registered business"
                     ? "bg-[#25AAE1] text-white shadow-lg-inner inset-0 "
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -378,6 +381,9 @@ function BasicInfo({
                 onChange={() => handleOptionClick("Private seller")}
               />
               <button
+              style={ selectedOption === "Private seller" ? {
+                boxShadow: "2px 2px 8px #444444 inset"
+              } : undefined}
                 type="button"
                 onClick={() => handleOptionClick("Private seller")}
                 className={`px-4 py-1 rounded w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
@@ -411,6 +417,9 @@ function BasicInfo({
                 onChange={() => handleNatureClick("Product")}
               />
               <span
+              style={ selectedCompanyNature.includes("Product") ? {
+                boxShadow: "2px 2px 8px #444444 inset"
+              } : undefined}
                 className={`px-4 py-1 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Product")
                     ? "bg-[#25AAE1] text-white shadow-inner"
@@ -432,6 +441,9 @@ function BasicInfo({
                 onChange={() => handleNatureClick("Services")}
               />
               <span
+              style={ selectedCompanyNature.includes("Services") ? {
+                boxShadow: "2px 2px 8px #444444 inset"
+              } : undefined}
                 className={`px-4 py-1 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60 text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Services")
                     ? "bg-[#25AAE1] text-white shadow-inner"

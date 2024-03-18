@@ -9,7 +9,7 @@ import Dropdown from "@/components/ui/custom_dropdown";
 import axios from "axios";
 import { Api } from "@/utils/api";
 import { FiMinus } from "react-icons/fi";
-import { IoAddSharp } from "react-icons/io5";
+import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
@@ -92,11 +92,7 @@ function BusinessHours({
       ],
     },
   ]);
-
   const [timeOptions, setTimeOptions] = useState<any>([]);
-  const [openingHours, setOpeningHours] = React.useState<any>(null);
-  const [closingHours, setClosingHours] = React.useState<any>(null);
-  const [dropdownCount, setDropdownCount] = useState<any>(1);
 
   useEffect(() => {
     const options = [];
@@ -124,80 +120,70 @@ function BusinessHours({
     }
   };
 
+  const removeDropdown = (dayIndex: any, timingIndex: any) => {
+    const updatedDays = [...days];
+    if (updatedDays[dayIndex].timing.length > 1) {
+      updatedDays[dayIndex].timing.splice(timingIndex, 1);
+      setDays(updatedDays);
+    }
+  };
+
   return (
     <div className="">
       <h2 className="text-lg font-bold">Opening Hours</h2>
-      <>
-        {days.map((v: any, i: any) => (
-          <div key={i}>
-            <h2 className="mt-2 font-bold">{v.day}</h2>
-            <div className="flex justify-between flex-wrap mt-2">
-              <div className="flex mb-4">
-                <input
-                  checked={v.isChecked}
-                  onChange={() => handleCheckboxClick(i)}
-                  type="checkbox"
-                  className="w-4 h-4 text-[#25AEE1] border-gray-300 rounded focus:ring-[#25AEE1] dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Closed
-                </label>
-              </div>
-              <div className="flex justify-between min-w-96" >
-                {!v.isChecked && (
-                  <div className="flex flex-col">
-                    {v.timing.map((timingItem: any, timingIndex: any) => (
-                      <div className="flex mt-4" key={timingIndex}>
-                        <div className="flex flex-col mr-4">
-                          {/* <Dropdown
-                            className="w-full sm:w-40 border-2 cursor-pointer hover:border-[#25AEE1] border-gray-200 rounded-lg"
-                            title="Select Time"
-                            onChange={(openingHours: any) => {
-                              const updatedDays = [...days];
-                              updatedDays[i].timing[timingIndex].openingHours =
-                                openingHours;
-                              setDays(updatedDays);
-                            }}
-                            options={timeOptions}
-                          /> */}
-                          <TextField
-                            onChange={(openingHours: any) => {
-                              const updatedDays = [...days];
-                              updatedDays[i].timing[timingIndex].openingHours =
-                                openingHours.target.value;
-                              setDays(updatedDays);
-                            }}
-                            id="outlined-select-currency"
-                            select
-                            className="w-48"
-                            label="Opening Hours"
-                            defaultValue="24:00"
-                          >
-                            {timeOptions.map((v: any, i: any) => (
-                              <MenuItem value={v}>{v}</MenuItem>
-                            ))}
-                          </TextField>
-                        </div>
-                        {v.timing[0].openingHours !== "24:00" && v.timing[0].openingHours !== "" && (
-                          <div className="flex flex-col">
-                            {/* <Dropdown
-                              className="w-full sm:w-40 border-2 cursor-pointer hover:border-[#25AEE1] border-gray-200 rounded-lg"
-                              title="Select Time"
-                              onChange={(closingHours: any) => {
-                                const updatedDays = [...days];
-                                updatedDays[i].timing[
-                                  timingIndex
-                                ].closingHours = closingHours;
-                                setDays(updatedDays);
-                              }}
-                              options={timeOptions}
-                            /> */}
+      {days.map((day: any, dayIndex: any) => (
+        <div key={dayIndex}>
+          <h2 className="mt-2 font-bold">{day.day}</h2>
+          <div className="flex justify-between flex-wrap mt-2">
+            <div className="flex mb-4">
+              <input
+                checked={day.isChecked}
+                onChange={() => handleCheckboxClick(dayIndex)}
+                type="checkbox"
+                className="w-4 h-4 text-[#25AEE1] border-gray-300 rounded focus:ring-[#25AEE1] dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Closed
+              </label>
+            </div>
+            <div className="flex justify-between min-w-96 ">
+              {!day.isChecked && (
+                <div className="flex flex-col">
+                  {day.timing.map((timingItem: any, timingIndex: any) => (
+                    <div className="flex mt-4 " key={timingIndex}>
+                      <div className="flex flex-col ">
+                        <TextField
+                        focused
+                          onChange={(event: any) => {
+                            const updatedDays = [...days];
+                            updatedDays[dayIndex].timing[
+                              timingIndex
+                            ].openingHours = event.target.value;
+                            setDays(updatedDays);
+                          }}
+                          id="outlined-select-currency"
+                          select
+                          className="w-48"
+                          label="Opening Hours"
+                          defaultValue="24:00"
+                        >
+                          {timeOptions.map((time: any, index: any) => (
+                            <MenuItem key={index} value={time}>
+                              {time}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </div>
+                      {timingItem.openingHours !== "24:00" &&
+                        timingItem.openingHours !== "" && (
+                          <div className="flex flex-col ms-4">
                             <TextField
-                              onChange={(closingHours: any) => {
+                            focused
+                              onChange={(event: any) => {
                                 const updatedDays = [...days];
-                                updatedDays[i].timing[
+                                updatedDays[dayIndex].timing[
                                   timingIndex
-                                ].closingHours = closingHours.target.value;
+                                ].closingHours = event.target.value;
                                 setDays(updatedDays);
                               }}
                               id="outlined-select-currency"
@@ -206,26 +192,42 @@ function BusinessHours({
                               label="Closing Hours"
                               defaultValue="24:00"
                             >
-                              {timeOptions.map((v: any, i: any) => (
-                                <MenuItem value={v}>{v}</MenuItem>
+                              {timeOptions.map((time: any, index: any) => (
+                                <MenuItem key={index} value={time}>
+                                  {time}
+                                </MenuItem>
                               ))}
-                            </TextField>{" "}
+                            </TextField>
                           </div>
                         )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {!v.isChecked && v.timing[0].openingHours != "24:00" && (
-                  <div className="mt-8 ms-4 text-[25px] cursor-pointer hover:scale-110 hover:transition-all">
-                    <IoAddSharp onClick={() => addDropdown(i)} />
-                  </div>
-                )}
+                      {!day.isChecked &&
+                        day.timing.length !== 1 &&
+                        timingIndex === 1 && (
+                          <div className="mt-4 ms-4 text-[25px] cursor-pointer hover:scale-110 hover:transition-all">
+                            <IoMdRemove
+                              onClick={() =>
+                                removeDropdown(dayIndex, timingIndex)
+                              }
+                            />
+                          </div>
+                        )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="w-10 flex justify-end">
+                {!day.isChecked &&
+                  day.timing[0].openingHours != "24:00" &&
+                  day.timing[0].openingHours !== "" && (
+                    <div className="mt-8 text-[25px] cursor-pointer">
+                      <IoMdAdd  onClick={() => addDropdown(dayIndex)} />
+                    </div>
+                  )}
               </div>
             </div>
           </div>
-        ))}
-      </>
+        </div>
+      ))}
     </div>
   );
 }
