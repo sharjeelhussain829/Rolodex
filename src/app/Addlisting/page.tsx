@@ -22,72 +22,73 @@ import Timing from "./timing";
 import ImageInput from "@/components/forms/imageInput";
 import RadioInput from "@/components/forms/radioinput";
 import More from "./more";
+
+import { NextPage } from "next";
+import { styled } from "@mui/material";
 function Page() {
-  const aboutRef = useRef<HTMLHeadingElement>(null);
-  const locationRef = useRef<HTMLHeadingElement>(null);
-  const hourRef = useRef<HTMLHeadingElement>(null);
-  const contactRef = useRef<HTMLHeadingElement>(null);
-  const moreRef = useRef<HTMLHeadingElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const locationRef = useRef<HTMLDivElement>(null);
+  const hourRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const moreRef = useRef<HTMLDivElement>(null);
 
-  const elementRef = useRef(null);
+  const [underline, setUnderline] = useState("about");
 
-  const handleClick = (ref: React.RefObject<HTMLHeadingElement>) => {
+  const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
-      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.scrollTo({
+        top: ref.current.offsetTop,
+        behavior: "smooth",
+      });
     }
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries: any) => {
-      entries.forEach((entry: any) => {
-        if (entry.isIntersecting) {
-          // Handle intersection logic if needed
-        } else {
-          console.log("Element is not visible");
-        }
-      });
-    });
+    const handleScroll = () => {
+      const aboutOffset = aboutRef.current?.offsetTop;
+      const locationOffset = locationRef.current?.offsetTop;
+      const hourOffset = hourRef.current?.offsetTop;
+      const contactOffset = contactRef.current?.offsetTop;
+      const moreOffset = moreRef.current?.offsetTop;
 
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
-    }
+      const scrollPosition = window.scrollY;
 
-    if (locationRef.current) {
-      observer.observe(locationRef.current);
-    }
+      if (
+        aboutOffset !== undefined &&
+        locationOffset !== undefined &&
+        scrollPosition >= aboutOffset &&
+        scrollPosition < locationOffset
+      ) {
+        setUnderline("about");
+      } else if (
+        locationOffset !== undefined &&
+        hourOffset !== undefined &&
+        scrollPosition >= locationOffset &&
+        scrollPosition < hourOffset
+      ) {
+        setUnderline("location");
+      } else if (
+        hourOffset !== undefined &&
+        contactOffset !== undefined &&
+        scrollPosition >= hourOffset &&
+        scrollPosition < contactOffset
+      ) {
+        setUnderline("hour");
+      } else if (
+        contactOffset !== undefined &&
+        moreOffset !== undefined &&
+        scrollPosition >= contactOffset &&
+        scrollPosition < moreOffset
+      ) {
+        setUnderline("contact");
+      } else if (moreOffset !== undefined && scrollPosition >= moreOffset) {
+        setUnderline("more");
+      }
+    };
 
-    if (hourRef.current) {
-      observer.observe(hourRef.current);
-    }
-
-    if (contactRef.current) {
-      observer.observe(contactRef.current);
-    }
-
-    if (moreRef.current) {
-      observer.observe(moreRef.current);
-    }
-
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      if (aboutRef.current) {
-        observer.unobserve(aboutRef.current);
-      }
-
-      if (locationRef.current) {
-        observer.unobserve(locationRef.current);
-      }
-
-      if (hourRef.current) {
-        observer.unobserve(hourRef.current);
-      }
-
-      if (contactRef.current) {
-        observer.unobserve(contactRef.current);
-      }
-
-      if (moreRef.current) {
-        observer.unobserve(moreRef.current);
-      }
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -263,79 +264,116 @@ function Page() {
     );
   }
 
-
   return (
     <main>
       <NavBar />
       <div className="max-w-[1240px]  mx-auto mb-40 p-4 xl:p-0">
         <Navigation title1={"Home"} title2={"Add listing"} />
 
-        <div>
-          <div className="xl:flex flex-wrap justify-center hidden rounded-lg pt-5 pb-5 w-full sticky top-0 shadow-md bg-white z-10 xl:w-4/6 xl:gap-10">
+        <div className="xl:flex flex-wrap justify-center hidden rounded-lg pt-5 pb-5 w-full sticky top-0 shadow-md bg-white z-10 xl:w-4/6 xl:gap-10">
+          <div className="xl:flex flex-wrap justify-center xl:gap-10">
             <h1
-              ref={aboutRef}
-              className="text-sm font-bold cursor-pointer sm:text-sm"
-              onClick={() => handleClick(aboutRef)}
+              className={`text-sm font-bold cursor-pointer sm:text-sm ${
+                underline === "about" ? "border-b-2 border-[#25AEE1] " : ""
+              } `}
+              onClick={() => {
+                scrollToRef(aboutRef);
+                setTimeout(() =>{
+                  setUnderline("about");
+                },1000)
+              }}
             >
               About
             </h1>
             <h1
-              ref={locationRef}
-              className="text-sm font-bold cursor-pointer sm:text-sm"
-              onClick={() => handleClick(locationRef)}
+              className={`text-sm font-bold cursor-pointer sm:text-sm ${
+                underline === "location" ? "border-b-2 border-[#25AEE1] " : ""
+              } `}
+              onClick={() => {
+                scrollToRef(locationRef);
+                setTimeout(() =>{
+                  setUnderline("location");
+                },1000)
+              }}
             >
               Location
             </h1>
             <h1
-              ref={hourRef}
-              className="text-sm font-bold cursor-pointer sm:text-sm"
-              onClick={() => handleClick(hourRef)}
+              className={`text-sm font-bold cursor-pointer sm:text-sm ${
+                underline === "hour" ? "border-b-2 border-[#25AEE1] " : ""
+              } `}
+              onClick={() => {
+                scrollToRef(hourRef);
+                setTimeout(() =>{
+                  setUnderline("hour");
+                },1000)
+              }}
             >
               Hour
             </h1>
             <h1
-              ref={contactRef}
-              className="text-sm font-bold cursor-pointer sm:text-sm"
-              onClick={() => handleClick(contactRef)}
+              className={`text-sm font-bold cursor-pointer sm:text-sm ${
+                underline === "contact" ? "border-b-2 border-[#25AEE1] " : ""
+              } `}
+              onClick={() => {
+                scrollToRef(contactRef);
+                setTimeout(() =>{
+                  setUnderline("contact");
+                },1000)
+              }}
             >
               Contact Me
             </h1>
             <h1
-              ref={moreRef}
-              className="text-sm font-bold cursor-pointer sm:text-sm"
-              onClick={() => handleClick(moreRef)}
+              className={`text-sm font-bold cursor-pointer sm:text-sm ${
+                underline === "more" ? "border-b-2 border-[#25AEE1] " : ""
+              } `}
+              onClick={() => {
+                scrollToRef(moreRef);
+                setTimeout(() =>{
+                  setUnderline("more");
+                },1000)
+              }}
             >
               More
             </h1>
           </div>
-          {/* Rest of your component */}
         </div>
 
         <div className="sm:grid sm:grid-cols-3 flex flex-col-reverse gap-4 ">
           <form onSubmit={handleSubmit(onSubmit)} className="col-span-2 mt-4">
-            <BasicInfo
-            ref={aboutRef}
-              watch={watch}
-              register={register}
-              getValues={getValues}
-              errors={errors}
-              updateDropdownValue={updateDropdownValue}
-            />
-            <Location
-            ref={locationRef}
-              watch={watch}
-              Values={getValues}
-              register={register}
-              errors={errors}
-              updateDropdownValue={updateDropdownValue}
-            />
-            <div className="flex flex-col space-y-6 rounded-lg shadow-md p-6 mt-12">
-              <BusinessHours ref={hourRef} />
+            <div ref={aboutRef}>
+              <BasicInfo
+                watch={watch}
+                register={register}
+                getValues={getValues}
+                errors={errors}
+                updateDropdownValue={updateDropdownValue}
+              />
+            </div>
+            <div ref={locationRef}>
+              <Location
+                watch={watch}
+                Values={getValues}
+                register={register}
+                errors={errors}
+                updateDropdownValue={updateDropdownValue}
+              />
+            </div>
+            <div
+              ref={hourRef}
+              className="flex flex-col space-y-6 rounded-lg shadow-md p-6 mt-12"
+            >
+              <BusinessHours />
             </div>
 
-            <Contactdetail ref={contactRef} register={register} errors={errors} />
+            <div ref={contactRef}>
+              <Contactdetail register={register} errors={errors} />
+            </div>
 
-            <More />
+            <div ref={moreRef}>
+              <More />
+            </div>
 
             <div className="flex gap-4 mt-20">
               <Button type={"submit"} className={"!px-12   !rounded-full"}>
