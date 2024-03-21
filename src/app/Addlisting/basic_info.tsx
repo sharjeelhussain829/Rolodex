@@ -262,7 +262,7 @@ function BasicInfo({
           <div className="flex flex-wrap">
             <div className=" w-full sm:w-[50%]">
               {[...Array(dropdownCount)].map((_, index) => (
-                <div className="flex items-center mt-2">
+                <div className="flex items-center mt-2" key={index}>
                   <Dropdown
                     key={index}
                     error={errors?.category?.message}

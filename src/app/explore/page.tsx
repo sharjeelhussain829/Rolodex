@@ -40,7 +40,7 @@ function Explore() {
         console.error("Error fetching news:", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [options]);
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };

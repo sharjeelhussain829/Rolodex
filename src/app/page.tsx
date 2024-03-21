@@ -62,7 +62,7 @@ function Page() {
       .catch((error) => {
         console.error("Error fetching news:", error);
       });
-  }, []);
+  }, [options]);
 
   //<............pagination............>
   const itemsPerPage = 2;
