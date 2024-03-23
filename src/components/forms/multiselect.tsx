@@ -98,7 +98,7 @@ const MultiSelect: React.FC<DropdownProps> = ({ items, getValues }) => {
     } else {
       setFilteredItems(serviceNames);
     }
-  }, [serviceVal, productNames, serviceVal]);
+  }, [serviceNames, serviceVal, productNames]);
 
   const handleInputChange = (input: string) => {
     setInputValue(input);

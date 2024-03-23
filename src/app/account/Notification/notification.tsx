@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { BiHome } from "react-icons/bi";
+import { MdCancel } from "react-icons/md";
+
 function Notification() {
   const [showNotification, setshowNotification] = useState<any>(true);
 
@@ -23,43 +26,38 @@ function Notification() {
       </p>
       <div className="flex mt-6 gap-4">
         <div className=" group relative  items-center justify-center  overflow-hidden transition-transform transform-gpu   rounded-xl px-4 cursor-pointer py-2 shadow-md flex gap-2 bg-[#F5F4F8] hover:bg-white">
-          <Image
+          {/* <Image
             src={"/icons/homeicongray.svg"}
             width={20}
             height={20}
             sizes="100vw"
             className=" object-cover transition-opacity duration-300 group-hover:hidden"
             alt="Selected Image"
-          />
-          <Image
-            src={"/icons/homeblue.svg"}
-            width={20}
-            height={20}
-            sizes="100vw"
-            className=" object-cover  group-hover:flex hidden transition-opacity duration-300"
-            alt="Selected Image"
-          />
+          /> */}
+
+          <BiHome className="text-[#00000096] text-[20px]" />
           <p className="group-hover:text-primary sm:text-base text-sm ">
             For rent notifications
           </p>
         </div>
         <div className=" group relative  items-center justify-center  overflow-hidden transition-transform transform-gpu   rounded-xl px-4 cursor-pointer py-2 shadow-md flex gap-2 bg-[#F5F4F8] hover:bg-white">
-          <Image
+          {/* <Image
             src={"/icons/homeicongray.svg"}
             width={20}
             height={20}
             sizes="100vw"
             className=" object-cover transition-opacity duration-300 group-hover:hidden"
             alt="Selected Image"
-          />
-          <Image
+          /> */}
+          <BiHome className="text-[#00000085] text-[20px]" />
+          {/* <Image
             src={"/icons/homeblue.svg"}
             width={20}
             height={20}
             sizes="100vw"
             className=" object-cover  group-hover:flex hidden transition-opacity duration-300"
             alt="Selected Image"
-          />
+          /> */}
           <p className="group-hover:text-primary sm:text-base text-sm ">
             For sale notifications
           </p>
@@ -189,14 +187,16 @@ function Notification() {
         </div>
         <hr className="border-t-2 border-gray-200 my-4" />
         <div className="flex gap-2 cursor-pointer">
-          <Image
+          {/* <Image
             src={"/icons/cross.svg"}
             width={20}
             height={20}
             sizes="100vw"
             className=" "
             alt="Selected Image"
-          />
+          /> */}
+
+          <MdCancel className="text-[#0000009d] text-[20px]" />
           <p className="text-gray-500 text-semibold">
             Unsubscribe me from all Rolodex notifications
           </p>

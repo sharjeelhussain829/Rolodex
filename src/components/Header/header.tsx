@@ -8,9 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, selectAuthToken } from "@/utils/redux/reducers/userslice";
 import { FetchUserData } from "@/utils/redux/actions/action";
 import DropdownNotification from "../DropdownNotification";
+import { IoIosLogOut } from "react-icons/io";
+import { FiUser } from "react-icons/fi";
+import { MdArrowRightAlt } from "react-icons/md";
 import axios from "axios";
-const apiKey = "0163e5a5fb574db8bd1a47082b501672"
 
+const apiKey = "67b614bbae624403ae0361869a0e050d"
+// 0163e5a5fb574db8bd1a47082b501672
+// 67b614bbae624403ae0361869a0e050d
 const NavBar = () => {
   const [isNavOpen, setIsNavOpen] = useState<any>(false);
   const [contryFlag, setCountryFlag] = useState<any>({});
@@ -39,7 +44,10 @@ const NavBar = () => {
 
   useEffect(() => {
     axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + apiKey)
-      .then(response => setCountryFlag(response.data))
+      .then(response => {
+        console.log(response.data)
+        setCountryFlag(response.data)
+      })
       .catch((error) => {
         console.error("Error fetching lists:", error);
       });
@@ -110,14 +118,15 @@ const NavBar = () => {
                   className="gap-2  font-bold opacity-70 font-noto py-2 px-5 md:p-0 flex flex-row    rounded md:bg-transparent  "
                   aria-current="page"
                 >
-                  <Image
+                  {/* <Image
                     src={"/icons/usericon.svg"}
                     className=""
                     width={12}
                     height={12}
                     sizes={"100vw"}
                     alt="User Icon"
-                  />
+                  /> */}
+                  <FiUser className="text-[#000000a2] text-[18px]"/>
                   Sign in
                 </Link>
               ) : (
@@ -152,13 +161,14 @@ const NavBar = () => {
                           href="/account"
                           className="flex font-noto items-center  gap-2 hover:text-primary px-2 font-bold opacity-80 border-b-2 py-2 text-sm text-gray-600 capitalize transition-colors duration-300 transform "
                         >
-                          <Image
+                          {/* <Image
                             src={"/icons/usericon.svg"}
                             sizes="100vw"
                             height={10}
                             width={10}
                             alt={"icon"}
-                          />
+                          /> */}
+                          <FiUser className="text-[#000000a2] text-[18px]"/>
                           Profile
                         </Link>
                         <Link
@@ -166,13 +176,15 @@ const NavBar = () => {
                           href="/login"
                           className="flex items-center font-noto  gap-1 px-2 py-2 font-bold opacity-80  text-sm hover:text-primary capitalize text-gray-600 transition-colors duration-300 transform "
                         >
-                          <Image
+                          {/* <Image
                             src={"/icons/sidebaricon5.svg"}
                             sizes="100vw"
                             height={14}
                             width={14}
                             alt={"icon"}
-                          />
+                          /> */}
+                          <IoIosLogOut className="text-[16px]"/>
+
                           Log out
                         </Link>
                       </div>
@@ -208,13 +220,15 @@ const NavBar = () => {
               <p className=" items-center font-noto  gap-2 font-bold opacity-80 py-2 cool-link navlink px-5 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary">
                 My Rolodex
               </p>
-              <Image
+              {/* <Image
                 src={"/icons/rightvector.svg"}
                 sizes="100vw"
                 height={16}
                 width={16}
                 alt={"icon"}
-              />
+              /> */}
+              <MdArrowRightAlt className="text-[22px] text-[#000000c5] mt-[4px]"/>
+
             </Link>
             )}
           </div>

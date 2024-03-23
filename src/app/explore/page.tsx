@@ -16,20 +16,22 @@ import Loader from "@/components/loader";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 function Explore() {
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 6;
-  const [currentPage, setCurrentPage] = useState(1);
-  const options = {
-    method: "GET",
-    url: "https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=cdf1c77a1651239ee1c12d4ce1640be7",
-    headers: {
-      "content-type": "application/json",
-    },
-  };
+
   useEffect(() => {
+    const options = {
+      method: "GET",
+      url: "https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=cdf1c77a1651239ee1c12d4ce1640be7",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
     axios
       .request(options)
       .then((response) => {
@@ -40,7 +42,8 @@ function Explore() {
         console.error("Error fetching news:", error);
         setIsLoading(false);
       });
-  }, [options]);
+  }, []);
+  
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };

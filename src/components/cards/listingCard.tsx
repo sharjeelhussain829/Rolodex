@@ -6,6 +6,9 @@ import { Api } from "@/utils/api";
 import { ToastContainer, toast } from "react-toastify";
 import AddToFav from "../icons/addtofav";
 import { GetUser } from "../userToken";
+import { PiPhoneCall } from "react-icons/pi";
+import { TbMessage } from "react-icons/tb";
+import { TbSend } from "react-icons/tb";
 
 function ListingCard({
   data,
@@ -111,30 +114,34 @@ function ListingCard({
           </div>
           <hr className="w-full my-2 sm:my-0" />
           <div className="flex items-center gap-8 pb-1 justify-around sm:justify-start mt-2 sm:mt-0">
-            <Image
+            {/* <Image
               src={"/icons/call.svg"}
               className="cursor-pointer"
               sizes="100vw"
               height={20}
               width={20}
               alt={"icon"}
-            />
-            <Image
+            /> */}
+            
+            <PiPhoneCall className="text-[#000000a6] text-[20px]"/>
+            {/* <Image
               src={"/icons/messagetext1.svg"}
               className="cursor-pointer"
               sizes="100vw"
               height={20}
               width={20}
               alt={"icon"}
-            />
-            <Image
+            /> */}
+            <TbMessage className="text-[#000000a6] text-[20px]"/>
+            {/* <Image
               src={"/icons/sendicon.svg"}
               className="cursor-pointer"
               sizes="100vw"
               height={20}
               width={20}
               alt={"icon"}
-            />
+            /> */}
+            <TbSend className="text-[#000000a6] text-[20px]"/>
             {Wishlist && (
               <div
                 className="p-2 bg-white rounded-full"

@@ -8,6 +8,7 @@ import { GetUser } from "@/components/userToken";
 import Loader from "@/components/loader";
 import { toast } from "react-toastify";
 import BuisnessDetailCard from "@/components/cards/buisnessdetailcard";
+
 function Listing() {
   const [loader, setLoader] = useState<any>(true);
   const [myListing, setmyListing] = useState<any>([]);

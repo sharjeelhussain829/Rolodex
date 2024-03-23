@@ -22,6 +22,10 @@ import { setUserDetail } from "@/utils/redux/reducers/userslice";
 import Loader from "@/components/loader";
 import AccountIcons from "@/components/icons/account_Icons";
 import NavigationDrawer from "@/components/drawer";
+import { PiPhoneCall } from "react-icons/pi";
+import { BiMessageAltDetail } from "react-icons/bi";
+import { CiUser } from "react-icons/ci";
+import Rating from "@mui/material/Rating";
 
 function Page() {
   const [activeComponent, setActiveComponent] = useState<any>("My Rolodex");
@@ -108,7 +112,19 @@ function Page() {
             <div className="rounded-xl group col-span-1 shadow-md  h-[fit-content] ">
               <div className="flex items-start p-2 ">
                 <div className="lg:inline-flex lg:mr-2 items-center w-[40px] lg:w-[50px] text-sm text-gray-900 font-semibold border-[3px] border-primary rounded-full">
-                  <Image
+                  {userdata?.profile_pic ? (
+                    <Image
+                      src={userdata?.profile_pic}
+                      sizes="100vw"
+                      height={0}
+                      width={0}
+                      className="w-full"
+                      alt={"icon"}
+                    />
+                  ) : (
+                    <CiUser />
+                  )}
+                  {/* <Image
                     src={
                       userdata?.profile_pic
                         ? userdata?.profile_pic
@@ -119,41 +135,51 @@ function Page() {
                     width={0}
                     className="w-full"
                     alt={"icon"}
-                  />
+                  /> */}
                 </div>
                 <div className="group-hover:block lg:inline-block hidden">
                   <h1 className="font-bold !text-xl">
                     {userdata?.first_name ?? "" + " " + userdata?.last_name}
                   </h1>
-                  <Image
+                  {/* <Image
                     src={"/icons/yelowrating.svg"}
                     sizes="100vw"
                     height={60}
                     width={60}
                     alt={"icon"}
-                  />
+                  /> */}
                   {userdata?.phone_number && (
-                    <div className="  mt-2 flex gap-2 items-center">
-                      <Image
+                    <div className="  mt-2 flex gap-2 flex-col justify-center">
+                      {/* <Image
                         src={"/icons/call.svg"}
                         className=""
                         sizes="100vw"
                         height={16}
                         width={16}
                         alt={"icon"}
-                      />
-                      <p>{userdata?.phone_number ?? ""}</p>
+                      /> */}
+                     
+                        <Rating
+                        style={{fontSize: "14px",}}
+                          name="read-only"
+                          value={3.5} readOnly
+                        />
+                      <p className="flex gap-2 items-center">
+                      <PiPhoneCall className="text-[#00000096] text-[18px]" />
+                      {userdata?.phone_number ?? ""}
+                      </p>
                     </div>
                   )}
                   <p className="  flex gap-2 items-center">
-                    <Image
+                    {/* <Image
                       src={"/icons/messagetext1.svg"}
                       className=""
                       sizes="100vw"
                       height={16}
                       width={16}
                       alt={"icon"}
-                    />
+                    /> */}
+                    <BiMessageAltDetail className="text-[#00000096] text-[18px]" />
                     {userdata?.email ?? ""}
                   </p>
                 </div>
@@ -184,7 +210,7 @@ function Page() {
                         "text-primary border-l-4"
                       }`}
                     >
-                      <Image
+                      {/* <Image
                         src={
                           items?.title === activeComponent
                             ? items?.activeIcon ?? "/icons/userblue.svg"
@@ -194,7 +220,8 @@ function Page() {
                         height={14}
                         width={14}
                         alt={"icon"}
-                      />
+                      /> */}
+                      {items.icon}
                       {/* <AccountIcons
                         path1={items?.path1}
                         path2={items?.path2}
@@ -236,7 +263,7 @@ function Page() {
           {activeComponent === "Notification Preferences" && <Notification />}
         </div>
       </div>
-      
+
       <Footer />
     </main>
   );

@@ -7,6 +7,9 @@ import axios from "axios";
 import { Api } from "@/utils/api";
 import { GetUser } from "@/components/userToken";
 import Loader from "@/components/loader";
+import { FaStar } from "react-icons/fa6";
+import { VscListSelection } from "react-icons/vsc";
+
 function Review() {
   const [loader, setLoader] = useState<any>(true);
   const [date, setDate] = useState<any>("new");
@@ -94,28 +97,32 @@ function Review() {
       <hr className="border-t-2 border-gray-100 my-4" />
       <div className="flex flex-col  sm:flex-row justify-between sm:items-center">
         <div className="flex items-center">
-          <Image
+          {/* <Image
             src={"/icons/singlestar.svg"}
             className="mr-2"
             sizes="100vw"
             height={20}
             width={20}
             alt={"icon"}
-          />
+          /> */}
+          <FaStar className="text-[#f1c40f] text-[20px] me-2"/>
+
           <h1 className="md:text-2xl text-lg font-bold">
             {reviewsBy === "others" && averageRating} ({reviews?.length}{" "}
             reviews)
           </h1>
         </div>
         <div className="flex">
-          <Image
+          {/* <Image
             src={"/icons/sort.svg"}
             className="mr-2"
             sizes="100vw"
             height={16}
             width={16}
             alt={"icon"}
-          />
+          /> */}
+          <VscListSelection className="text-[18px] text-[#000000a2] mt-2"/>
+
           <div className="flex items-center ">
             <p className="mr-2 text-gray-600">Sort by:</p>
             <Dropdown

@@ -2,7 +2,7 @@
 import NavBar from "@/components/Header/header";
 import Footer from "@/components/footer/footer";
 import SearchForm from "@/components/ui/searchinput";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Notificationcard from "@/components/cards/notificationcard";
 import BusinessCard from "@/components/cards/buisnesscard";
@@ -29,15 +29,56 @@ function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [buisnessDetail, setBuisnessDetail] = useState<any>();
 
+  // const router = useRouter();
+  // const options = {
+  //   method: "GET",
+  //   url: "https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=cdf1c77a1651239ee1c12d4ce1640be7",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  // };
+  // const user_id = GetUser()?._id;
+
+  
+  // useEffect(() => {
+  //   const loginuserapi = `${Api}/ads?query=&user_id=${user_id}&type=web`;
+  //   const logoutapi = `${Api}/ads?type=web`;
+
+  //   axios
+  //     .post(user_id ? loginuserapi : logoutapi)
+  //     .then((response) => {
+  //       setAds(response.data.data);
+  //       setIsLoading(false);
+  //       setAdsDetail(response.data.data[0]);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching lists:", error);
+  //       setIsLoading(false);
+  //     });
+
+  //   axios
+  //     .request(options)
+  //     .then((response) => {
+  //       setNews(response?.data?.articles);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching news:", error);
+  //     });
+  // }, [user_id]);
+
+
+  // added new code from here but not removed old 
   const router = useRouter();
-  const options = {
+  const user_id = GetUser()?._id;
+
+  const options = useMemo(() => ({
     method: "GET",
     url: "https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=cdf1c77a1651239ee1c12d4ce1640be7",
     headers: {
       "content-type": "application/json",
     },
-  };
-  const user_id = GetUser()?._id;
+  }), []);
+
   useEffect(() => {
     const loginuserapi = `${Api}/ads?query=&user_id=${user_id}&type=web`;
     const logoutapi = `${Api}/ads?type=web`;
@@ -62,7 +103,11 @@ function Page() {
       .catch((error) => {
         console.error("Error fetching news:", error);
       });
-  }, [options]);
+  }, [user_id, options]);
+// added before
+
+
+
 
   //<............pagination............>
   const itemsPerPage = 2;

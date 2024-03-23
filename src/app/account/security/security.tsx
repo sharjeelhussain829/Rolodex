@@ -11,6 +11,8 @@ import Button from "@/components/ui/Button";
 import ProgressBar from "@/components/ui/progressbar";
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
+import { IoMdDesktop } from "react-icons/io";
+import { MdOutlinePhoneAndroid } from "react-icons/md";
 
 function Security({ userDetail, percentageComplete }: any) {
   const {
@@ -107,13 +109,14 @@ function Security({ userDetail, percentageComplete }: any) {
           </h1>
           <div className="flex justify-between items-center py-4">
             <div className="flex  gap-4">
-              <Image
+              {/* <Image
                 src={"/icons/desktop.svg"}
                 sizes="100vw"
                 height={20}
                 width={20}
                 alt={"icon"}
-              />
+              /> */}
+              <IoMdDesktop className="text-[#0000009d] text-[20px]"/>
               <div>
                 <h1 className="sm:text-lg text-gray-500 text-base font-bold">
                   Mac – New York, USA
@@ -132,13 +135,14 @@ function Security({ userDetail, percentageComplete }: any) {
           <hr className="border-t-2 border-gray-100 " />
           <div className="flex justify-between items-center py-4">
             <div className="flex  gap-4">
-              <Image
+              {/* <Image
                 src={"/icons/moblie.svg"}
                 sizes="100vw"
                 height={15}
                 width={15}
                 alt={"icon"}
-              />
+              /> */}
+              <MdOutlinePhoneAndroid className="text-[#0000009d] text-[20px]"/>
               <div>
                 <h1 className="sm:text-lg text-base text-gray-500 font-bold">
                   Iphone 12 – New York, USA
@@ -153,13 +157,14 @@ function Security({ userDetail, percentageComplete }: any) {
           <hr className="border-t-2 border-gray-100 " />
           <div className="flex justify-between items-center py-4">
             <div className="flex  gap-4">
-              <Image
+              {/* <Image
                 src={"/icons/desktop.svg"}
                 sizes="100vw"
                 height={20}
                 width={20}
                 alt={"icon"}
-              />
+              /> */}
+              <IoMdDesktop className="text-[#0000009d] text-[20px]"/>
               <div>
                 <h1 className="sm:text-lg text-gray-500 text-base font-bold">
                   Windows 10.1 – New York, USA

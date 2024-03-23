@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import Button from "../ui/Button";
-import GalleryImg from "./image-gallery.png"
+import ImageGallery from "/image-gallery.png"
 import { IoMdImages } from "react-icons/io";
 import { useDropzone } from "react-dropzone";
 const FileInput = ({
@@ -81,9 +81,9 @@ const FileInput = ({
               }}
               className={"!rounded-full !bg-none !text-sm !bg-gray-100 flex items-center flex-col justify-center"}
             >
-              <Image
-              className="h-10 w-10"
-            src={GalleryImg}
+           <img
+              className="h-8 w-8 mr-2" 
+            src="/image-gallery.png"
             alt="Gallery-Icon"
             
           />

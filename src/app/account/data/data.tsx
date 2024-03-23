@@ -1,33 +1,42 @@
+import { IoHeartOutline } from "react-icons/io5";
+import { FiUser } from "react-icons/fi";
+import { MdLockOutline } from "react-icons/md";
+import { PiListBold } from "react-icons/pi";
+import { FaRegStar } from "react-icons/fa";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoLogOutOutline } from "react-icons/io5";
+
+
 const list = [
   {
     title: "My Rolodex",
-    icon: "/icons/vector.svg",
+    icon: <IoHeartOutline className="text-[#00000096] text-[20px]"/>,
     activeIcon: "/icons/rolodexblue.svg",
   },
   {
     title: "Personal Info",
-    icon: "/icons/usericon.svg",
+    icon: <FiUser className="text-[#00000096] text-[20px]"/>,
     activeIcon: "/icons/userblue.svg",
   },
   {
     title: "Password & Security",
-    icon: "/icons/vector1.svg",
+    icon: <MdLockOutline className="text-[#00000096] text-[20px]"/>,
     activeIcon: "/icons/Securityblue.svg",
   },
   {
     title: "My Listings",
-    icon: "/icons/vector4.svg",
+    icon: <PiListBold className="text-[#00000096] text-[20px]"/>,
     activeIcon: "/icons/Listingsblue.svg",
   },
 
   {
     title: "Reviews",
-    icon: "/icons/sidebaricon2.svg",
+    icon:<FaRegStar className="text-[#00000096] text-[20px]"/>,
     activeIcon: "/icons/Reviewsblue.svg",
   },
   {
     title: "Notification Preferences",
-    icon: "/icons/sidebariocn4.svg",
+    icon: <IoMdNotificationsOutline className="text-[#00000096] text-[20px]"/>,
     activeIcon: "/icons/Notificationblue.svg",
   },
   //   {
@@ -36,7 +45,7 @@ const list = [
   //   },
   {
     title: "Log Out",
-    icon: "/icons/sidebaricon5.svg",
+    icon: <IoLogOutOutline  className="text-[#00000096] text-[20px]"/>,
   },
 ];
 export default list;

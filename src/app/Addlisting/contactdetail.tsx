@@ -1,6 +1,9 @@
 import TextFeild from "@/components/forms/TextFeild";
 import React from "react";
 import Image from "next/image";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import CustomIcon from "@/components/icon.jsx";
+
 function Contactdetail({ register, errors }: any) {
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 mt-12">
@@ -40,54 +43,58 @@ function Contactdetail({ register, errors }: any) {
       />
       <label className="text-sm  font-semibold">Socials</label>
       <div className="flex items-center">
-        <Image
+        {/* <Image
           src={"/icons/fbr.svg"}
           sizes="100vw"
           height={50}
           width={50}
           alt={"icon"}
-        />
+        /> */}
+        <CustomIcon icon={FaFacebookF} className="custom-icon" />
+
         <TextFeild
           name={"facebook"}
           register={register}
           inputType={"text"}
           placeholder={"Your facebook account"}
           error={errors?.facebook?.message}
-          className={""}
+          className={"ms-2"}
         />
       </div>
       <div className="flex items-center">
-        <Image
+        {/* <Image
           src={"/icons/linkdinr.svg"}
           sizes="100vw"
           height={50}
           width={50}
           alt={"icon"}
-        />
+        /> */}
+        <CustomIcon icon={FaLinkedinIn} className="custom-icon" />
         <TextFeild
           name={"linkedin"}
           register={register}
           inputType={"text"}
           placeholder={"Your linkedin account"}
           error={errors?.linkedin?.message}
-          className={""}
+          className={"ms-2"}
         />
       </div>
       <div className="flex items-center">
-        <Image
+        {/* <Image
           src={"/icons/icon-round.svg"}
           sizes="100vw"
           height={50}
           width={50}
           alt={"icon"}
-        />
+        /> */}
+        <CustomIcon icon={FaTwitter} className="custom-icon " />
         <TextFeild
           name={"twitter"}
           register={register}
           inputType={"text"}
           placeholder={"Your twitter account"}
           error={errors?.twitter?.message}
-          className={""}
+          className={"ms-2"}
         />
       </div>
       {/* <h1 className="text-lg font-semibold text-primary my-4">Load more</h1> */}

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { IoNotificationsOutline } from "react-icons/io5";
+
 
 const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -64,7 +66,8 @@ const DropdownNotification = () => {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
             </span>
           )}
-          <Image width={25} height={25} src={"/icons/notify.svg"} alt="Logo" />
+          {/* <Image width={25} height={25} src={"/icons/notify.svg"} alt="Logo" /> */}
+          <IoNotificationsOutline className="text-[30px]"/>
         </div>
       </div>
 
