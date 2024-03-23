@@ -73,7 +73,7 @@ function Listing() {
             </div>
           </div>
           <p className="text-gray-500 text-sm  ">
-            Reviews you’ve received will be visible both here and on your public
+            Reviews you&apos;ve received will be visible both here and on your public
             profile.
           </p>
           <div className="flex flex-wrap mt-6 gap-4">
