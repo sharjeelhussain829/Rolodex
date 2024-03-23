@@ -73,9 +73,9 @@ function Page() {
     },
   ];
   const columnStyles = [
-    { backgroundColor: "#F2F3FE", backgroundImage: "/icons/finger-icon.png" },
-    { backgroundColor: "#F2FBFE", backgroundImage: "/icons/text-icon.png" },
-    { backgroundColor: "#FDF6F3", backgroundImage: "/icons/heart-icon.png" },
+    { backgroundColor: "#F2F3FE", backgroundImage: "/finger.png" },
+    { backgroundColor: "#F2FBFE", backgroundImage: "/doc.png" },
+    { backgroundColor: "#FDF6F3", backgroundImage: "/heart.png" },
   ];
   const ImageColors = ["#B8B9FD", "#B8ECFD", "#FDCDB8"];
   return (

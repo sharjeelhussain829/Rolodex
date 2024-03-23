@@ -16,6 +16,9 @@ import Loader from "@/components/loader";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { RiMenu2Fill } from "react-icons/ri";
+import { MdSearch } from "react-icons/md";
+import { MdOutlineMailOutline } from "react-icons/md";
 
 function Explore() {
   const [news, setNews] = useState([]);
@@ -43,7 +46,7 @@ function Explore() {
         setIsLoading(false);
       });
   }, []);
-  
+
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
@@ -130,15 +133,15 @@ function Explore() {
           <div className="col-span-1 w-full">
             <div className="flex w-full">
               <div className="flex items-center w-[25%]">
-                <Image
+                {/* <Image
                   src={"/icons/sort.svg"}
                   className="mr-2"
                   sizes="100vw"
                   height={25}
                   width={25}
                   alt={"icon"}
-                />
-
+                /> */}
+                <RiMenu2Fill className="text-[20px]" />
                 <p className="mr-2">Sort by:</p>
               </div>
               <div className="flex items-center w-[75%]">
@@ -162,14 +165,16 @@ function Explore() {
                 type="submit"
                 className="absolute right-0 top-0 mt-5 mr-4"
               >
-                <Image
+                {/* <Image
                   src={"/icons/searchicon.svg"}
                   className=""
                   sizes="100vw"
                   height={15}
                   width={15}
                   alt={"icon"}
-                />
+                /> */}
+
+                <MdSearch />
               </button>
             </div>
             <div className="border-[1px] border-gray-200 p-4 rounded-xl">
@@ -232,14 +237,15 @@ function Explore() {
               <form>
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <Image
+                    {/* <Image
                       src={"/icons/vector (28).svg"}
                       className=""
                       sizes="100vw"
                       height={15}
                       width={15}
                       alt={"icon"}
-                    />
+                    /> */}
+                    <MdOutlineMailOutline className="text-[#666276]"/>
                   </div>
                   <input
                     type="text"

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+
 const Pagination = ({ totalItems, itemsPerPage, onPageChange }: any) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
@@ -91,15 +93,16 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange }: any) => {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className=" rotate-180"
+              className=" rotate-180 mt-2"
             >
-              <Image
+              {/* <Image
                 src="/icons/minirightarrow.svg"
                 width={8}
                 height={8}
                 className="mt-0"
                 alt="right"
-              />
+              /> */}
+              <MdOutlineKeyboardArrowRight className="text-[24px] text-[#000000d0]"/>
             </button>
           )}
           {renderPaginationButtons()}
@@ -109,13 +112,15 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange }: any) => {
               disabled={currentPage === totalPages}
               className=""
             >
-              <Image
+              {/* <Image
                 src="/icons/minirightarrow.svg"
                 width={8}
                 height={8}
                 className="mt-1"
                 alt="right"
-              />
+              /> */}
+              <MdOutlineKeyboardArrowRight className="text-[24px] mt-1 text-[#000000d0]"/>
+
             </button>
           )}
         </>

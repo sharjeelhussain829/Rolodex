@@ -19,6 +19,18 @@ import { GetUser } from "@/components/userToken";
 import Loader from "@/components/loader";
 import { useRouter } from "next/navigation";
 import BuisnessDetailCard from "@/components/cards/buisnessdetailcard";
+import { IoMdSearch } from "react-icons/io";
+import { BsCashStack } from "react-icons/bs";
+import { AiOutlinePieChart } from "react-icons/ai";
+import { RiCapsuleLine } from "react-icons/ri";
+import { PiPlant } from "react-icons/pi";
+import { CiDesktop } from "react-icons/ci";
+import GppGoodIcon from '@mui/icons-material/GppGood';
+import { MdMoreHoriz } from "react-icons/md";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+
+
 
 function Page() {
   const [ads, setAds] = useState([]);
@@ -39,7 +51,6 @@ function Page() {
   // };
   // const user_id = GetUser()?._id;
 
-  
   // useEffect(() => {
   //   const loginuserapi = `${Api}/ads?query=&user_id=${user_id}&type=web`;
   //   const logoutapi = `${Api}/ads?type=web`;
@@ -66,18 +77,20 @@ function Page() {
   //     });
   // }, [user_id]);
 
-
-  // added new code from here but not removed old 
+  // added new code from here but not removed old
   const router = useRouter();
   const user_id = GetUser()?._id;
 
-  const options = useMemo(() => ({
-    method: "GET",
-    url: "https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=cdf1c77a1651239ee1c12d4ce1640be7",
-    headers: {
-      "content-type": "application/json",
-    },
-  }), []);
+  const options = useMemo(
+    () => ({
+      method: "GET",
+      url: "https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=cdf1c77a1651239ee1c12d4ce1640be7",
+      headers: {
+        "content-type": "application/json",
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     const loginuserapi = `${Api}/ads?query=&user_id=${user_id}&type=web`;
@@ -104,10 +117,7 @@ function Page() {
         console.error("Error fetching news:", error);
       });
   }, [user_id, options]);
-// added before
-
-
-
+  // added before
 
   //<............pagination............>
   const itemsPerPage = 2;
@@ -221,14 +231,15 @@ function Page() {
                       key={index}
                       className="flex hover:bg-white md:w-[fit-content] flex-wrap cursor-pointer gap-1 px-3 text-sm justify-center py-1 bg-white bg-opacity-5 rounded-full"
                     >
-                      <Image
+                      {/* <Image
                         src={"/icons/searchicon.svg"}
                         className=""
                         sizes="100vw"
                         height={10}
                         width={10}
                         alt={"icon"}
-                      />
+                      /> */}
+                      <IoMdSearch className="text-[14px] mt-[2px]" />
                       <p className="text-sm font-normal font-noto">{items}</p>
                     </div>
                   ))}
@@ -253,13 +264,13 @@ function Page() {
           <div className="flex flex-col">
             <div className="grid  md:flex md:flex-wrap md:justify-between grid-cols-1 xsm:grid-cols-2 sm:grid-cols-3 lg:grid-cols-7  ">
               {[
-                "Accounting",
-                "Marketing & PR",
-                "Medicine",
-                "Agriculture",
-                "IT",
-                "Security",
-                "More",
+                { name: "Accounting", icon: <BsCashStack className="text-[#25AEE1]" /> },
+                { name: "Marketing & PR", icon: <AiOutlinePieChart className="text-[#25AEE1]"/> },
+                { name: "Medicine", icon:  <RiCapsuleLine  className="text-[#25AEE1]"/> },
+                { name: "Agriculture", icon: <PiPlant className="text-[#25AEE1]"/> },
+                { name: "IT", icon: <CiDesktop  className="text-[#25AEE1]"/> },
+                { name: "Security", icon: <GppGoodIcon  className="text-[#25AEE1]"/> },
+                { name: "More", icon: <MdMoreHoriz className="text-[#25AEE1]"/> },
               ].map((items, index) => (
                 <div
                   key={index}
@@ -267,19 +278,20 @@ function Page() {
                 >
                   <div
                     className={`p-3 rounded-full bg-white ${
-                      index === 6 && "px-3 py-5"
+                      index === 6 && "px-3 py-5 h-[10px] flex items-center "
                     }`}
                   >
-                    <Image
+                    {/* <Image
                       src={`/icons/${items}.svg`}
                       className=""
                       sizes="100vw"
                       height={20}
                       width={20}
                       alt={"icon"}
-                    />
+                    /> */}
+                    {items.icon}
                   </div>
-                  <p className="text-[16px] font-bold font-noto">{items}</p>
+                  <p className="text-[16px] font-bold font-noto">{items.name}</p>
                 </div>
               ))}
             </div>
@@ -313,14 +325,16 @@ function Page() {
                   >
                     View all
                   </Link>
-                  <Image
+                  {/* <Image
                     src={"/icons/rightarrow.svg"}
                     className=" "
                     sizes="100vw"
                     height={20}
                     width={20}
                     alt={"icon"}
-                  />
+                  /> */}
+                  
+                  <FaArrowRightLong className="text-[#000000b0] text-[18px]"/>
                 </div>
               </div>
               <div className="flex flex-col mt-2 gap-4 rounded-xl shadow-gray-300  ">
@@ -373,13 +387,14 @@ function Page() {
                       }
                     >
                       Let’s Roll{" "}
-                      <Image
+                      {/* <Image
                         src={"/icons/vector (27).svg"}
                         sizes="100vw"
                         height={6}
                         width={6}
                         alt={"icon"}
-                      />
+                      /> */}
+                      <MdOutlineKeyboardArrowRight className="text-[24px]"/>
                     </Button>
                   </div>
                 </div>
@@ -397,14 +412,15 @@ function Page() {
               >
                 View all
               </Link>
-              <Image
+              {/* <Image
                 src={"/icons/rightarrow.svg"}
                 className=" "
                 sizes="100vw"
                 height={16}
                 width={16}
                 alt={"icon"}
-              />
+              /> */}
+              <FaArrowRightLong className="text-[18px] text-[#000000b9]"/>
             </div>
           </div>
           <div className="relative  mx-4 xl:mx-0">
@@ -505,14 +521,15 @@ function Page() {
               >
                 Go to explore
               </Link>
-              <Image
+              {/* <Image
                 src={"/icons/rightarrow.svg"}
                 className=" "
                 sizes="100vw"
                 height={16}
                 width={16}
                 alt={"icon"}
-              />
+              /> */}
+              <FaArrowRightLong className="text-[18px] text-[#000000b9]"/>
             </div>
           </div>
           <div className="relative  mb-20">

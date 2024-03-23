@@ -16,6 +16,10 @@ import { Api } from "@/utils/api";
 import { GetUser } from "@/components/userToken";
 import Loader from "@/components/loader";
 import Link from "next/link";
+import { VscListSelection } from "react-icons/vsc";
+import { HiOutlineBriefcase } from "react-icons/hi2";
+
+
 // import { apiUrl } from "../utils/api"
 function Page() {
   const [ads, setAds] = useState([]);
@@ -145,14 +149,15 @@ function Page() {
           <div>
             <Navigation title1={"Home"} title2={"Search"} />
             <div className="flex ">
-              <Image
+              {/* <Image
                 src={"/icons/sort.svg"}
                 className="mr-2"
                 sizes="100vw"
                 height={16}
                 width={16}
                 alt={"icon"}
-              />
+              /> */}
+              <VscListSelection className="text-[24px] text-[#000000b0] mt-2 me-1" />
               <div className="flex items-center ">
                 <p className="mr-2 text-gray-500 font-semibold font-noto">
                   Sort by :
@@ -168,13 +173,14 @@ function Page() {
             </div>
           </div>
           <div className="flex items-center">
-            <Image
+            {/* <Image
               src={"/icons/vector (26).svg"}
               sizes="100vw"
               height={20}
               width={20}
               alt={"icon"}
-            />
+            /> */}
+            <HiOutlineBriefcase className="text-[#000000b7] text-[24px]"/>
             <p className="ml-2 text-gray-500 font-semibold font-noto">
               {ads.length} Businesses
             </p>

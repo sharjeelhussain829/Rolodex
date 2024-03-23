@@ -8,6 +8,11 @@ import { GetUser } from "@/components/userToken";
 import Loader from "@/components/loader";
 import { toast } from "react-toastify";
 import BuisnessDetailCard from "@/components/cards/buisnessdetailcard";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { IoDocumentOutline } from "react-icons/io5";
+import { BsArchive } from "react-icons/bs";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 function Listing() {
   const [loader, setLoader] = useState<any>(true);
@@ -51,13 +56,14 @@ function Listing() {
           <div className="flex items-center justify-between">
             <h1 className="md:text-3xl text-xl  font-bold mb-3">My Ads</h1>
             <div className="flex items-center gap-2 ">
-              <Image
+              {/* <Image
                 src={"/icons/deleteicon.svg"}
                 sizes="100vw"
                 height={12}
                 width={12}
                 alt={"icon"}
-              />
+              /> */}
+              <RiDeleteBinLine className="text-[#25AEE1] text-[16px]" />
               <p
                 onClick={deleteAllAds}
                 className="text-primary  text-base font-bold  cursor-pointer"
@@ -72,33 +78,37 @@ function Listing() {
           </p>
           <div className="flex flex-wrap mt-6 gap-4">
             <div className="rounded-xl px-4 py-2 cursor-pointer shadow-md flex gap-2 bg-[#F5F4F8] bg-white">
-              <Image
+              {/* <Image
                 src={"/icons/file1.svg"}
                 sizes="100vw"
                 height={12}
                 width={12}
                 alt={"icon"}
-              />
+              /> */}
+
+              <IoDocumentTextOutline className="text-[18px] text-[#25AEE1]" />
               <p className="hover:text-primary text-sm  ">Published</p>
             </div>
             <div className="rounded-xl px-4 py-2 cursor-pointer shadow-md flex gap-2 bg-[#F5F4F8] hover:bg-white">
-              <Image
+              {/* <Image
                 src={"/icons/file.svg"}
                 sizes="100vw"
                 height={12}
                 width={12}
                 alt={"icon"}
-              />
+              /> */}
+              <IoDocumentOutline className="text-[18px] text-[#25AEE1]" />
               <p className="hover:text-primary   text-sm ">Drafts</p>
             </div>
             <div className="rounded-xl px-4 py-2 cursor-pointer shadow-md flex gap-2 bg-[#F5F4F8] hover:bg-white">
-              <Image
+              {/* <Image
                 src={"/icons/archived.svg"}
                 sizes="100vw"
                 height={15}
                 width={15}
                 alt={"icon"}
-              />
+              /> */}
+              <BsArchive className="text-[16px] text-[#25AEE1] mt-[2px]" />
               <p className="hover:text-primary   text-sm ">Archived</p>
             </div>
           </div>
@@ -124,14 +134,15 @@ function Listing() {
               >
                 View all
               </p>
-              <Image
+              {/* <Image
                 src={"/icons/rightarrow.svg"}
                 className=" "
                 sizes="100vw"
                 height={20}
                 width={20}
                 alt={"icon"}
-              />
+              /> */}
+              <FaArrowRightLong className="text-[20px] text-[#000c]"/>
             </div>
           </div>
         )}

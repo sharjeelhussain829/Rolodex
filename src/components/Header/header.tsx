@@ -13,7 +13,7 @@ import { FiUser } from "react-icons/fi";
 import { MdArrowRightAlt } from "react-icons/md";
 import axios from "axios";
 
-const apiKey = "67b614bbae624403ae0361869a0e050d"
+const apiKey = "0163e5a5fb574db8bd1a47082b501672"
 // 0163e5a5fb574db8bd1a47082b501672
 // 67b614bbae624403ae0361869a0e050d
 const NavBar = () => {
@@ -227,7 +227,7 @@ const NavBar = () => {
                 width={16}
                 alt={"icon"}
               /> */}
-              <MdArrowRightAlt className="text-[22px] text-[#000000c5] mt-[4px]"/>
+              <MdArrowRightAlt className="text-[22px] text-[#000000c5] mt-[2px]"/>
 
             </Link>
             )}

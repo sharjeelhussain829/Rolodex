@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { AiOutlineFire } from "react-icons/ai";
+import { BiSolidEdit } from "react-icons/bi";
+import { IoIosPower } from "react-icons/io";
+
 const ThreeDotDropdown = ({ deleteAdd, log }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,7 +24,7 @@ const ThreeDotDropdown = ({ deleteAdd, log }: any) => {
         onClick={toggleDropdown}
         className=" group relative w-8 h-8 flex items-center justify-center  overflow-hidden transition-transform transform-gpu   z-10  p-2 group text-gray-700  shadow-md  bg-white  rounded-full border-gray-300  hover:border-primary"
       >
-        <Image
+        {/* <Image
           src={"/icons/dotgray.svg"}
           className=" object-cover transition-opacity duration-300 group-hover:hidden"
           sizes="100vw"
@@ -33,7 +39,9 @@ const ThreeDotDropdown = ({ deleteAdd, log }: any) => {
           height={4}
           width={4}
           alt={"icon"}
-        />
+        /> */}
+
+        <BsThreeDotsVertical className="text-[24px] text-[#000000c9]" />
       </button>
 
       {/* Dropdown menu */}
@@ -43,36 +51,39 @@ const ThreeDotDropdown = ({ deleteAdd, log }: any) => {
           className="absolute right-0 top-6 z-20 flex flex-col w-[140px] py-2 mt-2 origin-top-right bg-white rounded-xl shadow-xl "
         >
           <h1 className="flex gap-1 px-4 py-1 cursor-pointer text-sm text-gray-600 capitalize transition-colors duration-300 transform ">
-            <Image
+            {/* <Image
               src={"/icons/editlisting.svg"}
               className=""
               sizes="100vw"
               height={15}
               width={15}
               alt={"icon"}
-            />
+            /> */}
+            <BiSolidEdit className="text-[16px]" />
             Edit
           </h1>
           <h1 className="flex gap-1 px-4 py-1 cursor-pointer text-sm text-gray-600 capitalize transition-colors duration-300 transform ">
-            <Image
+            {/* <Image
               src={"/icons/editlisting.svg"}
               className=""
               sizes="100vw"
               height={15}
               width={15}
               alt={"icon"}
-            />
+            /> */}
+            <AiOutlineFire className="text-[16px]" />
             Promote
           </h1>
           <h1 className="flex gap-1  cursor-pointer px-4 py-1 text-sm text-gray-600 capitalize transition-colors duration-300 transform ">
-            <Image
+            {/* <Image
               src={"/icons/editlisting.svg"}
               className=""
               sizes="100vw"
               height={15}
               width={15}
               alt={"icon"}
-            />
+            /> */}
+            <IoIosPower  className="text-[16px] "/>
             Deactivate
           </h1>
 
@@ -80,14 +91,15 @@ const ThreeDotDropdown = ({ deleteAdd, log }: any) => {
             onClick={deleteAdd}
             className="flex gap-1 px-4 py-1 text-sm cursor-pointer text-primary capitalize transition-colors duration-300 transform "
           >
-            <Image
+            {/* <Image
               src={"/icons/editlisting.svg"}
               className=""
               sizes="100vw"
               height={15}
               width={15}
               alt={"icon"}
-            />
+            /> */}
+            <RiDeleteBinLine  className="text-[16px]"/>
             Delete
           </h1>
         </div>
