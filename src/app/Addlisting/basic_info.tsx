@@ -39,6 +39,7 @@ function BasicInfo({
   const [selectedOption, setSelectedOption] = React.useState<string | null>(
     null
   );
+  console.log(selectedOption);
   const [selectedCompanyNature, setSelectedCompanyNature] = React.useState<
     string[]
   >([]);
@@ -210,6 +211,26 @@ function BasicInfo({
     // });
   };
 
+  const [formData, setFormData] = useState({
+    product_name: "",
+    product_description: "",
+    product_category: "",
+    product_price: "",
+    product_url: "",
+    product_category2: "",
+  });
+  console.log(formData);
+
+  const handleFormChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+
+
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
       <h1 className="text-2xl md:2text-xl font-bold flex">
@@ -354,9 +375,13 @@ function BasicInfo({
                 onChange={() => handleOptionClick("Registered business")}
               />
               <button
-              style={ selectedOption === "Registered business" ? {
-                boxShadow: "2px 2px 8px #444444 inset"
-              } : undefined}
+                style={
+                  selectedOption === "Registered business"
+                    ? {
+                        boxShadow: "2px 2px 8px #444444 inset",
+                      }
+                    : undefined
+                }
                 type="button"
                 onClick={() => handleOptionClick("Registered business")}
                 className={`px-4 py-1 rounded w-40 text-sm  sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
@@ -380,9 +405,13 @@ function BasicInfo({
                 onChange={() => handleOptionClick("Private seller")}
               />
               <button
-              style={ selectedOption === "Private seller" ? {
-                boxShadow: "2px 2px 8px #444444 inset"
-              } : undefined}
+                style={
+                  selectedOption === "Private seller"
+                    ? {
+                        boxShadow: "2px 2px 8px #444444 inset",
+                      }
+                    : undefined
+                }
                 type="button"
                 onClick={() => handleOptionClick("Private seller")}
                 className={`px-4 py-1 rounded w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
@@ -416,9 +445,13 @@ function BasicInfo({
                 onChange={() => handleNatureClick("Product")}
               />
               <span
-              style={ selectedCompanyNature.includes("Product") ? {
-                boxShadow: "2px 2px 8px #444444 inset"
-              } : undefined}
+                style={
+                  selectedCompanyNature.includes("Product")
+                    ? {
+                        boxShadow: "2px 2px 8px #444444 inset",
+                      }
+                    : undefined
+                }
                 className={`px-4 py-1 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Product")
                     ? "bg-[#25AAE1] text-white shadow-inner"
@@ -440,9 +473,13 @@ function BasicInfo({
                 onChange={() => handleNatureClick("Services")}
               />
               <span
-              style={ selectedCompanyNature.includes("Services") ? {
-                boxShadow: "2px 2px 8px #444444 inset"
-              } : undefined}
+                style={
+                  selectedCompanyNature.includes("Services")
+                    ? {
+                        boxShadow: "2px 2px 8px #444444 inset",
+                      }
+                    : undefined
+                }
                 className={`px-4 py-1 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60 text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Services")
                     ? "bg-[#25AAE1] text-white shadow-inner"
@@ -470,48 +507,45 @@ function BasicInfo({
 
           <Modal open={open} onClose={onCloseModal} center>
             <div className="flex gap-4 flex-wrap">
-              <div className="mb-2">
-                <div>
-                  <ProductTextFeild
-                    required
-                    name={"product_name"}
-                    inputType={"text"}
-                    label={"Product Name*"}
-                    register={register}
-                    // maxLength={{ value: 20, message: "Max Length 20" }}
-                    // minLength={{ value: 4, message: "Min Length 4" }}
-                    error={errors?.business_name?.message}
-                    placeholder={"Product Name"}
-                  />
-                </div>
+              <form action="">
+                <div className="mb-2">
+                  <div>
+                    <ProductTextFeild
+                      required={true}
+                      label="Product Name*"
+                      name="product_name"
+                      placeholder={"Product name"}
+                      value={formData.product_name}
+                      onChange={handleFormChange}
+                    />
+                  </div>
 
-                <div className="mt-4">
-                  <Dropdown
-                    error={errors?.category?.message}
-                    className={"border-2 border-gray-200 rounded-lg w-full"}
-                    title={"Select Category"}
-                    onChange={(selectedOption: any) =>
-                      updateDropdownValue("category", selectedOption)
-                    }
-                    options={categories}
-                  />
-                </div>
+                  <div className="mt-4">
+                    <Dropdown
+                      // error={errors?.category?.message}
+                      className={"border-2 border-gray-200 rounded-lg w-full"}
+                      title={"Select Category"}
+                      onChange={(e: any) =>
+                        setFormData({ ...formData, product_category2: e.name })
+                      }
+                      // onChange={(selectedOption: any) =>
+                      //   updateDropdownValue("category", selectedOption)
+                      // }
+                      options={categories}
+                    />
+                  </div>
 
-                <div className="mt-4">
-                  <ProductTextFeild
-                    required
-                    name={"product_category"}
-                    inputType={"text"}
-                    label={"Product Category*"}
-                    register={register}
-                    // maxLength={{ value: 20, message: "Max Length 20" }}
-                    // minLength={{ value: 4, message: "Min Length 4" }}
-                    error={errors?.business_name?.message}
-                    placeholder={"Product Category"}
-                  />
-                </div>
-                <div className="mt-4">
-                  <ProductTextFeild
+                  <div className="mt-4">
+                    <ProductTextFeild
+                      label="Product Category*"
+                      name="product_category"
+                      placeholder={"Product category"}
+                      value={formData.product_category}
+                      onChange={handleFormChange}
+                    />
+                  </div>
+                  <div className="mt-4">
+                    {/* <ProductTextFeild
                     required
                     name={"product_price"}
                     inputType={"text"}
@@ -521,37 +555,45 @@ function BasicInfo({
                     // minLength={{ value: 4, message: "Min Length 4" }}
                     error={errors?.business_name?.message}
                     placeholder={"Product Price ($)"}
-                  />
-                  <span className="text-gray-400 text-sm relative bottom-2">
-                    optional
-                  </span>
-                </div>
-                <div className="">
-                  <label className={`block text-sm mt-4 font-semibold `}>
-                    Description*
-                  </label>
-                  <textarea
-                    // {...register("description", {
-                    //   required: `Description  is required`,
-                    //   maxLength: 750,
-                    //   minLength: 4,
-                    // })}
-                    name={"description"}
-                    placeholder="Describe your business here..."
-                    className="border-2 w-full my-1 focus:ring-0 focus:border-primary p-4 border-gray-200  rounded-xl resize-none"
-                    id=""
-                    cols={30}
-                    rows={2}
-                  ></textarea>
-                  <p className="text-gray-400 text-sm relative bottom-2">
-                    optional
-                  </p>
-                  <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
-                    {errors.description?.message}
-                  </span>
-                </div>
-                <div>
-                  <ProductTextFeild
+                  /> */}
+                    <ProductTextFeild
+                      label="Product Price*"
+                      name="product_price"
+                      placeholder={"Product price"}
+                      value={formData.product_price}
+                      onChange={handleFormChange}
+                    />
+                    <span className="text-gray-400 text-sm relative bottom-2">
+                      optional
+                    </span>
+                  </div>
+                  <div className="">
+                    <label className={`block text-sm mt-4 font-semibold `}>
+                      Description*
+                    </label>
+                    <textarea
+                      name="product_description"
+                      value={formData.product_description}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          product_description: e.target.value,
+                        })
+                      }
+                      placeholder="Describe your business here..."
+                      className="border-2 w-full my-1 focus:ring-0 focus:border-primary p-4 border-gray-200 rounded-xl resize-none"
+                      cols={30}
+                      rows={2}
+                    ></textarea>
+                    <p className="text-gray-400 text-sm relative bottom-2">
+                      optional
+                    </p>
+                    <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
+                      {errors.description?.message}
+                    </span>
+                  </div>
+                  <div>
+                    {/* <ProductTextFeild
                     required
                     name={"product_landing_page"}
                     inputType={"text"}
@@ -561,39 +603,47 @@ function BasicInfo({
                     // minLength={{ value: 4, message: "Min Length 4" }}
                     error={errors?.business_name?.message}
                     placeholder={"Product landing page URL"}
-                  />
-                  <span className="text-gray-400 text-sm relative bottom-2">
-                    optional
-                  </span>
+                  /> */}
+                    <ProductTextFeild
+                      label="Product Landig Page URL**"
+                      name="product_url"
+                      placeholder={"Product landig page URL"}
+                      value={formData.product_url}
+                      onChange={handleFormChange}
+                    />
+                    <span className="text-gray-400 text-sm relative bottom-2">
+                      optional
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="w-60 lg:mt-3 mt-2 flex items-end justify-between flex-col">
-                {[
-                  {
-                    fileInputRef: fileInputRef2,
-                    selectedImage: selectedProductImage1,
-                    setSelectedImage: setSelectedProductImage1,
-                  },
-                ].map((items, index) => (
-                  <ProductImageInput
-                    key={index}
-                    index={index}
-                    items={items}
-                    setSelectedImage={items.setSelectedImage}
-                    selectedImage={items.selectedImage}
-                    handleImageClick={handleImageClick}
-                    handleFileChange={handleFileChange2}
-                    fileInputRef={items}
-                  />
-                ))}
-                <Button
-                  type={"submit"}
-                  onClick={onCloseModal}
-                  className={"!px-12 mt-4 !rounded-full"}
-                >
-                  Publish
-                </Button>
-              </div>
+                <div className="w-60 lg:mt-3 mt-2 flex items-end justify-between flex-col">
+                  {[
+                    {
+                      fileInputRef: fileInputRef2,
+                      selectedImage: selectedProductImage1,
+                      setSelectedImage: setSelectedProductImage1,
+                    },
+                  ].map((items, index) => (
+                    <ProductImageInput
+                      key={index}
+                      index={index}
+                      items={items}
+                      setSelectedImage={items.setSelectedImage}
+                      selectedImage={items.selectedImage}
+                      handleImageClick={handleImageClick}
+                      handleFileChange={handleFileChange2}
+                      fileInputRef={items}
+                    />
+                  ))}
+                  <Button
+                    type={"submit"}
+                    onClick={onCloseModal}
+                    className={"!px-12 mt-4 !rounded-full"}
+                  >
+                    Publish
+                  </Button>
+                </div>
+              </form>
             </div>
           </Modal>
           {/* <div>
