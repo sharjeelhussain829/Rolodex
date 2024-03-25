@@ -22,9 +22,9 @@ import Timing from "./timing";
 import ImageInput from "@/components/forms/imageInput";
 import RadioInput from "@/components/forms/radioinput";
 import More from "./more";
-
 import { NextPage } from "next";
 import { styled } from "@mui/material";
+
 function Page() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);

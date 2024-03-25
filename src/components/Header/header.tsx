@@ -11,6 +11,8 @@ import DropdownNotification from "../DropdownNotification";
 import { IoIosLogOut } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
 import { MdArrowRightAlt } from "react-icons/md";
+import { LuUser2 } from "react-icons/lu";
+
 import axios from "axios";
 
 const apiKey = "0163e5a5fb574db8bd1a47082b501672"
@@ -126,7 +128,7 @@ const NavBar = () => {
                     sizes={"100vw"}
                     alt="User Icon"
                   /> */}
-                  <FiUser className="text-[#000000a2] text-[18px]"/>
+                  <FiUser className="text-[#000000d5] text-[18px] mt-1"/>
                   Sign in
                 </Link>
               ) : (
@@ -243,14 +245,16 @@ const NavBar = () => {
                 className="gap-2 font-bold opacity-80 py-2  md:p-0 flex flex-row  text-primary rounded md:bg-transparent md:text-blue-700 "
                 aria-current="page"
               >
-                <Image
+                {/* <Image
                   src={"/icons/usericon.svg"}
                   className=""
                   width={10}
                   height={10}
                   sizes={"100vw"}
                   alt="User Icon"
-                />
+                /> */}
+                <LuUser2 className="text-[20px] text-[#000000d7] mt-[2px]"/>
+
                 Sign in
               </p>
             </Link>

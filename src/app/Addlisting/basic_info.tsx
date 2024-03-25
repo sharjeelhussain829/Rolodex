@@ -235,7 +235,6 @@ function BasicInfo({
             fileInputRef={items}
           />
         ))}
-        {/* <ImageInput /> */}
       </div>
       <div className=" space-y-6 mt-4">
         <div className="flex gap-4">

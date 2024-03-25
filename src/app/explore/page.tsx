@@ -46,7 +46,7 @@ function Explore() {
         setIsLoading(false);
       });
   }, []);
-
+console.log(news)
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };

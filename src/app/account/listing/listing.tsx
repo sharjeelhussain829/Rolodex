@@ -77,7 +77,7 @@ function Listing() {
             profile.
           </p>
           <div className="flex flex-wrap mt-6 gap-4">
-            <div className="rounded-xl px-4 py-2 cursor-pointer shadow-md flex gap-2 bg-[#F5F4F8] bg-white">
+            <div className="rounded-xl px-4 py-2 cursor-pointer shadow-md flex gap-2 bg-[#F5F4F8]">
               {/* <Image
                 src={"/icons/file1.svg"}
                 sizes="100vw"

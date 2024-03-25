@@ -200,6 +200,11 @@ function BusinessHours({
                             </TextField>
                           </div>
                         )}
+                      {!day.isChecked && timingIndex === 0 && (
+                        <div className="mt-4 ms-4 text-[25px] cursor-pointer hover:scale-110 hover:transition-all">
+                          <IoMdAdd onClick={() => addDropdown(dayIndex)} />
+                        </div>
+                      )}
                       {!day.isChecked &&
                         day.timing.length !== 1 &&
                         timingIndex === 1 && (
@@ -215,21 +220,13 @@ function BusinessHours({
                   ))}
                 </div>
               )}
-              <div className="w-10 flex justify-end">
-                {!day.isChecked &&
-                  day.timing[0].openingHours != "24:00" &&
-                  day.timing[0].openingHours !== "" && (
-                    <div className="mt-8 text-[25px] cursor-pointer">
-                      <IoMdAdd onClick={() => addDropdown(dayIndex)} />
-                    </div>
-                  )}
-              </div>
             </div>
           </div>
         </div>
       ))}
     </div>
   );
+  
 }
 
 export default BusinessHours;

@@ -1,19 +1,19 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import Button from "../ui/Button";
-import ImageGallery from "/image-gallery.png"
 import { IoMdImages } from "react-icons/io";
 import { useDropzone } from "react-dropzone";
+
 const FileInput = ({
   index,
   selectedImage,
   handleImageClick,
-  fileInputRef,
   handleFileChange,
   setSelectedImage,
   items,
 }: any) => {
   const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null); // Creating a ref
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -41,6 +41,15 @@ const FileInput = ({
         { target: { files: [files[0]] } } as any,
         setSelectedImage
       );
+
+      // Pass the value of the dropped image to the parent component
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const dataUrl = reader?.result as string;
+        items.onImageSelect(dataUrl);
+      };
+
+      reader.readAsDataURL(files[0]);
     }
   };
 
@@ -55,7 +64,7 @@ const FileInput = ({
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        style={{boxShadow: "0px 0px 20px #25AEE1 inset"}}
+        style={{ boxShadow: "0px 0px 20px #25AEE1 inset" }}
         className={`mt-4 border-2 bg-gray-100 shadow-[#25AEE1] w-50 sm:w-60 h-[150px] px-4 p-1 flex flex-col items-center justify-center rounded-xl gap-2 ${
           isDragging ? "border-primary" : ""
         }`}
@@ -79,20 +88,23 @@ const FileInput = ({
               onClick={() => {
                 handleImageClick(fileInputRef, selectedImage);
               }}
-              className={"!rounded-full !bg-none !text-sm !bg-gray-100 flex items-center flex-col justify-center"}
+              className={
+                "!rounded-full !bg-none !text-sm !bg-gray-100 flex items-center flex-col justify-center"
+              }
             >
-           <img
-              className="h-8 w-8 mr-2" 
-            src="/image-gallery.png"
-            alt="Gallery-Icon"
-            
-          />
+              <img
+                className="h-8 w-8 mr-2"
+                src="/image-gallery.png"
+                alt="Gallery-Icon"
+              />
             </Button>
-            <p className="text-[#25AEE1] text-sm text-center">Upload your business card and company Logo here</p>
+            <p className="text-[#25AEE1] text-sm text-center">
+              Upload your business card and company Logo here
+            </p>
           </div>
         )}
         <input
-          ref={fileInputRef}
+          ref={fileInputRef} // Passing the ref to the input element
           type="file"
           accept="image/*"
           className="hidden"

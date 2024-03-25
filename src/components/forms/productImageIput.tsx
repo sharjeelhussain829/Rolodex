@@ -3,12 +3,13 @@ import Image from "next/image";
 import Button from "../ui/Button";
 import { IoMdImages } from "react-icons/io";
 import { useDropzone } from "react-dropzone";
+import { PiImagesThin } from "react-icons/pi";
 // import ImageGallery from "/image-gallery.png"
 const ProductImageInput = ({
   index,
   selectedImage,
   handleImageClick,
-  fileInputRef,
+  fileInputRef2,
   handleFileChange,
   setSelectedImage,
   items,
@@ -68,7 +69,7 @@ const ProductImageInput = ({
             className="cursor-pointer w-[fit-content] h-full "
             alt="Selected Image"
             onClick={() => {
-              handleImageClick(fileInputRef);
+              handleImageClick(fileInputRef2);
             }}
           />
         ) : (
@@ -76,25 +77,28 @@ const ProductImageInput = ({
             <Button
               type={"button"}
               onClick={() => {
-                handleImageClick(fileInputRef, selectedImage);
+                handleImageClick(fileInputRef2, selectedImage);
               }}
-              className={"!rounded-full !bg-none !text-sm bg-white flex items-center flex-col justify-center"}
+              className={
+                "!rounded-full !bg-none !text-sm bg-white flex items-center flex-col justify-center"
+              }
             >
               <span className="text-black">Drag a photo here</span>
               <span className="text-black font-semibold">OR</span>
-            <span className="text-black text-md text-center flex items-center font-semibold">
-            <Image
+              <span className="text-black text-md text-center flex items-center font-semibold">
+                {/* <Image
               className="h-8 w-8 mr-2" 
             src="/image-gallery.png"
             alt="Gallery-Icon"
-            
-          /> Select a photo
-            </span>
+          /> */}
+                <PiImagesThin className="h-8 w-8 mr-2" />
+                Select a photo
+              </span>
             </Button>
           </div>
         )}
         <input
-          ref={fileInputRef}
+          ref={fileInputRef2}
           type="file"
           accept="image/*"
           className="hidden"
