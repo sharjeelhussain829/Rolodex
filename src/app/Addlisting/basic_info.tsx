@@ -25,13 +25,7 @@ import ServiceTextFeild from "@/components/forms/serviceTextField";
 import { FaMinus } from "react-icons/fa6";
 import ProductModal from "@/components/forms/modal";
 
-function BasicInfo({
-  register,
-  errors,
-  watch,
-  addCategories,
-  getValues,
-}: any) {
+function BasicInfo({ register, errors, watch, updateDropdownValue, getValues }: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [dropdownCount, setDropdownCount] = useState(1);
@@ -69,7 +63,8 @@ function BasicInfo({
   const [selectedCategoryValues, setSelectedCategoryValues] = useState<
     string[]
   >([]);
-console.log(selectedCategoryValues)
+  console.log(selectedCategoryValues);
+
   const handleDropdownChange = (index: number, selectedOption: string) => {
     const updatedValues = [...selectedCategoryValues];
     updatedValues[index] = selectedOption;
@@ -78,8 +73,9 @@ console.log(selectedCategoryValues)
   // console.log(selectedCategoryValues);
 
   useEffect(() => {
-    addCategories("category", selectedCategoryValues)
-  }, [selectedCategoryValues])
+    // addCategories("category", selectedCategoryValues);
+    updateDropdownValue("category", selectedCategoryValues)
+  }, [selectedCategoryValues]);
   const addDropdown = () => {
     setDropdownCount((prevCount) => prevCount + 1);
   };
@@ -235,6 +231,8 @@ console.log(selectedCategoryValues)
               {[...Array(dropdownCount)].map((_, index) => (
                 <div className="flex items-center mt-2" key={index}>
                   <Dropdown
+                    register={register}
+                    required
                     key={index}
                     error={errors?.category?.message}
                     className="border-2 border-gray-200 sm:w-[100%] w-full rounded-lg"
@@ -255,7 +253,6 @@ console.log(selectedCategoryValues)
                   )}
                 </div>
               ))}
-              
             </div>
             <div className="ms-3 cursor-pointer">
               <button

@@ -92,7 +92,7 @@ function BusinessHours({
       ],
     },
   ]);
-  console.log(days)
+  
   const [timeOptions, setTimeOptions] = useState<any>([]);
 
   useEffect(() => {

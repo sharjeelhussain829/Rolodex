@@ -140,11 +140,12 @@ function Page() {
   
   
   const onSubmit = async (data: any) => {
-    if (data.category.length == 0) {
+    if (data.category.length === 0) {
       setError("category", {
         type: "manual",
         message: "Category is required",
       });
+      return;
     }
     if (data.country.trim() === "") {
       setError("country", {
@@ -231,12 +232,18 @@ function Page() {
   //   }
   // };
 
-  const updateDropdownValue = (name: any, selectedOption: any) => {
-    if (selectedOption.name) {
-      setValue(name, selectedOption._id);
-    } else {
-      setValue(name, selectedOption);
-    }
+  // const updateDropdownValue = (name: any, selectedOption: any) => {
+  //   if (selectedOption.name) {
+  //     setValue(name, selectedOption._id);
+  //   } else {
+  //     setValue(name, selectedOption);
+  //   }
+  //   clearErrors(name);
+  // };
+
+  const updateDropdownValue = (name : any, selectedOption : any) => {
+    const selectedValues = Array.isArray(selectedOption) ? selectedOption.map(option => option._id || option) : selectedOption._id || selectedOption;
+    setValue(name, selectedValues);
     clearErrors(name);
   };
   
@@ -258,9 +265,9 @@ function Page() {
     );
   }
 
-  function addCategories (name: any , arr: any) {
-    setValue(name, arr);
-  }
+  // function addCategories (name: any , arr: any) {
+  //   setValue(name, arr);
+  // }
 
   return (
     <main>
@@ -346,8 +353,8 @@ function Page() {
                 register={register}
                 getValues={getValues}
                 errors={errors}
-                addCategories={addCategories}
-                // updateDropdownValue={updateDropdownValue}
+                // addCategories={addCategories}
+                updateDropdownValue={updateDropdownValue}
               />
             </div>
             <div ref={locationRef}>
