@@ -14,16 +14,16 @@ import {
 } from "react-icons/io";
 import { MdAddBox } from "react-icons/md";
 import FileInput from "@/components/forms/fileInput";
-import ImageInput from "@/components/forms/imageInput";
+// import ImageInput from "@/components/forms/imageInput";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { useForm } from "react-hook-form";
 import ProductTextFeild from "@/components/forms/ProductTextField";
 // import AddProductModal from "@/components/modals/AddProductModal";
-import ProductImageInput from "@/components/forms/productImageIput";
 import Button from "@/components/ui/Button";
 import ServiceTextFeild from "@/components/forms/serviceTextField";
 import { FaMinus } from "react-icons/fa6";
+import ProductModal from "@/components/forms/modal";
 
 function BasicInfo({
   register,
@@ -39,7 +39,7 @@ function BasicInfo({
   const [selectedOption, setSelectedOption] = React.useState<string | null>(
     null
   );
-  console.log(selectedOption);
+
   const [selectedCompanyNature, setSelectedCompanyNature] = React.useState<
     string[]
   >([]);
@@ -49,7 +49,9 @@ function BasicInfo({
     "Option 3",
   ]);
 
-  const [serviceCategory, setServiceCategory] = useState<any>([]);
+
+  // Dropdown for category
+  const [serviceCategory, setServiceCategory] = useState<any>([]); // it takes service modal values what user added for
 
   const addServiceCategory = (index: any) => {
     setServiceCategory([...serviceCategory, selectedCategories[index]]);
@@ -87,8 +89,9 @@ function BasicInfo({
     "HTML",
   ];
 
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
+  function isOpen() {
+    setOpen(!open);
+  }
 
   const onServiceOpenModal = () => setServiceOpen(true);
   const onServiceCloseModal = () => setServiceOpen(false);
@@ -115,10 +118,6 @@ function BasicInfo({
         prevState.filter((item) => item !== value)
       );
     }
-  }
-
-  function addCategory() {
-    console.log("success");
   }
 
   const { setValue } = useForm();
@@ -159,42 +158,6 @@ function BasicInfo({
     }
   };
 
-  const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
-  const fileInputRef2 = useRef<any>(null);
-
-  const handleImageClick = (fileInputRef: any) => {
-    fileInputRef?.current?.click();
-  };
-
-  const handleFileChange2 = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    const selectedFile = event?.target?.files?.[0];
-
-    if (selectedFile) {
-      try {
-        if (!selectedFile.type.startsWith("image/")) {
-          throw new Error("Invalid file type. Please upload an image.");
-        }
-
-        const formData = new FormData();
-        formData.append("profile_pic", selectedFile);
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const dataUrl = reader?.result as string;
-          setValue("images", dataUrl);
-          setSelectedImage(dataUrl);
-        };
-
-        reader.readAsDataURL(selectedFile);
-      } catch (error) {
-        console.error("Error handling file change:");
-      }
-    }
-  };
-
   const addDropdown = () => {
     setDropdownCount((prevCount) => prevCount + 1);
   };
@@ -202,34 +165,7 @@ function BasicInfo({
   const removeDropdown = (indexToRemove: any) => {
     console.log(indexToRemove);
     setDropdownCount((prevCount: any) => prevCount - 1);
-    // setDropdownCount((prevCount: any) => {
-    //   console.log(prevCount)
-    //   const updatedCount = prevCount.filter(
-    //     (_: any, index: any) => index !== indexToRemove
-    //   );
-    //   return updatedCount;
-    // });
   };
-
-  const [formData, setFormData] = useState({
-    product_name: "",
-    product_description: "",
-    product_category: "",
-    product_price: "",
-    product_url: "",
-    product_category2: "",
-  });
-  console.log(formData);
-
-  const handleFormChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-
 
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
@@ -246,6 +182,7 @@ function BasicInfo({
           },
         ].map((items, index) => (
           <FileInput
+            register={register}
             key={index}
             index={index}
             items={items}
@@ -490,179 +427,13 @@ function BasicInfo({
               </span>
             </label>
           </div>
-          {/* <RadioInput
-            title={"Product"}
-            value="product"
-            name="sevice_type"
-            register={register}
-            watch={watch}
-          />
-          <RadioInput
-            title={"Service"}
-            value="service"
-            name="sevice_type"
-            register={register}
-            watch={watch}
-          /> */}
 
-          <Modal open={open} onClose={onCloseModal} center>
-            <div className="flex gap-4 flex-wrap">
-              <form action="">
-                <div className="mb-2">
-                  <div>
-                    <ProductTextFeild
-                      required={true}
-                      label="Product Name*"
-                      name="product_name"
-                      placeholder={"Product name"}
-                      value={formData.product_name}
-                      onChange={handleFormChange}
-                    />
-                  </div>
+          <ProductModal open={open} isOpen={isOpen} />
 
-                  <div className="mt-4">
-                    <Dropdown
-                      // error={errors?.category?.message}
-                      className={"border-2 border-gray-200 rounded-lg w-full"}
-                      title={"Select Category"}
-                      onChange={(e: any) =>
-                        setFormData({ ...formData, product_category2: e.name })
-                      }
-                      // onChange={(selectedOption: any) =>
-                      //   updateDropdownValue("category", selectedOption)
-                      // }
-                      options={categories}
-                    />
-                  </div>
-
-                  <div className="mt-4">
-                    <ProductTextFeild
-                      label="Product Category*"
-                      name="product_category"
-                      placeholder={"Product category"}
-                      value={formData.product_category}
-                      onChange={handleFormChange}
-                    />
-                  </div>
-                  <div className="mt-4">
-                    {/* <ProductTextFeild
-                    required
-                    name={"product_price"}
-                    inputType={"text"}
-                    label={"Product Price ($)*"}
-                    register={register}
-                    // maxLength={{ value: 20, message: "Max Length 20" }}
-                    // minLength={{ value: 4, message: "Min Length 4" }}
-                    error={errors?.business_name?.message}
-                    placeholder={"Product Price ($)"}
-                  /> */}
-                    <ProductTextFeild
-                      label="Product Price*"
-                      name="product_price"
-                      placeholder={"Product price"}
-                      value={formData.product_price}
-                      onChange={handleFormChange}
-                    />
-                    <span className="text-gray-400 text-sm relative bottom-2">
-                      optional
-                    </span>
-                  </div>
-                  <div className="">
-                    <label className={`block text-sm mt-4 font-semibold `}>
-                      Description*
-                    </label>
-                    <textarea
-                      name="product_description"
-                      value={formData.product_description}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          product_description: e.target.value,
-                        })
-                      }
-                      placeholder="Describe your business here..."
-                      className="border-2 w-full my-1 focus:ring-0 focus:border-primary p-4 border-gray-200 rounded-xl resize-none"
-                      cols={30}
-                      rows={2}
-                    ></textarea>
-                    <p className="text-gray-400 text-sm relative bottom-2">
-                      optional
-                    </p>
-                    <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
-                      {errors.description?.message}
-                    </span>
-                  </div>
-                  <div>
-                    {/* <ProductTextFeild
-                    required
-                    name={"product_landing_page"}
-                    inputType={"text"}
-                    label={"Product landing page URL*"}
-                    register={register}
-                    // maxLength={{ value: 20, message: "Max Length 20" }}
-                    // minLength={{ value: 4, message: "Min Length 4" }}
-                    error={errors?.business_name?.message}
-                    placeholder={"Product landing page URL"}
-                  /> */}
-                    <ProductTextFeild
-                      label="Product Landig Page URL**"
-                      name="product_url"
-                      placeholder={"Product landig page URL"}
-                      value={formData.product_url}
-                      onChange={handleFormChange}
-                    />
-                    <span className="text-gray-400 text-sm relative bottom-2">
-                      optional
-                    </span>
-                  </div>
-                </div>
-                <div className="w-60 lg:mt-3 mt-2 flex items-end justify-between flex-col">
-                  {[
-                    {
-                      fileInputRef: fileInputRef2,
-                      selectedImage: selectedProductImage1,
-                      setSelectedImage: setSelectedProductImage1,
-                    },
-                  ].map((items, index) => (
-                    <ProductImageInput
-                      key={index}
-                      index={index}
-                      items={items}
-                      setSelectedImage={items.setSelectedImage}
-                      selectedImage={items.selectedImage}
-                      handleImageClick={handleImageClick}
-                      handleFileChange={handleFileChange2}
-                      fileInputRef={items}
-                    />
-                  ))}
-                  <Button
-                    type={"submit"}
-                    onClick={onCloseModal}
-                    className={"!px-12 mt-4 !rounded-full"}
-                  >
-                    Publish
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </Modal>
-          {/* <div>
-  {open ? (
-    <AddProductModal open onCloseModal 
-    register={register}
-    errors
-    required
-    watch
-    updateDropdownValue
-    getValues
-    categories
-    />
-  ) : undefined}
-</div> */}
           <div className="flex flex-wrap mt-2">
             <div className="ms-3 cursor-pointer space-x-4">
               <button
-                onClick={onOpenModal}
+                onClick={isOpen}
                 type="button"
                 className="flex items-center mt-2 w-60"
               >

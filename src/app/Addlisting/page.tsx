@@ -50,7 +50,6 @@ function Page() {
       const hourOffset = hourRef.current?.offsetTop;
       const contactOffset = contactRef.current?.offsetTop;
       const moreOffset = moreRef.current?.offsetTop;
-
       const scrollPosition = window.scrollY;
 
       if (
@@ -110,6 +109,7 @@ function Page() {
     defaultValues: {
       user_id: GetUser()?._id,
       business_name: "",
+      image_description: "",
       category: "",
       company_type: "",
       location: "",
@@ -135,6 +135,8 @@ function Page() {
       timeshipt: "",
     },
   });
+
+  
   const onSubmit = async (data: any) => {
     if (data.category.trim() === "") {
       setError("category", {
@@ -148,12 +150,12 @@ function Page() {
         message: "Country is required",
       });
     }
-    // if (data.images.trim() === "") {
-    //   setError("images", {
-    //     type: "manual",
-    //     message: "image is required",
-    //   });
-    // }
+    if (data.images.trim() === "") {
+      setError("images", {
+        type: "manual",
+        message: "image is required",
+      });
+    }
     if (data.city.trim() === "") {
       setError("city", {
         type: "manual",
@@ -171,6 +173,7 @@ function Page() {
         type: "manual",
         message: "ZipCode is required",
       });
+      console.log(data)
     }
 
     data.location = `${data.district} ${data.city} ${data.zipCode} ${data.country} ${data.streetName} `;
@@ -246,6 +249,7 @@ function Page() {
     }
     clearErrors(name);
   };
+  
   const calculateProfileCompletion = (fields: any) => {
     const totalFields = 19;
     delete fields?.user_id;
@@ -405,6 +409,7 @@ function Page() {
                                      ${
                                        items === "Basic info" &&
                                        getValues().business_name &&
+                                       getValues().image_description &&
                                        getValues().category &&
                                        getValues().company_type
                                          ? "text-primary"

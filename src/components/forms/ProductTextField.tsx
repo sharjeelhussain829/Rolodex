@@ -36,7 +36,6 @@ function ProductTextFeild({
         }`}
         maxLength={maxLength}
         minLength={minLength}
-        required={required}
         onChange={onChange} // Set onChange event handler
       />
       <span className="text-red-400 block text-[12px] mt-1 font-poppin font-normal">

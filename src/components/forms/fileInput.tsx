@@ -1,16 +1,16 @@
 import React, { useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import Button from "../ui/Button";
-import { IoMdImages } from "react-icons/io";
-import { useDropzone } from "react-dropzone";
 
 const FileInput = ({
+  register,
   index,
   selectedImage,
   handleImageClick,
   handleFileChange,
   setSelectedImage,
   items,
+  errors, // Add errors prop
 }: any) => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null); // Creating a ref
@@ -118,18 +118,22 @@ const FileInput = ({
           {` Image ${index + 1} Description*`}
         </label>
         <textarea
-          //  {...register("description", {
-          //    required: `Description  is required`,
-          //    maxLength: 8000,
-          //    minLength: 4,
-          //  })}
-          name={"description"}
+          {...register("image_description", {
+            required: "Image Description is required", // Set required validation
+            maxLength: 8000,
+            minLength: 4,
+          })}
           placeholder="Image description..."
           className="border-2 text-sm my-1 w-full focus:ring-0 focus:border-primary   p-4 border-gray-200  rounded-xl resize-none"
           id=""
           cols={30}
           rows={2}
         ></textarea>
+        {errors?.image_description && (
+          <p className="text-red-500 text-sm">
+            {errors?.image_description?.message}
+          </p>
+        )}
       </div>
     </div>
   );
