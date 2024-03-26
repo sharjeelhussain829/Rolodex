@@ -95,6 +95,7 @@ function Page() {
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
   const {
     register,
     handleSubmit,
@@ -110,7 +111,7 @@ function Page() {
       user_id: GetUser()?._id,
       business_name: "",
       image_description: "",
-      category: "",
+      category: [],
       company_type: "",
       location: "",
       images: "",
@@ -137,8 +138,9 @@ function Page() {
   });
 
   
+  
   const onSubmit = async (data: any) => {
-    if (data.category.trim() === "") {
+    if (data.category.length == 0) {
       setError("category", {
         type: "manual",
         message: "Category is required",
@@ -199,47 +201,35 @@ function Page() {
       }
     }
   };
-  // const [selectedImage1, setSelectedImage1] = useState<any>();
-  // const [selectedImage2, setSelectedImage2] = useState<any>();
-  // const [selectedImage3, setSelectedImage3] = useState<any>();
-  // const [selectedImage4, setSelectedImage4] = useState<any>();
-  // const [getImage, setImage] = useState<any>(null);
-  // const fileInputRef1 = useRef<any>(null);
-  // const fileInputRef2 = useRef<any>(null);
-  // const fileInputRef3 = useRef<any>(null);
-  // const fileInputRef4 = useRef<any>(null);
-  // const handleImageClick = (fileInputRef: any) => {
-  //   fileInputRef?.current?.click();
+
+  // const handleFileChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>,
+  //   setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
+  // ) => {
+  //   const selectedFile = event?.target?.files?.[0];
+
+  //   if (selectedFile) {
+  //     try {
+  //       if (!selectedFile.type.startsWith("image/")) {
+  //         throw new Error("Invalid file type. Please upload an image.");
+  //       }
+
+  //       const formData = new FormData();
+  //       formData.append("profile_pic", selectedFile);
+
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => {
+  //         const dataUrl = reader?.result as string;
+  //         setValue("images", dataUrl);
+  //         setSelectedImage(dataUrl);
+  //       };
+
+  //       reader.readAsDataURL(selectedFile);
+  //     } catch (error) {
+  //       console.error("Error handling file change:");
+  //     }
+  //   }
   // };
-
-  const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    const selectedFile = event?.target?.files?.[0];
-
-    if (selectedFile) {
-      try {
-        if (!selectedFile.type.startsWith("image/")) {
-          throw new Error("Invalid file type. Please upload an image.");
-        }
-
-        const formData = new FormData();
-        formData.append("profile_pic", selectedFile);
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const dataUrl = reader?.result as string;
-          setValue("images", dataUrl);
-          setSelectedImage(dataUrl);
-        };
-
-        reader.readAsDataURL(selectedFile);
-      } catch (error) {
-        console.error("Error handling file change:");
-      }
-    }
-  };
 
   const updateDropdownValue = (name: any, selectedOption: any) => {
     if (selectedOption.name) {
@@ -266,6 +256,10 @@ function Page() {
         <Loader />
       </div>
     );
+  }
+
+  function addCategories (name: any , arr: any) {
+    setValue(name, arr);
   }
 
   return (
@@ -352,7 +346,8 @@ function Page() {
                 register={register}
                 getValues={getValues}
                 errors={errors}
-                updateDropdownValue={updateDropdownValue}
+                addCategories={addCategories}
+                // updateDropdownValue={updateDropdownValue}
               />
             </div>
             <div ref={locationRef}>

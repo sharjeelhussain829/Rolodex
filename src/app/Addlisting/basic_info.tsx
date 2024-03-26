@@ -29,7 +29,7 @@ function BasicInfo({
   register,
   errors,
   watch,
-  updateDropdownValue,
+  addCategories,
   getValues,
 }: any) {
   const [open, setOpen] = useState(false);
@@ -49,7 +49,6 @@ function BasicInfo({
     "Option 3",
   ]);
 
-
   // Dropdown for category
   const [serviceCategory, setServiceCategory] = useState<any>([]); // it takes service modal values what user added for
 
@@ -67,6 +66,29 @@ function BasicInfo({
     setServiceCategory(updatedServiceCategory);
   };
 
+  const [selectedCategoryValues, setSelectedCategoryValues] = useState<
+    string[]
+  >([]);
+console.log(selectedCategoryValues)
+  const handleDropdownChange = (index: number, selectedOption: string) => {
+    const updatedValues = [...selectedCategoryValues];
+    updatedValues[index] = selectedOption;
+    setSelectedCategoryValues(updatedValues);
+  };
+  // console.log(selectedCategoryValues);
+
+  useEffect(() => {
+    addCategories("category", selectedCategoryValues)
+  }, [selectedCategoryValues])
+  const addDropdown = () => {
+    setDropdownCount((prevCount) => prevCount + 1);
+  };
+
+  const removeDropdown = (indexToRemove: any) => {
+    console.log(indexToRemove);
+    setDropdownCount((prevCount: any) => prevCount - 1);
+  };
+
   useEffect(() => {
     axios
       .get(`${Api}/categories`)
@@ -78,6 +100,7 @@ function BasicInfo({
         console.log(error);
       });
   }, []);
+
   const dropdownItems = [
     "Python",
     "JavaScript",
@@ -158,15 +181,6 @@ function BasicInfo({
     }
   };
 
-  const addDropdown = () => {
-    setDropdownCount((prevCount) => prevCount + 1);
-  };
-
-  const removeDropdown = (indexToRemove: any) => {
-    console.log(indexToRemove);
-    setDropdownCount((prevCount: any) => prevCount - 1);
-  };
-
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
       <h1 className="text-2xl md:2text-xl font-bold flex">
@@ -223,19 +237,17 @@ function BasicInfo({
                   <Dropdown
                     key={index}
                     error={errors?.category?.message}
-                    className={
-                      "border-2 border-gray-200 sm:w-[100%]  w-full rounded-lg "
-                    }
-                    title={"Accommodation"}
-                    onChange={(selectedOption: any) =>
-                      updateDropdownValue("category", selectedOption)
+                    className="border-2 border-gray-200 sm:w-[100%] w-full rounded-lg"
+                    title="Accommodation"
+                    onChange={(selectedOption: string) =>
+                      handleDropdownChange(index, selectedOption)
                     }
                     options={categories}
                   />
                   {index !== 0 && (
                     <button className="flex cursor-pointer absolute left-1/3">
                       <FaMinus
-                        className=" ms-8 rounded-sm p-auto text-2xl text-white bg-[#25AEE1] "
+                        className="ms-8 rounded-sm p-auto text-2xl text-white bg-[#25AEE1]"
                         onClick={() => removeDropdown(index)}
                       />
                       <span className="ms-1">Remove Category</span>
@@ -243,6 +255,7 @@ function BasicInfo({
                   )}
                 </div>
               ))}
+              
             </div>
             <div className="ms-3 cursor-pointer">
               <button
@@ -285,20 +298,6 @@ function BasicInfo({
           <h1 className="text-base md:text-xl font-semibold  mb-4">
             Are you listing on Rolodex as part of a company?
           </h1>
-          {/* <RadioInput
-            title={"I am a registered business"}
-            value="partner_seller"
-            name="company_type"
-            register={register}
-            watch={watch}
-          /> */}
-          {/* <RadioInput
-                title={"I am a private seller"}
-                value="private_seller"
-                name="company_type"
-                register={register}
-                watch={watch}
-              /> */}
           <span className="text-gray-400 text-md">I am a</span>
           <div className="mt-2">
             <label className="inline-flex items-center sm:space-x-4">

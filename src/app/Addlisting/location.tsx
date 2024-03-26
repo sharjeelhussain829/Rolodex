@@ -1,13 +1,6 @@
-"use client";
 import { FaLocationDot } from "react-icons/fa6";
-// import { useState } from "react";
-import TextFeild from "@/components/forms/TextFeild";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import RadioInput from "@/components/forms/radioinput";
-import Dropdown from "@/components/ui/custom_dropdown";
-import axios from "axios";
-import { Api } from "@/utils/api";
+import React, { useState } from "react";
+
 function Location({
   register,
   errors,
@@ -16,23 +9,29 @@ function Location({
   Values,
 }: any) {
   const [location, setLocation] = useState("");
-  const [areaLocation, setLocationarea] = useState<string>("");
+  const [areaLocation, setLocationArea] = useState<string>("");
 
   const handleRemoteClick = () => {
-    setLocationarea("remote");
+    setLocationArea("remote");
   };
 
   const handleOnSiteClick = () => {
-    setLocationarea("on-site");
+    setLocationArea("on-site");
   };
 
-  const handleLocationChange = (event: any) => {
+  const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
   };
 
-  const mapSrc = `https://maps.google.com/maps?width=100%&height=600&hl=en&q=${encodeURIComponent(
-    location
-  )}&ie=UTF8&t=&z=14&iwloc=B&output=embed`;
+  const handleSubmit = () => {
+    // Include the selected location type (remote or on-site) when submitting the form data
+    const formData = {
+      locationType: areaLocation,
+      location: location,
+    };
+    // You can submit formData to your backend or perform further actions
+    console.log(formData);
+  };
 
   return (
     <div className="flex flex-col space-y-6 rounded-lg shadow-md p-6 mt-12">
@@ -84,129 +83,18 @@ function Location({
             width="100%"
             height="100%"
             title="map"
-            src={mapSrc}
+            src={`https://maps.google.com/maps?width=100%&height=600&hl=en&q=${encodeURIComponent(
+              location
+            )}&ie=UTF8&t=&z=14&iwloc=B&output=embed`}
           ></iframe>
         </div>
-        {/* <RadioInput
-          title={"OnSite"}
-          value="onsite"
-          name="location_type"
-          register={register}
-          watch={watch}
-        />
-        <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
-          {errors?.company_type?.message}
-        </span> */}
+        <button
+          className="mt-5 h-9 w-48 rounded-lg font-bold shadow-lg active:bg-[#25AAE1] active:text-white hover:bg-[#25AAE1] transition duration-200 transform hover:scale-110 ease-in-out text-black hover:text-white bg-[#25AAE1]"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
       </div>
-      {/* {Values()?.location_type === "remote" && (
-        <>
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
-            <div className="flex flex-col sm:w-[50%] w-[100%]">
-              <label className="text-sm  font-semibold">Country*</label>
-              <Dropdown
-                error={errors?.country?.message}
-                className={"border-2 border-gray-200  w-[100%] rounded-lg "}
-                title={"Germany"}
-                onChange={(selectedOption: any) =>
-                  updateDropdownValue("country", selectedOption)
-                }
-                options={["January", "February", "March", "April"]}
-              />
-            </div>
-            <div className="flex flex-col sm:w-[50%] w-[100%]">
-              <label className="text-sm  font-semibold">City*</label>
-              <Dropdown
-                error={errors?.city?.message}
-                className={"border-2 border-gray-200  w-[100%] rounded-lg "}
-                title={"Berlin"}
-                onChange={(selectedOption: any) =>
-                  updateDropdownValue("city", selectedOption)
-                }
-                options={["January", "February", "March", "April"]}
-              />
-            </div>
-          </div>
-        </>
-      )}
-      {Values()?.location_type === "onsite" && (
-        <>
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
-            <div className="flex flex-col sm:w-[50%] w-[100%]">
-              <label className="text-sm  font-semibold">Country*</label>
-              <Dropdown
-                error={errors?.country?.message}
-                className={"border-2 border-gray-200  w-[100%] rounded-lg "}
-                title={"Germany"}
-                onChange={(selectedOption: any) =>
-                  updateDropdownValue("country", selectedOption)
-                }
-                options={["January", "February", "March", "April"]}
-              />
-            </div>
-            <div className="flex flex-col sm:w-[50%] w-[100%]">
-              <label className="text-sm  font-semibold">City*</label>
-              <Dropdown
-                error={errors?.city?.message}
-                className={"border-2 border-gray-200  w-[100%] rounded-lg "}
-                title={"Berlin"}
-                onChange={(selectedOption: any) =>
-                  updateDropdownValue("city", selectedOption)
-                }
-                options={["January", "February", "March", "April"]}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 items-center">
-            <div className="flex flex-col sm:w-[70%] w-[100%]">
-              <label className="text-sm  font-semibold">
-                Province / State*
-              </label>
-              <Dropdown
-                error={errors?.district?.message}
-                className={"border-2 border-gray-200  w-[100%] rounded-lg "}
-                title={"Berlin"}
-                onChange={(selectedOption: any) =>
-                  updateDropdownValue("district", selectedOption)
-                }
-                options={["January", "February", "March", "April"]}
-              />
-            </div>
-            <TextFeild
-              name={"zipCode"}
-              label={"Zip code*"}
-              register={register}
-              inputType={"number"}
-              maxLength={{ value: 8, message: "Max Length 8" }}
-              minLength={{ value: 4, message: "Min Length 4" }}
-              placeholder={"Zip code*"}
-              error={errors?.zipCode?.message}
-              className={"sm:w-[25%] w-[100%]"}
-            />
-          </div>
-          <TextFeild
-            required
-            name={"streetName"}
-            label={"Street Name*"}
-            register={register}
-            inputType={"text"}
-            minLength={{ value: 4, message: "Min Length 4" }}
-            placeholder={"streetName"}
-            error={errors?.streetName?.message}
-            className={""}
-          />
-          <h1 className="text-lg font-semibold"></h1>
-          <div className="h-[200px] rounded-2xl">
-            <iframe
-              className="rounded-xl"
-              width="100%"
-              height="100%"
-              title="map"
-              scrolling="no"
-              src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4%B0zmir+(My%20Business%20Name)&ie=UTF8&t=&z=14&iwloc=B&output=embed"
-            ></iframe>
-          </div>{" "}
-        </>
-      )} */}
     </div>
   );
 }

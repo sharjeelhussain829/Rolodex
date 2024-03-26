@@ -37,6 +37,8 @@ function Contactdetail({ register, errors }: any) {
         label={"Website"}
         register={register}
         inputType={"text"}
+        maxLength={{ value: 30, message: "Max Length 30" }}
+        minLength={{ value: 4, message: "Min Length 4" }}
         placeholder={"Enter your website"}
         error={errors?.web?.message}
         className={""}

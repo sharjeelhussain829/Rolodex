@@ -92,6 +92,7 @@ function BusinessHours({
       ],
     },
   ]);
+  console.log(days)
   const [timeOptions, setTimeOptions] = useState<any>([]);
 
   useEffect(() => {
@@ -127,6 +128,7 @@ function BusinessHours({
       setDays(updatedDays);
     }
   };
+
 
   return (
     <div className="">
