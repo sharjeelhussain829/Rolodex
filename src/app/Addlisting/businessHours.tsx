@@ -18,7 +18,6 @@ function BusinessHours({
   days,
 }: any) {
 
-console.log(days)
 
   const [timeOptions, setTimeOptions] = useState<any>([]);
 

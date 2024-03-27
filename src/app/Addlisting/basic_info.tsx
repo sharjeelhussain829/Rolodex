@@ -24,6 +24,7 @@ import Button from "@/components/ui/Button";
 import ServiceTextFeild from "@/components/forms/serviceTextField";
 import { FaMinus } from "react-icons/fa6";
 import ProductModal from "@/components/forms/modal";
+import { IoIosClose } from "react-icons/io";
 
 function BasicInfo({
   register,
@@ -70,22 +71,32 @@ function BasicInfo({
     string[]
   >([]);
 
+  const [isValueNotExist, setIsValueNotExist] = useState<any>(false);
+
   const handleDropdownChange = (index: number, selectedOption: string) => {
     const updatedValues = [...selectedCategoryValues];
     updatedValues[index] = selectedOption;
     setSelectedCategoryValues(updatedValues);
+    setIsValueNotExist(true);
   };
 
   useEffect(() => {
     updateDropdownValue("category", selectedCategoryValues);
   }, [selectedCategoryValues]);
+
   const addDropdown = () => {
-    setDropdownCount((prevCount) => prevCount + 1);
+    if (selectedCategoryValues.length == dropdownCount) {
+      setDropdownCount((prevCount) => prevCount + 1);
+      setIsValueNotExist(true);
+    } else {
+      setIsValueNotExist(false);
+    }
   };
 
   const removeDropdown = (indexToRemove: any) => {
-    console.log(indexToRemove);
     setDropdownCount((prevCount: any) => prevCount - 1);
+    selectedCategoryValues.splice(indexToRemove, 1);
+    setIsValueNotExist(true);
   };
 
   useEffect(() => {
@@ -246,16 +257,19 @@ function BasicInfo({
                     options={categories}
                   />
                   {index !== 0 && (
-                    <button className="flex cursor-pointer absolute left-1/3">
-                      <FaMinus
-                        className="ms-8 rounded-sm p-auto text-2xl text-white bg-[#25AEE1]"
+                    <button className="flex cursor-pointer left-1/3">
+                      <IoIosClose
+                        className="ms-8 rounded-sm p-auto text-2xl font-extrabold text-white bg-[#25AEE1]"
                         onClick={() => removeDropdown(index)}
                       />
-                      <span className="ms-1">Remove Category</span>
+                      {/* <span className="ms-1">Remove Category</span> */}
                     </button>
                   )}
                 </div>
               ))}
+              <span className="text-red-500 text-[14px]">
+                {!isValueNotExist && "Please select your category"}
+              </span>
             </div>
             <div className="ms-3 cursor-pointer">
               <button
@@ -430,7 +444,9 @@ function BasicInfo({
           <ProductModal open={open} isOpen={isOpen} />
 
           <div className="flex flex-wrap mt-2">
-            {!selectedCompanyNature.includes("Product") ? "" :  (
+            {!selectedCompanyNature.includes("Product") ? (
+              ""
+            ) : (
               <div className="ms-3 cursor-pointer space-x-4">
                 <button
                   onClick={isOpen}

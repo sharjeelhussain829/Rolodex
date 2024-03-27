@@ -5,12 +5,10 @@ import NavBar from "@/components/Header/header";
 import Footer from "@/components/footer/footer";
 import Navigation from "@/components/ui/navigation";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
 import Button from "@/components/ui/Button";
 import Contactdetail from "./contactdetail";
 import ProgressBar from "@/components/ui/progressbar";
 import CheckmarkIcon from "@/components/icons/tickmark";
-import Heading from "@/components/ui/Heading";
 import axios from "axios";
 import { Api } from "@/utils/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,13 +16,8 @@ import { GetUser } from "@/components/userToken";
 import Loader from "@/components/loader";
 import { BasicInfo } from "./basic_info";
 import Location from "./location";
-import Timing from "./timing";
-import ImageInput from "@/components/forms/imageInput";
-import RadioInput from "@/components/forms/radioinput";
 import More from "./more";
 
-import { NextPage } from "next";
-import { styled } from "@mui/material";
 function Page() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
@@ -236,6 +229,12 @@ function Page() {
         message: "Country is required",
       });
     }
+    if (data.location.trim() === "") {
+      setError("location", {
+        type: "manual",
+        message: "Location is required",
+      });
+    }
     if (data.images.trim() === "") {
       setError("images", {
         type: "manual",
@@ -258,6 +257,13 @@ function Page() {
       setError("zipCode", {
         type: "manual",
         message: "ZipCode is required",
+      });
+      console.log(data);
+    }
+    if (data.accessibilty.trim() === "") {
+      setError("accessibilty", {
+        type: "manual",
+        message: "accessibilty is required",
       });
       console.log(data);
     }
@@ -446,7 +452,7 @@ function Page() {
                 Values={getValues}
                 register={register}
                 errors={errors}
-                updateDropdownValue={updateDropdownValue}
+                setValue={setValue}
               />
             </div>
             <div
@@ -465,7 +471,7 @@ function Page() {
             </div>
 
             <div ref={moreRef}>
-              <More />
+              <More setValue={setValue} />
             </div>
 
             <div className="flex gap-4 mt-20">

@@ -67,7 +67,7 @@ const Dropdown = ({
   };
 
   return (
-    <>
+    <div className="flex flex-col w-full">
       <div
         className={`relative inline-block text-left ${className}`}
         onMouseEnter={drophover && openDropdown}
@@ -155,11 +155,11 @@ const Dropdown = ({
           </div>
         )}
       </div>
-      <div className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
+      <div className="text-red-400 block text-[12px] font-poppin font-normal">
         {" "}
         {error}
       </div>
-    </>
+    </div>
   );
 };
 

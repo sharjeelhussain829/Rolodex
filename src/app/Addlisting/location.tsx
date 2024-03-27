@@ -2,36 +2,26 @@ import { FaLocationDot } from "react-icons/fa6";
 import React, { useState } from "react";
 
 function Location({
-  register,
-  errors,
-  watch,
-  updateDropdownValue,
-  Values,
+ setValue,
+ errors
 }: any) {
   const [location, setLocation] = useState("");
   const [areaLocation, setLocationArea] = useState<string>("");
 
-  const handleRemoteClick = () => {
-    setLocationArea("remote");
-  };
+  const handlechange = (name: any, value: any) =>{
+    setValue(name, value)
+  } 
 
-  const handleOnSiteClick = () => {
-    setLocationArea("on-site");
+  const handleOnClick = (v : any) => {
+    setLocationArea(v);
+    handlechange("location_type", v)
   };
 
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
+    handlechange("location", location)
   };
 
-  const handleSubmit = () => {
-    // Include the selected location type (remote or on-site) when submitting the form data
-    const formData = {
-      locationType: areaLocation,
-      location: location,
-    };
-    // You can submit formData to your backend or perform further actions
-    console.log(formData);
-  };
 
   return (
     <div className="flex flex-col space-y-6 rounded-lg shadow-md p-6 mt-12">
@@ -42,7 +32,7 @@ function Location({
       <div>
         <div className="flex items-start pt-5">
           <button
-            onClick={handleRemoteClick}
+            onClick={() => handleOnClick("remote")}
             type="button"
             className={`h-9 w-48 rounded-lg font-bold shadow-lg active:bg-[#25AAE1] focus:text-white active:text-white hover:bg-[#25AAE1] transition duration-200 transform hover:scale-110 ease-in-out text-black hover:text-white ${
               areaLocation === "remote"
@@ -57,7 +47,7 @@ function Location({
           </p>
         </div>
         <button
-          onClick={handleOnSiteClick}
+          onClick={() => handleOnClick("on-site")}
           type="button"
           className={`mt-5 h-9 w-48 rounded-lg font-bold shadow-lg active:bg-[#25AAE1] active:text-white hover:bg-[#25AAE1] transition duration-200 transform hover:scale-110 ease-in-out text-black hover:text-white ${
             areaLocation === "on-site"
@@ -67,6 +57,9 @@ function Location({
         >
           OnSite
         </button>
+          <p className="text-sm text-red-400 mt-3.5 ms-5">
+          {errors?.location?.message}
+          </p>
 
         <h1 className="mt-10">Location*</h1>
         <input
@@ -88,12 +81,12 @@ function Location({
             )}&ie=UTF8&t=&z=14&iwloc=B&output=embed`}
           ></iframe>
         </div>
-        <button
+        {/* <button
           className="mt-5 h-9 w-48 rounded-lg font-bold shadow-lg active:bg-[#25AAE1] active:text-white hover:bg-[#25AAE1] transition duration-200 transform hover:scale-110 ease-in-out text-black hover:text-white bg-[#25AAE1]"
           onClick={handleSubmit}
         >
           Submit
-        </button>
+        </button> */}
       </div>
     </div>
   );
