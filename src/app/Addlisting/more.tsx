@@ -3,11 +3,26 @@ import { styled } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 
 function More() {
-  const [isSelected, setIsSelected] = useState<any>(""); // Change state type to boolean
-  const [isAmenities, setIsAmenities] = useState<any>(false); // Change state type to boolean
-  const [isPlanning, setIsPlanning] = useState<any>(false); // Change state type to boolean
-  const [isServiceOptions, setIsServiceOptions] = useState<any>(false); // Change state type to boolean
+  const [isSelected, setIsSelected] = useState<any>("");
+  const [isAmenities, setIsAmenities] = useState<any>("");
+  const [isPlanning, setIsPlanning] = useState<any>(""); 
+  const [isServiceOptions, setIsServiceOptions] = useState<any>("");
+  
+  // console.log(isSelected)
+  // console.log(isAmenities)
+  // console.log(isPlanning)
+  // console.log(isServiceOptions)
 
+  const [allValues, setAllValues] = useState<any>({
+    accessibility: "",
+    amenties: "",
+    planning: "",
+    service_options: "",
+  });
+
+  // useEffect(() => {
+
+  // }, [isSelected, isAmenities, isPlanning, isServiceOptions])
 
   return (
     <>
@@ -24,14 +39,14 @@ function More() {
           <div className="pt-5">
             <button
             style={
-              isSelected === "selected"
+              isSelected === "seating"
                 ? { boxShadow: "2px 4px 5px #444444 inset" }
                 : undefined
             }
-              onClick={() => setIsSelected("selected")}
+              onClick={() => setIsSelected("seating")}
               type="button"
               className={`h-9 w-36 mr-5 rounded-2xl font-bold shadow-lg hover:bg-[#25AAE1] transition duration-200 transform ease-in-out hover:text-white ${
-                isSelected === "selected"
+                isSelected === "seating"
                   ? "bg-[#25AAE1] text-white"
                   : "hover:scale-110"
               }`}
@@ -40,14 +55,14 @@ function More() {
             </button>
             <button
              style={
-              isSelected === "un-selected"
+              isSelected === "toilet"
                 ? { boxShadow: "2px 4px 5px #444444 inset" }
                 : undefined
             }
-              onClick={() => setIsSelected("un-selected")}
+              onClick={() => setIsSelected("toilet")}
               type="button"
               className={`h-9 w-36 rounded-2xl font-bold shadow-lg hover:bg-[#25AAE1] transition duration-200 transform ease-in-out hover:text-white ${
-                isSelected === "un-selected"
+                isSelected === "toilet"
                   ? "bg-[#25AAE1] text-white"
                   : "hover:scale-110"
               }`}
@@ -67,16 +82,16 @@ function More() {
           <div className="pt-5">
             <button
             style={
-              isPlanning === "selected"
+              isPlanning === "yes"
                 ? { boxShadow: "2px 4px 5px #444444 inset" }
                 : undefined
             }
               onClick={() => {
-                setIsPlanning("selected");
+                setIsPlanning("yes");
               }}
               type="button"
               className={`h-9 w-36 mr-5 rounded-2xl font-bold shadow-lg hover:bg-[#25AAE1] transition duration-200 transform ease-in-out hover:text-white ${
-                isPlanning === "selected"
+                isPlanning === "yes"
                   ? "bg-[#25AAE1] text-white"
                   : "hover:scale-110"
               }`}
@@ -85,16 +100,16 @@ function More() {
             </button>
             <button
             style={
-              isPlanning === "un-selected"
+              isPlanning === "no"
                 ? { boxShadow: "2px 4px 5px #444444 inset" }
                 : undefined
             }
               onClick={() => {
-                setIsPlanning("un-selected");
+                setIsPlanning("no");
               }}
               type="button"
               className={`h-9 w-36 rounded-2xl font-bold shadow-lg hover:bg-[#25AAE1] transition duration-200 transform ease-in-out hover:text-white ${
-                isPlanning === "un-selected"
+                isPlanning === "no"
                   ? "bg-[#25AAE1] text-white"
                   : "hover:scale-110"
               }`}
@@ -114,16 +129,16 @@ function More() {
           <div className="pt-5">
             <button
             style={
-              isAmenities === "selected"
+              isAmenities === "yes"
                 ? { boxShadow: "2px 4px 5px #444444 inset" }
                 : undefined
             }
               onClick={() => {
-                setIsAmenities("selected");
+                setIsAmenities("yes");
               }}
               type="button"
               className={`h-9 w-36 mr-5 rounded-2xl font-bold shadow-lg hover:bg-[#25AAE1] transition duration-200 transform  ease-in-out hover:text-white ${
-                isAmenities === "selected"
+                isAmenities === "yes"
                   ? "bg-[#25AAE1] text-white"
                   : "hover:scale-110"
               }`}

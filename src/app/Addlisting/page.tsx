@@ -170,9 +170,6 @@ function Page() {
     setIsLoading(false);
   }, [days]);
 
-  // const businessHoursHandler = (days: any) => {
-  //   setDays(days);
-  // };
 
   const {
     register,
@@ -211,9 +208,16 @@ function Page() {
       linkedin: "",
       twitter: "",
       timeshipt: "",
+      accessibilty: "",
+      amenties: "",
+      plannig: "",
+      serviceOption: "",
     },
   });
 
+
+
+  
   const onSubmit = async (data: any) => {
     if (data.category.length === 0) {
       setError("category", {
@@ -222,6 +226,7 @@ function Page() {
       });
       return;
     }
+    
     if (data.businessHours) {
       data.businessHours = days;
     }
@@ -280,6 +285,7 @@ function Page() {
       }
     }
   };
+
 
   // const handleFileChange = (
   //   event: React.ChangeEvent<HTMLInputElement>,
@@ -345,9 +351,6 @@ function Page() {
     );
   }
 
-  // function addCategories (name: any , arr: any) {
-  //   setValue(name, arr);
-  // }
 
   return (
     <main>

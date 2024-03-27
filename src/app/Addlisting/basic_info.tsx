@@ -25,7 +25,13 @@ import ServiceTextFeild from "@/components/forms/serviceTextField";
 import { FaMinus } from "react-icons/fa6";
 import ProductModal from "@/components/forms/modal";
 
-function BasicInfo({ register, errors, watch, updateDropdownValue, getValues }: any) {
+function BasicInfo({
+  register,
+  errors,
+  watch,
+  updateDropdownValue,
+  getValues,
+}: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [dropdownCount, setDropdownCount] = useState(1);
@@ -63,18 +69,15 @@ function BasicInfo({ register, errors, watch, updateDropdownValue, getValues }: 
   const [selectedCategoryValues, setSelectedCategoryValues] = useState<
     string[]
   >([]);
-  console.log(selectedCategoryValues);
 
   const handleDropdownChange = (index: number, selectedOption: string) => {
     const updatedValues = [...selectedCategoryValues];
     updatedValues[index] = selectedOption;
     setSelectedCategoryValues(updatedValues);
   };
-  // console.log(selectedCategoryValues);
 
   useEffect(() => {
-    // addCategories("category", selectedCategoryValues);
-    updateDropdownValue("category", selectedCategoryValues)
+    updateDropdownValue("category", selectedCategoryValues);
   }, [selectedCategoryValues]);
   const addDropdown = () => {
     setDropdownCount((prevCount) => prevCount + 1);
@@ -427,17 +430,18 @@ function BasicInfo({ register, errors, watch, updateDropdownValue, getValues }: 
           <ProductModal open={open} isOpen={isOpen} />
 
           <div className="flex flex-wrap mt-2">
-            <div className="ms-3 cursor-pointer space-x-4">
-              <button
-                onClick={isOpen}
-                type="button"
-                className="flex items-center mt-2 w-60"
-              >
-                <MdAddBox className="text-[#25AAE1] text-3xl" />
-                Add product
-              </button>
-            </div>
-
+            {!selectedCompanyNature.includes("Product") ? "" :  (
+              <div className="ms-3 cursor-pointer space-x-4">
+                <button
+                  onClick={isOpen}
+                  type="button"
+                  className="flex items-center mt-2 w-60"
+                >
+                  <MdAddBox className="text-[#25AAE1] text-3xl" />
+                  Add product
+                </button>
+              </div>
+            )}
             <Modal open={serviceOpen} onClose={onServiceCloseModal} center>
               <div className="flex gap-4 flex-wrap">
                 <div className="mb-2">
@@ -494,16 +498,22 @@ function BasicInfo({ register, errors, watch, updateDropdownValue, getValues }: 
                 </div>
               </div>
             </Modal>
-            <div className="ms-3 cursor-pointer space-x-4">
-              <button
-                type="button"
-                onClick={onServiceOpenModal}
-                className="flex items-center mt-2 w-60"
-              >
-                <MdAddBox className="text-[#25AAE1] text-3xl" />
-                Add Another Service
-              </button>
-            </div>
+            <span>
+              {!selectedCompanyNature.includes("Services") ? (
+                ""
+              ) : (
+                <div className="ms-3 cursor-pointer space-x-4">
+                  <button
+                    type="button"
+                    onClick={onServiceOpenModal}
+                    className="flex items-center mt-2 w-60"
+                  >
+                    <MdAddBox className="text-[#25AAE1] text-3xl" />
+                    Add Another Service
+                  </button>
+                </div>
+              )}
+            </span>
           </div>
 
           <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">

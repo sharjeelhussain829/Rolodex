@@ -7,13 +7,11 @@ import { PiImagesLight } from "react-icons/pi";
 
 // import ImageGallery from "/image-gallery.png"
 const ProductImageInput = ({
-  index,
   selectedImage,
   handleImageClick,
   fileInputRef,
   handleFileChange,
   setSelectedImage,
-  items,
 }: any) => {
   const [isDragging, setIsDragging] = useState(false);
 

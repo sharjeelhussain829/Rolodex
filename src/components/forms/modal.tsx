@@ -8,9 +8,7 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { useForm } from "react-hook-form";
 import ProductTextFeild from "@/components/forms/ProductTextField";
-// import AddProductModal from "@/components/modals/AddProductModal";
 import ProductImageInput from "@/components/forms/productImageIput";
-import Button from "@/components/ui/Button";
 
 export default function ProductModal({ open, isOpen }: any) {
   const [categories, setcategories] = useState([]);
@@ -29,16 +27,7 @@ export default function ProductModal({ open, isOpen }: any) {
         console.log(error);
       });
   }, []);
-  const dropdownItems = [
-    "Python",
-    "JavaScript",
-    "Ruby",
-    "JAVA",
-    "ASP.Net",
-    "C++",
-    "SQL",
-    "HTML",
-  ];
+ 
 
   const [formData, setFormData] = useState({
     product_name: "",

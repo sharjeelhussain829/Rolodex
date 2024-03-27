@@ -16,10 +16,9 @@ import MenuItem from "@mui/material/MenuItem";
 function BusinessHours({
   setDays,
   days,
-  // businessHoursHandler,
 }: any) {
 
-
+console.log(days)
 
   const [timeOptions, setTimeOptions] = useState<any>([]);
 
@@ -39,7 +38,6 @@ function BusinessHours({
     const updatedWeekDays = [...days];
     updatedWeekDays[index].isChecked = !updatedWeekDays[index].isChecked;
     setDays(updatedWeekDays);
-    // businessHoursHandler(updatedWeekDays)
   };
   
   const addDropdown = (index: any) => {
@@ -47,7 +45,6 @@ function BusinessHours({
     if (updatedDays[index].timing.length === 1) {
       updatedDays[index].timing.push({ openingHours: "", closingHours: "" });
       setDays(updatedDays);
-      // businessHoursHandler(updatedDays)
     }
   };
   
@@ -56,7 +53,6 @@ function BusinessHours({
     if (updatedDays[dayIndex].timing.length > 1) {
       updatedDays[dayIndex].timing.splice(timingIndex, 1);
       setDays(updatedDays);
-      // businessHoursHandler(updatedDays)
     }
   };
 
