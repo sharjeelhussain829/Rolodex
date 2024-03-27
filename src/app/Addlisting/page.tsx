@@ -91,10 +91,88 @@ function Page() {
     };
   }, []);
 
+  const [days, setDays] = useState<any>([
+    {
+      day: "Monday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+    {
+      day: "Tuesday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+    {
+      day: "Wednesday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+    {
+      day: "Thursday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+    {
+      day: "Friday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+    {
+      day: "Saturday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+    {
+      day: "Sunday",
+      isChecked: false,
+      timing: [
+        {
+          openingHours: "",
+          closingHours: "",
+        },
+      ],
+    },
+  ]);
+
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setIsLoading(false);
-  }, []);
+  }, [days]);
+
+  // const businessHoursHandler = (days: any) => {
+  //   setDays(days);
+  // };
 
   const {
     register,
@@ -123,8 +201,7 @@ function Page() {
       location_type: "",
       zipCode: "",
       description: "",
-      opening_time: "",
-      closing_time: "",
+      businessHours: days,
       streetName: "",
       email: "",
       phone: "",
@@ -137,8 +214,6 @@ function Page() {
     },
   });
 
-  
-  
   const onSubmit = async (data: any) => {
     if (data.category.length === 0) {
       setError("category", {
@@ -146,6 +221,9 @@ function Page() {
         message: "Category is required",
       });
       return;
+    }
+    if (data.businessHours) {
+      data.businessHours = days;
     }
     if (data.country.trim() === "") {
       setError("country", {
@@ -176,7 +254,7 @@ function Page() {
         type: "manual",
         message: "ZipCode is required",
       });
-      console.log(data)
+      console.log(data);
     }
 
     data.location = `${data.district} ${data.city} ${data.zipCode} ${data.country} ${data.streetName} `;
@@ -241,12 +319,14 @@ function Page() {
   //   clearErrors(name);
   // };
 
-  const updateDropdownValue = (name : any, selectedOption : any) => {
-    const selectedValues = Array.isArray(selectedOption) ? selectedOption.map(option => option._id || option) : selectedOption._id || selectedOption;
+  const updateDropdownValue = (name: any, selectedOption: any) => {
+    const selectedValues = Array.isArray(selectedOption)
+      ? selectedOption.map((option) => option._id || option)
+      : selectedOption._id || selectedOption;
     setValue(name, selectedValues);
     clearErrors(name);
   };
-  
+
   const calculateProfileCompletion = (fields: any) => {
     const totalFields = 19;
     delete fields?.user_id;
@@ -283,9 +363,9 @@ function Page() {
               } `}
               onClick={() => {
                 scrollToRef(aboutRef);
-                setTimeout(() =>{
+                setTimeout(() => {
                   setUnderline("about");
-                },1000)
+                }, 1000);
               }}
             >
               About
@@ -296,9 +376,9 @@ function Page() {
               } `}
               onClick={() => {
                 scrollToRef(locationRef);
-                setTimeout(() =>{
+                setTimeout(() => {
                   setUnderline("location");
-                },1000)
+                }, 1000);
               }}
             >
               Location
@@ -309,9 +389,9 @@ function Page() {
               } `}
               onClick={() => {
                 scrollToRef(hourRef);
-                setTimeout(() =>{
+                setTimeout(() => {
                   setUnderline("hour");
-                },1000)
+                }, 1000);
               }}
             >
               Hour
@@ -322,9 +402,9 @@ function Page() {
               } `}
               onClick={() => {
                 scrollToRef(contactRef);
-                setTimeout(() =>{
+                setTimeout(() => {
                   setUnderline("contact");
-                },1000)
+                }, 1000);
               }}
             >
               Contact Me
@@ -335,9 +415,9 @@ function Page() {
               } `}
               onClick={() => {
                 scrollToRef(moreRef);
-                setTimeout(() =>{
+                setTimeout(() => {
                   setUnderline("more");
-                },1000)
+                }, 1000);
               }}
             >
               More
@@ -370,7 +450,11 @@ function Page() {
               ref={hourRef}
               className="flex flex-col space-y-6 rounded-lg shadow-md p-6 mt-12"
             >
-              <BusinessHours />
+              <BusinessHours
+                days={days}
+                setDays={setDays}
+                // businessHoursHandler={businessHoursHandler}
+              />
             </div>
 
             <div ref={contactRef}>
@@ -428,9 +512,12 @@ function Page() {
                                          : items === "Description" &&
                                            getValues().description
                                          ? "text-primary"
-                                         : items === "Timing" &&
-                                           getValues().opening_time &&
-                                           getValues().closing_time
+                                         : //  : items === "Timing" &&
+                                         //    getValues().opening_time &&
+                                         //    getValues().closing_time
+                                         //  ? "text-primary"
+                                         items === "Timing" &&
+                                           getValues().businessHours.length > 0
                                          ? "text-primary"
                                          : items === "Contact details" &&
                                            getValues().email &&

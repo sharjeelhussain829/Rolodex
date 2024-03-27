@@ -14,85 +14,13 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
 function BusinessHours({
-  register,
-  errors,
-  watch,
-  updateDropdownValue,
-  Values,
+  setDays,
+  days,
+  // businessHoursHandler,
 }: any) {
-  const [days, setDays] = useState<any>([
-    {
-      day: "Monday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-    {
-      day: "Tuesday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-    {
-      day: "Wednesday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-    {
-      day: "Thursday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-    {
-      day: "Friday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-    {
-      day: "Saturday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-    {
-      day: "Sunday",
-      isChecked: false,
-      timing: [
-        {
-          openingHours: "",
-          closingHours: "",
-        },
-      ],
-    },
-  ]);
-  
+
+
+
   const [timeOptions, setTimeOptions] = useState<any>([]);
 
   useEffect(() => {
@@ -111,21 +39,24 @@ function BusinessHours({
     const updatedWeekDays = [...days];
     updatedWeekDays[index].isChecked = !updatedWeekDays[index].isChecked;
     setDays(updatedWeekDays);
+    // businessHoursHandler(updatedWeekDays)
   };
-
+  
   const addDropdown = (index: any) => {
     const updatedDays = [...days];
     if (updatedDays[index].timing.length === 1) {
       updatedDays[index].timing.push({ openingHours: "", closingHours: "" });
       setDays(updatedDays);
+      // businessHoursHandler(updatedDays)
     }
   };
-
+  
   const removeDropdown = (dayIndex: any, timingIndex: any) => {
     const updatedDays = [...days];
     if (updatedDays[dayIndex].timing.length > 1) {
       updatedDays[dayIndex].timing.splice(timingIndex, 1);
       setDays(updatedDays);
+      // businessHoursHandler(updatedDays)
     }
   };
 
