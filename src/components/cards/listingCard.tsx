@@ -21,6 +21,11 @@ function ListingCard({
   useEffect(() => {
     setfav(data?.isFavorite);
   }, [data, fav]);
+
+  // const numberDial = (num : any) => {
+
+  // }
+
   const deleteAdd = async () => {
     try {
       const response = await axios.delete(`${Api}/ads/delete/${data?._id}`);
@@ -53,6 +58,7 @@ function ListingCard({
       }
     }
   };
+
   return (
     <div
       className={` w-full relative  flex   rounded-xl overflow-hidden justify-between  !font-phoppin shadow-md ${className}`}
@@ -60,9 +66,7 @@ function ListingCard({
       <div className="flex flex-col sm:flex-row w-full">
         {/* data?.images ? data?.images[0] : */}
         <div className="flex relative items-center ">
-          <div className="m-4 absolute right-0 top-0">
-            
-          </div>
+          <div className="m-4 absolute right-0 top-0"></div>
           <div className="m-4 absolute left-0 top-0">
             <p className="py-[1px]  px-2 text-sm  bg-[#07C98B] text-white rounded-lg font-phoppin">
               Verified
@@ -122,8 +126,13 @@ function ListingCard({
               width={20}
               alt={"icon"}
             /> */}
-            
-            <PiPhoneCall className="text-[#000000a6] text-[20px]"/>
+            <button
+              onClick={() => {
+                window.location.href = `tel:${"+923252105103"}`; // items?.phone_number
+              }}
+            >
+              <PiPhoneCall className="text-[#000000a6] text-[20px]" />
+            </button>
             {/* <Image
               src={"/icons/messagetext1.svg"}
               className="cursor-pointer"
@@ -132,7 +141,13 @@ function ListingCard({
               width={20}
               alt={"icon"}
             /> */}
-            <TbMessage className="text-[#000000a6] text-[20px]"/>
+            <button
+              onClick={() => {
+                window.location.href = `sms:${"+923252105103"}`;
+              }}
+            >
+              <TbMessage className="text-[#000000a6] text-[20px]" />
+            </button>
             {/* <Image
               src={"/icons/sendicon.svg"}
               className="cursor-pointer"
@@ -141,7 +156,21 @@ function ListingCard({
               width={20}
               alt={"icon"}
             /> */}
-            <TbSend className="text-[#000000a6] text-[20px]"/>
+            <button
+              onClick={async () => {
+                await navigator.share({
+                  title: data?.busniess_name
+                  ? data?.busniess_name
+                  : data?.business_name
+                  ? data?.business_name
+                  : "Business Name ",
+                  url:window.location.href
+                })
+              }}
+            >
+              <TbSend className="text-[#000000a6] text-[20px]" />
+            </button>
+
             {Wishlist && (
               <div
                 className="p-2 bg-white rounded-full"

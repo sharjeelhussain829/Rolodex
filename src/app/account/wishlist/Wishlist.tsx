@@ -13,6 +13,8 @@ function Wishlist() {
   const [itemsToShow, setItemsToShow] = useState(5);
   const [buisnessDetail, setBuisnessDetail] = useState<any>();
   const [adsDetail, setAdsDetail] = useState<any>();
+
+
   useEffect(() => {
     axios
       .get(`${Api}/favorites/?user_id=${GetUser()?._id}`)
