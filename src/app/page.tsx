@@ -25,12 +25,11 @@ import { AiOutlinePieChart } from "react-icons/ai";
 import { RiCapsuleLine } from "react-icons/ri";
 import { PiPlant } from "react-icons/pi";
 import { CiDesktop } from "react-icons/ci";
-import GppGoodIcon from '@mui/icons-material/GppGood';
+import GppGoodIcon from "@mui/icons-material/GppGood";
 import { MdMoreHoriz } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-
-
+import Continue from "./../components/continue.jsx";
 
 function Page() {
   const [ads, setAds] = useState([]);
@@ -178,6 +177,13 @@ function Page() {
   return (
     <main>
       <NavBar />
+        <Continue
+          src={"/images/character.png"}
+          headText={"We are working for amazing experience"}
+          childText={
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quas libero similique, aliquam quae tempora at iste aspernatur eos rem!"
+          }
+        />
       <div className="w-full relative  ">
         <Image
           src={"/images/Group 1000006809.png"}
@@ -210,6 +216,7 @@ function Page() {
                 WE MEAN BUSINESS
               </Heading>
             </div>
+
             <div>
               <SearchForm placeholder={"Search a Product or Service"} />
             </div>
@@ -264,13 +271,31 @@ function Page() {
           <div className="flex flex-col">
             <div className="grid  md:flex md:flex-wrap md:justify-between grid-cols-1 xsm:grid-cols-2 sm:grid-cols-3 lg:grid-cols-7  ">
               {[
-                { name: "Accounting", icon: <BsCashStack className="text-[#25AEE1]" /> },
-                { name: "Marketing & PR", icon: <AiOutlinePieChart className="text-[#25AEE1]"/> },
-                { name: "Medicine", icon:  <RiCapsuleLine  className="text-[#25AEE1]"/> },
-                { name: "Agriculture", icon: <PiPlant className="text-[#25AEE1]"/> },
-                { name: "IT", icon: <CiDesktop  className="text-[#25AEE1]"/> },
-                { name: "Security", icon: <GppGoodIcon  className="text-[#25AEE1]"/> },
-                { name: "More", icon: <MdMoreHoriz className="text-[#25AEE1]"/> },
+                {
+                  name: "Accounting",
+                  icon: <BsCashStack className="text-[#25AEE1]" />,
+                },
+                {
+                  name: "Marketing & PR",
+                  icon: <AiOutlinePieChart className="text-[#25AEE1]" />,
+                },
+                {
+                  name: "Medicine",
+                  icon: <RiCapsuleLine className="text-[#25AEE1]" />,
+                },
+                {
+                  name: "Agriculture",
+                  icon: <PiPlant className="text-[#25AEE1]" />,
+                },
+                { name: "IT", icon: <CiDesktop className="text-[#25AEE1]" /> },
+                {
+                  name: "Security",
+                  icon: <GppGoodIcon className="text-[#25AEE1]" />,
+                },
+                {
+                  name: "More",
+                  icon: <MdMoreHoriz className="text-[#25AEE1]" />,
+                },
               ].map((items, index) => (
                 <div
                   key={index}
@@ -291,7 +316,9 @@ function Page() {
                     /> */}
                     {items.icon}
                   </div>
-                  <p className="text-[16px] font-bold font-noto">{items.name}</p>
+                  <p className="text-[16px] font-bold font-noto">
+                    {items.name}
+                  </p>
                 </div>
               ))}
             </div>
@@ -333,8 +360,8 @@ function Page() {
                     width={20}
                     alt={"icon"}
                   /> */}
-                  
-                  <FaArrowRightLong className="text-[#000000b0] text-[18px]"/>
+
+                  <FaArrowRightLong className="text-[#000000b0] text-[18px]" />
                 </div>
               </div>
               <div className="flex flex-col mt-2 gap-4 rounded-xl shadow-gray-300  ">
@@ -394,7 +421,7 @@ function Page() {
                         width={6}
                         alt={"icon"}
                       /> */}
-                      <MdOutlineKeyboardArrowRight className="text-[24px]"/>
+                      <MdOutlineKeyboardArrowRight className="text-[24px]" />
                     </Button>
                   </div>
                 </div>
@@ -420,7 +447,7 @@ function Page() {
                 width={16}
                 alt={"icon"}
               /> */}
-              <FaArrowRightLong className="text-[18px] text-[#000000b9]"/>
+              <FaArrowRightLong className="text-[18px] text-[#000000b9]" />
             </div>
           </div>
           <div className="relative  mx-4 xl:mx-0">
@@ -529,7 +556,7 @@ function Page() {
                 width={16}
                 alt={"icon"}
               /> */}
-              <FaArrowRightLong className="text-[18px] text-[#000000b9]"/>
+              <FaArrowRightLong className="text-[18px] text-[#000000b9]" />
             </div>
           </div>
           <div className="relative  mb-20">
