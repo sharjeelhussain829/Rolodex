@@ -29,7 +29,7 @@ import GppGoodIcon from "@mui/icons-material/GppGood";
 import { MdMoreHoriz } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import Continue from "./../components/continue.jsx";
+import Continue from "./../components/construction.jsx";
 
 function Page() {
   const [ads, setAds] = useState([]);

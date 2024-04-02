@@ -32,16 +32,16 @@ function BasicInfo({
   watch,
   updateDropdownValue,
   getValues,
+  setValue,
   addProduct,
 }: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [dropdownCount, setDropdownCount] = useState(1);
-  const [categories, setcategories] = useState([]);
+  const [categories, setcategories] = useState<any>([]);
   const [selectedOption, setSelectedOption] = React.useState<string | null>(
     null
   );
-
 
   const [selectedCompanyNature, setSelectedCompanyNature] = React.useState<
     string[]
@@ -79,7 +79,7 @@ function BasicInfo({
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
-          setValue("image", dataUrl);
+          setValue("business_card_image", dataUrl);
           setSelectedImage(dataUrl);
         };
 
@@ -93,6 +93,35 @@ function BasicInfo({
 
   // Dropdown for category
   const [serviceCategory, setServiceCategory] = useState<any>([]); // it takes service modal values what user added for
+  const [inputValue, setInputValue] = useState<string>("");
+  const [selectedCategoryValues, setSelectedCategoryValues] = useState<any>([]);
+  const [inputNewErr, setInputNewErr] = useState<any>(false);
+
+  const addItem = () => {
+    if (inputValue.trim() !== "") {
+      let newCategory = {
+        name: inputValue,
+      };
+      let updatedSelectedCategoryValues = [...selectedCategoryValues];
+
+      let index = updatedSelectedCategoryValues.findIndex(
+        (item) => item === "other"
+      );
+      categories.pop();
+
+      if (index !== -1) {
+        updatedSelectedCategoryValues.splice(index, 1, newCategory);
+      } else {
+        updatedSelectedCategoryValues.push(newCategory);
+      }
+      setcategories([...categories, newCategory, "other"]);
+      setSelectedCategoryValues(updatedSelectedCategoryValues);
+      setSelectedOption(newCategory.name);
+      setInputValue("");
+    } else {
+      setInputNewErr(true);
+    }
+  };
 
   const addServiceCategory = (index: any) => {
     setServiceCategory([...serviceCategory, selectedCategories[index]]);
@@ -108,9 +137,6 @@ function BasicInfo({
     setServiceCategory(updatedServiceCategory);
   };
 
-  const [selectedCategoryValues, setSelectedCategoryValues] = useState<
-    string[]
-  >([]);
   const [isValueNotExist, setIsValueNotExist] = useState<any>(false);
 
   const handleDropdownChange = (index: number, selectedOption: string) => {
@@ -129,7 +155,6 @@ function BasicInfo({
       setDropdownCount((prevCount) => prevCount + 1);
       setIsValueNotExist(true);
     } else {
-      // setIsValueNotExist(false);
       setIsValueNotExist("error");
     }
   };
@@ -144,8 +169,8 @@ function BasicInfo({
     axios
       .get(`${Api}/categories`)
       .then((data) => {
+        data.data.data.push("other");
         setcategories(data.data.data);
-        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -194,43 +219,15 @@ function BasicInfo({
     }
   }
 
-  const { setValue } = useForm();
+  // const { setValue } = useForm();
 
-  const [selectedCompanyImage1, setSelectedCompanyImage1] = useState<any>();
-  const fileInputRef1 = useRef<any>(null);
+  // const [selectedCompanyImage1, setSelectedCompanyImage1] = useState<any>();
+  // const fileInputRef1 = useRef<any>(null);
 
-  const handleImageClick1 = (fileInputRef: any) => {
-    fileInputRef?.current?.click();
-  };
+  // const handleImageClick1 = (fileInputRef: any) => {
+  //   fileInputRef?.current?.click();
+  // };
 
-  const handleFileChange1 = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    const selectedFile = event?.target?.files?.[0];
-
-    if (selectedFile) {
-      try {
-        if (!selectedFile.type.startsWith("image/")) {
-          throw new Error("Invalid file type. Please upload an image.");
-        }
-
-        const formData = new FormData();
-        formData.append("profile_pic", selectedFile);
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const dataUrl = reader?.result as string;
-          setValue("images", dataUrl);
-          setSelectedImage(dataUrl);
-        };
-
-        reader.readAsDataURL(selectedFile);
-      } catch (error) {
-        console.error("Error handling file change:");
-      }
-    }
-  };
 
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
@@ -248,7 +245,7 @@ function BasicInfo({
         ].map((items, index) => (
           <FileInput
             required
-            name={"businessCardImage"}
+            name={"business_card_image"}
             label={"Company Logo*"}
             register={register}
             key={index}
@@ -312,6 +309,32 @@ function BasicInfo({
                   )}
                 </div>
               ))}
+              {selectedCategoryValues.includes("other") && (
+                <div>
+                  <div id="menu" className="flex">
+                    <input
+                      className="my-2 me-2 rounded-lg w-full border-inherit focus:border-[#25AEE1]"
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => {
+                        setInputNewErr(false);
+                        setInputValue(e.target.value);
+                      }}
+                      placeholder="Enter a value"
+                    />
+                    <button
+                      onClick={addItem}
+                      type="button"
+                      className="flex items-center"
+                    >
+                      <MdAddBox className="text-[#25AAE1] text-3xl ms-[18px] rounded-3xl" />{" "}
+                    </button>
+                  </div>
+                  <span className="text-[13px] text-[#ff0000ab]">
+                    {inputNewErr && "Please fill input field"}
+                  </span>
+                </div>
+              )}
               <span className="text-red-500 text-[14px]">
                 {errors?.category?.message ||
                   (isValueNotExist == "error" && !isValueNotExist) ||
@@ -359,7 +382,7 @@ function BasicInfo({
           <h1 className="text-base md:text-xl font-semibold  mb-4">
             Are you listing on Rolodex as part of a company?
           </h1>
-          <span className="text-gray-400 text-md">I am a</span>
+          <span className="text-gray-400 text-xl">I am a</span>
           <div className="mt-2">
             <label className="inline-flex items-center sm:space-x-4">
               <input
@@ -384,7 +407,7 @@ function BasicInfo({
                 }
                 type="button"
                 onClick={() => handleOptionClick("Registered business")}
-                className={`px-5 py-2 rounded w-40 text-sm font-bold sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-5 py-2 rounded w-40 h-10 text-sm font-bold sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedOption === "Registered business"
                     ? "bg-[#25AAE1] text-white shadow-lg-inner inset-0 "
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -417,7 +440,7 @@ function BasicInfo({
                 }
                 type="button"
                 onClick={() => handleOptionClick("Private seller")}
-                className={`px-4 py-2 font-bold  rounded w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-4 py-2 font-bold h-10 rounded w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedOption === "Private seller"
                     ? "bg-[#25AAE1] text-white shadow-lg-inner inset-0 "
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -455,7 +478,7 @@ function BasicInfo({
                       }
                     : undefined
                 }
-                className={`px-4 font-bold py-2 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-4 font-bold py-2 h-10 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Product")
                     ? "bg-[#25AAE1] text-white shadow-inner"
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -483,7 +506,7 @@ function BasicInfo({
                       }
                     : undefined
                 }
-                className={`px-4 font-bold py-2 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60 text-center transition-duration-200 ${
+                className={`px-4 font-bold py-2 h-10 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60 text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Services")
                     ? "bg-[#25AAE1] text-white shadow-inner"
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -493,8 +516,13 @@ function BasicInfo({
               </span>
             </label>
           </div>
-          
-          <ProductModal open={open} isOpen={isOpen} categories={categories} addProduct={addProduct}/>
+
+          <ProductModal
+            open={open}
+            isOpen={isOpen}
+            categories={categories}
+            addProduct={addProduct}
+          />
 
           <div className="flex flex-wrap mt-2">
             {!selectedCompanyNature.includes("Product") ? (

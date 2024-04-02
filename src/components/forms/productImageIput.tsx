@@ -79,7 +79,7 @@ const ProductImageInput = ({
               onClick={() => {
                 handleImageClick(fileInputRef, selectedImage);
               }}
-              className={"!rounded-full !bg-none !text-sm bg-white flex items-center flex-col justify-center"}
+              className={"!rounded-full !bg-none !shadow-none !text-sm bg-white flex items-center flex-col justify-center"}
             >
               <span className="text-black">Drag a photo here</span>
               <span className="text-black font-semibold">OR</span>

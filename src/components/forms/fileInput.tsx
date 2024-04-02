@@ -92,7 +92,7 @@ const FileInput = ({
                 handleImageClick(fileInputRef, selectedImage);
               }}
               className={
-                "!rounded-full !bg-[#D9D9D9] !text-sm  flex items-center flex-col justify-center"
+                "!rounded-full !bg-[#D9D9D9] !text-sm !shadow-none flex items-center flex-col justify-center"
               }
             >
               <img
@@ -111,6 +111,7 @@ const FileInput = ({
           type="file"
           accept="image/*"
           className="hidden"
+          name={name}
           onChange={(e) => {
             handleFileChange(e, setSelectedImage);
           }}
@@ -127,9 +128,9 @@ const FileInput = ({
         This image can only be your company logo or business card{" "}
       </p>
       <div className="w-full mt-1">
-        {errors?.businessCardImage && (
+        {errors?.business_card_image && (
           <p className="text-red-500 text-xs">
-            {errors?.businessCardImage?.message}
+            {errors?.business_card_image?.message}
           </p>
         )}
       </div>

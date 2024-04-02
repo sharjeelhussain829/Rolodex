@@ -159,6 +159,9 @@ function Page() {
   ]);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [err, setImageError] = useState(false);
+
+const Ad_STATUS = { PUBLISHED: "published", DRAFT: "draft", DEACTIVATE: "de_activated", };
 
   useEffect(() => {
     setIsLoading(false);
@@ -192,19 +195,15 @@ function Page() {
       category: [],
       company_type: "",
       location: "",
+      business_card_image: "",
       images: "",
       country: "",
       city: "",
-      district: "",
-      day: "",
       gallery_Image: "",
       input_Location: "",
-      // latlong: [],
       location_type: "",
-      zipCode: "",
       description: "",
       businessHours: days,
-      streetName: "",
       email: "",
       phone: "",
       service: "",
@@ -217,6 +216,7 @@ function Page() {
       amenties: "",
       plannig: "",
       serviceOption: "",
+      status: Ad_STATUS.PUBLISHED
     },
   });
 
@@ -227,9 +227,18 @@ function Page() {
     console.log(product)
   };
 
-  
+  console.log(getValues())
 
   const onSubmit = async (data: any) => {
+    console.log("successfully submit", data)
+
+    if (data.business_card_image.trim() === "") {
+      setError("business_card_image", {
+        type: "required",
+        message: "Business card is required",
+      });
+      return;
+    }
     if (data.category.length === 0) {
       setError("category", {
         type: "manual",
@@ -266,35 +275,19 @@ function Page() {
         message: "City is required",
       });
     }
-    if (data.district.trim() === "") {
-      setError("district", {
-        type: "manual",
-        message: "District is required",
-      });
-    }
-    if (data.zipCode.trim() === "") {
-      setError("zipCode", {
-        type: "manual",
-        message: "ZipCode is required",
-      });
-      console.log(data);
-    }
+    
     if (data.accessibilty.trim() === "") {
       setError("accessibilty", {
         type: "manual",
         message: "accessibilty is required",
       });
     }
-    console.log(data);
     
-    data.location = `${data.district} ${data.city} ${data.zipCode} ${data.country} ${data.streetName} `;
-    delete data.district;
+    data.location = ` ${data.city} ${data.country} `;
     delete data.images;
     delete data.city;
-    delete data.streetName;
     delete data.country;
     if (
-      getValues().district &&
       getValues().city &&
       getValues().country &&
       getValues().category
@@ -458,7 +451,9 @@ function Page() {
                 watch={watch}
                 register={register}
                 getValues={getValues}
+                setValue={setValue}
                 errors={errors}
+                err={err}
                 addProduct={addProduct}
                 // addCategories={addCategories}
                 updateDropdownValue={updateDropdownValue}
@@ -528,10 +523,7 @@ function Page() {
                                          ? "text-primary"
                                          : items === "Location" &&
                                            getValues().country &&
-                                           getValues().city &&
-                                           getValues().district &&
-                                           getValues().zipCode &&
-                                           getValues().streetName
+                                           getValues().city 
                                          ? "text-primary"
                                          : items === "Photos / video" &&
                                            getValues().images

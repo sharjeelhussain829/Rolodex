@@ -46,6 +46,8 @@ function ListingCard({
     const user_id = GetUser()?._id;
 
     if (user_id) {
+      console.log(user_id)
+      console.log(data?._id)
       try {
         const response = await axios.post(
           `${Api}/favorites/add-remove?user_id=${user_id}&post_id=${data?._id}`
