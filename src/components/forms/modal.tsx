@@ -14,9 +14,11 @@ export default function ProductModal({
   isOpen,
   addProduct,
   categories,
+  draftId
 }: any) {
   const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
   const fileInputRef2 = useRef<any>(null);
+  const [file,setFile] =useState<any>()
   const [formData, setFormData] = useState({
     product_name: "",
     product_description: "",
@@ -25,6 +27,7 @@ export default function ProductModal({
     product_url: "",
     product_category2: "",
     image: "",
+    product_images:''
   });
 
   const [err, setErr] = useState<any>({
@@ -63,6 +66,7 @@ export default function ProductModal({
     }
 
     formData.image = selectedProductImage1;
+    formData.product_images = file
 
     setErr({
       product_name: false,
@@ -95,7 +99,7 @@ export default function ProductModal({
     setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
   ) => {
     const selectedFile = event?.target?.files?.[0];
-
+    setFile(selectedFile);
     if (selectedFile) {
       try {
         if (!selectedFile.type.startsWith("image/")) {
@@ -104,7 +108,7 @@ export default function ProductModal({
 
         const formData = new FormData();
         formData.append("profile_pic", selectedFile);
-
+        
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;

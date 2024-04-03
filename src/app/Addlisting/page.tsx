@@ -27,6 +27,7 @@ function Page() {
   const moreRef = useRef<HTMLDivElement>(null);
 
   const [underline, setUnderline] = useState("about");
+  const [draftID, setdraftID] = useState(null);
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -38,6 +39,10 @@ function Page() {
   };
 
   useEffect(() => {
+    axios.get(Api + "/ads/draft").then((data:any) => {
+     
+      setdraftID(data)
+    });
     const handleScroll = () => {
       const aboutOffset = aboutRef.current?.offsetTop;
       const locationOffset = locationRef.current?.offsetTop;
@@ -161,7 +166,11 @@ function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [err, setImageError] = useState(false);
 
-const Ad_STATUS = { PUBLISHED: "published", DRAFT: "draft", DEACTIVATE: "de_activated", };
+  const Ad_STATUS = {
+    PUBLISHED: "published",
+    DRAFT: "draft",
+    DEACTIVATE: "de_activated",
+  };
 
   useEffect(() => {
     setIsLoading(false);
@@ -216,21 +225,22 @@ const Ad_STATUS = { PUBLISHED: "published", DRAFT: "draft", DEACTIVATE: "de_acti
       amenties: "",
       plannig: "",
       serviceOption: "",
-      status: Ad_STATUS.PUBLISHED
+      status: Ad_STATUS.PUBLISHED,
     },
   });
 
-
   const addProduct = (product: any) => {
     const productLength: number = getValues().products.length;
-    console.log(productLength)
-    console.log(product)
+    product['busniess_id'] = draftID.id
+// need to call api for creating product
+  axios.post(Api + "/products/create", product);
+   
   };
 
-  console.log(getValues())
+  console.log(getValues());
 
   const onSubmit = async (data: any) => {
-    console.log("successfully submit", data)
+    console.log("successfully submit", data);
 
     if (data.business_card_image.trim() === "") {
       setError("business_card_image", {
@@ -275,23 +285,19 @@ const Ad_STATUS = { PUBLISHED: "published", DRAFT: "draft", DEACTIVATE: "de_acti
         message: "City is required",
       });
     }
-    
+
     if (data.accessibilty.trim() === "") {
       setError("accessibilty", {
         type: "manual",
         message: "accessibilty is required",
       });
     }
-    
+
     data.location = ` ${data.city} ${data.country} `;
     delete data.images;
     delete data.city;
     delete data.country;
-    if (
-      getValues().city &&
-      getValues().country &&
-      getValues().category
-    ) {
+    if (getValues().city && getValues().country && getValues().category) {
       try {
         const response = await axios.post(Api + "/ads/create", data);
         toast.success("Successfully created", {
@@ -454,6 +460,7 @@ const Ad_STATUS = { PUBLISHED: "published", DRAFT: "draft", DEACTIVATE: "de_acti
                 setValue={setValue}
                 errors={errors}
                 err={err}
+                draftId={draftID}
                 addProduct={addProduct}
                 // addCategories={addCategories}
                 updateDropdownValue={updateDropdownValue}
@@ -523,7 +530,7 @@ const Ad_STATUS = { PUBLISHED: "published", DRAFT: "draft", DEACTIVATE: "de_acti
                                          ? "text-primary"
                                          : items === "Location" &&
                                            getValues().country &&
-                                           getValues().city 
+                                           getValues().city
                                          ? "text-primary"
                                          : items === "Photos / video" &&
                                            getValues().images
