@@ -39,9 +39,10 @@ function Page() {
   };
 
   useEffect(() => {
-    axios.get(Api + "/ads/draft").then((data:any) => {
-     
-      setdraftID(data)
+    axios.get(Api + "/ads/draft").then((res:any) => {
+    console.log(res ,'jjjjjjj')
+      setdraftID(res.data)
+      
     });
     const handleScroll = () => {
       const aboutOffset = aboutRef.current?.offsetTop;
@@ -231,10 +232,9 @@ function Page() {
 
   const addProduct = (product: any) => {
     const productLength: number = getValues().products.length;
-    product['busniess_id'] = draftID.id
 // need to call api for creating product
   axios.post(Api + "/products/create", product);
-   
+  
   };
 
   console.log(getValues());

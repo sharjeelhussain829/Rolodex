@@ -14,11 +14,11 @@ export default function ProductModal({
   isOpen,
   addProduct,
   categories,
-  draftId
+  draftId,
 }: any) {
   const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
   const fileInputRef2 = useRef<any>(null);
-  const [file,setFile] =useState<any>()
+  const [file, setFile] = useState<any>([]);
   const [formData, setFormData] = useState({
     product_name: "",
     product_description: "",
@@ -27,7 +27,7 @@ export default function ProductModal({
     product_url: "",
     product_category2: "",
     image: "",
-    product_images:''
+    product_images: [""],
   });
 
   const [err, setErr] = useState<any>({
@@ -43,9 +43,8 @@ export default function ProductModal({
       [name]: value,
     });
     setErr((prevErr: any) => ({ ...prevErr, [name]: false }));
-
   };
-  
+
   const handleSubmitProductModalForm = (e: any) => {
     e.preventDefault();
     if (formData.product_name.trim() === "") {
@@ -64,17 +63,25 @@ export default function ProductModal({
       setErr({ ...err, image: true });
       return;
     }
+    // Create a new FormData object
+    const fd = new FormData();
 
-    formData.image = selectedProductImage1;
-    formData.product_images = file
-
+    // Append form fields to the FormData object
+    fd.append("product_name", formData.product_name.trim());
+    fd.append("product_description", formData.product_description.trim());
+    fd.append("product_category", formData.product_category.trim());
+    fd.append("product_price", formData.product_price.trim());
+    fd.append("product_url", formData.product_url.trim());
+    fd.append("product_category2", formData.product_category2.trim());
+    fd.append("product_images", file); // Assuming file is already defined
+    fd.append("busniess_id", draftId.id);
     setErr({
       product_name: false,
       product_category2: false,
       image: false,
     });
-
-    addProduct(formData);
+    //
+    addProduct(fd);
 
     setFormData({
       product_name: "",
@@ -85,7 +92,7 @@ export default function ProductModal({
       product_category2: "",
       image: "",
     });
-    
+
     isOpen();
     setSelectedProductImage1("");
   };
@@ -99,7 +106,8 @@ export default function ProductModal({
     setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
   ) => {
     const selectedFile = event?.target?.files?.[0];
-    setFile(selectedFile);
+    console.log(selectedFile, "selectedFile");
+    setFile([selectedFile]);
     if (selectedFile) {
       try {
         if (!selectedFile.type.startsWith("image/")) {
@@ -108,7 +116,7 @@ export default function ProductModal({
 
         const formData = new FormData();
         formData.append("profile_pic", selectedFile);
-        
+
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
