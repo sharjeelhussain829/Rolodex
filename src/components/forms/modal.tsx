@@ -8,6 +8,7 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import ProductTextFeild from "@/components/forms/ProductTextField";
 import ProductImageInput from "@/components/forms/productImageIput";
+import Notification from './../../app/account/Notification/notification';
 
 export default function ProductModal({
   open,
@@ -18,7 +19,7 @@ export default function ProductModal({
 }: any) {
   const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
   const fileInputRef2 = useRef<any>(null);
-  const [file, setFile] = useState<any>([]);
+  const [file, setFile] = useState<File>([]);
   const [formData, setFormData] = useState({
     product_name: "",
     product_description: "",
@@ -29,7 +30,8 @@ export default function ProductModal({
     image: "",
     product_images: [""],
   });
-
+  // Create a new FormData object
+  const fd = new FormData();
   const [err, setErr] = useState<any>({
     product_name: false,
     product_category2: false,
@@ -63,8 +65,6 @@ export default function ProductModal({
       setErr({ ...err, image: true });
       return;
     }
-    // Create a new FormData object
-    const fd = new FormData();
 
     // Append form fields to the FormData object
     fd.append("product_name", formData.product_name.trim());
@@ -107,19 +107,18 @@ export default function ProductModal({
   ) => {
     const selectedFile = event?.target?.files?.[0];
     console.log(selectedFile, "selectedFile");
-    setFile([selectedFile]);
     if (selectedFile) {
       try {
         if (!selectedFile.type.startsWith("image/")) {
           throw new Error("Invalid file type. Please upload an image.");
         }
 
-        const formData = new FormData();
-        formData.append("profile_pic", selectedFile);
-
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
+          // Convert file to Blob
+          setFile(selectedFile); // Set the selected file directly
+          // Add original file name to Blob
           setSelectedImage(dataUrl);
           setSelectedProductImage1(dataUrl);
           setErr((prevErr: any) => ({ ...prevErr, image: false }));
