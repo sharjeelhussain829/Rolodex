@@ -39,11 +39,12 @@ function Page() {
   };
 
   useEffect(() => {
-    axios.get(Api + "/ads/draft").then((res:any) => {
-    console.log(res ,'jjjjjjj')
-      setdraftID(res.data)
-      
-    });
+    axios
+      .get(Api + "/ads/draft" + "?user_id=" + GetUser()?._id)
+      .then((res: any) => {
+        console.log(res, "jjjjjjj");
+        setdraftID(res.data);
+      });
     const handleScroll = () => {
       const aboutOffset = aboutRef.current?.offsetTop;
       const locationOffset = locationRef.current?.offsetTop;
