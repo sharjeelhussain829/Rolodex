@@ -29,7 +29,7 @@ import GppGoodIcon from "@mui/icons-material/GppGood";
 import { MdMoreHoriz } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import Continue from "./../components/construction.jsx";
+import Continue from "@/components/construction";
 
 function Page() {
   const [ads, setAds] = useState([]);
@@ -177,13 +177,13 @@ function Page() {
   return (
     <main>
       <NavBar />
-        <Continue
+        {/* <Continue
           src={"/images/character.png"}
-          headText={"We are working for amazing experience"}
+          headText={"We are creating something amazing"}
           childText={
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quas libero similique, aliquam quae tempora at iste aspernatur eos rem!"
+            "we will launch our mobile application soon."
           }
-        />
+        /> */}
       <div className="w-full relative  ">
         <Image
           src={"/images/Group 1000006809.png"}

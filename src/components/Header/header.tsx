@@ -15,7 +15,7 @@ import { LuUser2 } from "react-icons/lu";
 
 import axios from "axios";
 
-const apiKey = "0163e5a5fb574db8bd1a47082b501672"
+const apiKey = "0163e5a5fb574db8bd1a47082b501672";
 // 0163e5a5fb574db8bd1a47082b501672
 // 67b614bbae624403ae0361869a0e050d
 const NavBar = () => {
@@ -45,18 +45,21 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    axios.get('https://ipgeolocation.abstractapi.com/v1/?api_key=' + apiKey)
-      .then(response => {
-        console.log(response.data)
-        setCountryFlag(response.data)
-      })
-      .catch((error) => {
-        console.error("Error fetching lists:", error);
-      });
+    () => {
+      return axios
+        .get("https://ipgeolocation.abstractapi.com/v1/?api_key=" + apiKey)
+        .then((response) => {
+          console.log(response.data);
+          setCountryFlag(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching lists:", error);
+        });
+    };
   }, []);
 
   return (
-    <div className="border-gray-200 bg-gray-50 py-4">
+    <div className="py-4">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-8 font-bold opacity-80 rtl:space-x-reverse">
           <Link href={"/"}>
@@ -71,8 +74,12 @@ const NavBar = () => {
           </Link>
           <div>
             <Image
-              // src={"/usaflag.png"}  
-              src={contryFlag.flag ? contryFlag.flag.png : "https://www.flagsimporter.com/static/frontend/Mgs/orson/en_US/Magefan_Blog/images/default-no-image.png"}
+              // src={"/usaflag.png"}
+              src={
+                contryFlag.flag
+                  ? contryFlag.flag.png
+                  : "https://www.flagsimporter.com/static/frontend/Mgs/orson/en_US/Magefan_Blog/images/default-no-image.png"
+              }
               className="!hidden w-8 lg:!block"
               width={0}
               height={0}
@@ -128,7 +135,7 @@ const NavBar = () => {
                     sizes={"100vw"}
                     alt="User Icon"
                   /> */}
-                  <FiUser className="text-[#000000d5] text-[18px] mt-1"/>
+                  <FiUser className="text-[#000000d5] text-[18px] mt-1" />
                   Sign in
                 </Link>
               ) : (
@@ -170,7 +177,7 @@ const NavBar = () => {
                             width={10}
                             alt={"icon"}
                           /> */}
-                          <FiUser className="text-[#000000a2] text-[18px]"/>
+                          <FiUser className="text-[#000000a2] text-[18px]" />
                           Profile
                         </Link>
                         <Link
@@ -185,8 +192,7 @@ const NavBar = () => {
                             width={14}
                             alt={"icon"}
                           /> */}
-                          <IoIosLogOut className="text-[16px]"/>
-
+                          <IoIosLogOut className="text-[16px]" />
                           Log out
                         </Link>
                       </div>
@@ -219,19 +225,18 @@ const NavBar = () => {
             </Link>
             {token && (
               <Link href={token ? "/account" : "/login"} className="flex gap-2">
-              <p className=" items-center font-noto  gap-2 font-bold opacity-80 py-2 cool-link navlink px-5 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary">
-                My Rolodex
-              </p>
-              {/* <Image
+                <p className=" items-center font-noto  gap-2 font-bold opacity-80 py-2 cool-link navlink px-5 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary">
+                  My Rolodex
+                </p>
+                {/* <Image
                 src={"/icons/rightvector.svg"}
                 sizes="100vw"
                 height={16}
                 width={16}
                 alt={"icon"}
               /> */}
-              <MdArrowRightAlt className="text-[22px] text-[#000000c5] mt-[2px]"/>
-
-            </Link>
+                <MdArrowRightAlt className="text-[22px] text-[#000000c5] mt-[2px]" />
+              </Link>
             )}
           </div>
         </div>
@@ -253,8 +258,7 @@ const NavBar = () => {
                   sizes={"100vw"}
                   alt="User Icon"
                 /> */}
-                <LuUser2 className="text-[20px] text-[#000000d7] mt-[2px]"/>
-
+                <LuUser2 className="text-[20px] text-[#000000d7] mt-[2px]" />
                 Sign in
               </p>
             </Link>

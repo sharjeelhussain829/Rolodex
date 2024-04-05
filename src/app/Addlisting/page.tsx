@@ -27,7 +27,7 @@ function Page() {
   const moreRef = useRef<HTMLDivElement>(null);
 
   const [underline, setUnderline] = useState("about");
-  const [draftID, setdraftID] = useState(null);
+  const [draftID, setdraftID] = useState<any>(null);
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -191,25 +191,16 @@ function Page() {
   } = useForm({
     defaultValues: {
       user_id: GetUser()?._id,
-      products: [
-        {
-          product_name: "",
-          product_description: "",
-          product_category: "",
-          product_price: "",
-          product_url: "",
-          product_category2: "",
-          image: "",
-        },
-      ],
+      products: [],
+      isProduct: "",
       business_name: "",
+      business_image: "",
       category: [],
       company_type: "",
       location: "",
-      business_card_image: "",
-      images: "",
-      country: "",
-      city: "",
+      // images: "",
+      // country: "",
+      // city: "",
       gallery_Image: "",
       input_Location: "",
       location_type: "",
@@ -222,85 +213,159 @@ function Page() {
       facebook: "",
       linkedin: "",
       twitter: "",
-      timeshipt: "",
+      // timeshipt: "",
       accessibilty: "",
       amenties: "",
       plannig: "",
       serviceOption: "",
+      hasBusinessHours: false,
       status: Ad_STATUS.PUBLISHED,
     },
   });
+const [allProducts, setAllProducts] = useState<any>([])
+
+useEffect(() => {
+setValue("products", allProducts)
+}, [allProducts])
+
 
   const addProduct = (product: any) => {
-    const productLength: number = getValues().products.length;
-// need to call api for creating product
-  axios.post(Api + "/products/create", product);
-  
+    // const productLength: number = getValues().products.length;
+    // need to call api for creating product
+    // axios.post(Api + "/products/create", product);
+    const productName = product.get("product_name");
+    const productDescription = product.get("product_description");
+    const productCategory = product.get("product_category");
+    const productPrice = product.get("product_price");
+    const productUrl = product.get("product_url");
+    const productCategory2 = product.get("product_category2");
+    const productImages = product.getAll("product_images");
+
+    const formDataObject = {
+      product_name: productName,
+      product_description: productDescription,
+      product_category: productCategory,
+      product_price: productPrice,
+      product_url: productUrl,
+      product_category2: productCategory2,
+      product_images: productImages,
+    };
+    setAllProducts([...allProducts, formDataObject])
   };
 
-  console.log(getValues());
+  // const addProduct = (product: any) => {
+  //   const prevProduct = getValues().products;
+  //   setValue("products", [...prevProduct, product]);
+  //   console.log(getValues());
+  // };
+
+  // const onSubmit = async (data: any) => {
+  //   console.log("successfully submit", data);
+
+  //   if (data.business_card_image.trim() === "") {
+  //     setError("business_card_image", {
+  //       type: "required",
+  //       message: "Business card is required",
+  //     });
+  //     return;
+  //   }
+  //   if (data.category.length === 0) {
+  //     setError("category", {
+  //       type: "manual",
+  //       message: "Category is required",
+  //     });
+  //     return;
+  //   }
+
+  //   if (data.businessHours) {
+  //     data.businessHours = days;
+  //   }
+  //   if (data.country.trim() === "") {
+  //     setError("country", {
+  //       type: "manual",
+  //       message: "Country is required",
+  //     });
+  //   }
+  //   if (data.location.trim() === "") {
+  //     setError("location", {
+  //       type: "manual",
+  //       message: "Location is required",
+  //     });
+  //   }
+
+  //   if (data.images.trim() === "") {
+  //     setError("images", {
+  //       type: "manual",
+  //       message: "image is required",
+  //     });
+  //   }
+  //   if (data.city.trim() === "") {
+  //     setError("city", {
+  //       type: "manual",
+  //       message: "City is required",
+  //     });
+  //   }
+
+  //   if (data.accessibilty.trim() === "") {
+  //     setError("accessibilty", {
+  //       type: "manual",
+  //       message: "accessibilty is required",
+  //     });
+  //   }
+
+  //   data.location = ` ${data.city} ${data.country} `;
+  //   delete data.images;
+  //   delete data.city;
+  //   delete data.country;
+  //   if (getValues().city && getValues().country && getValues().category) {
+  //     try {
+  //       const response = await axios.post(Api + "/ads/create", data);
+  //       toast.success("Successfully created", {
+  //         autoClose: 2000,
+  //         position: toast.POSITION.TOP_RIGHT,
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   const onSubmit = async (data: any) => {
-    console.log("successfully submit", data);
-
-    if (data.business_card_image.trim() === "") {
-      setError("business_card_image", {
+    if (data?.business_image?.trim() === "") {
+      setError("business_image", {
         type: "required",
-        message: "Business card is required",
+        message: "image is required",
       });
-      return;
     }
-    if (data.category.length === 0) {
+    if (data?.category?.length === 0) {
       setError("category", {
-        type: "manual",
+        type: "required",
         message: "Category is required",
       });
-      return;
     }
-
-    if (data.businessHours) {
+    if (data?.businessHours) {
       data.businessHours = days;
     }
-    if (data.country.trim() === "") {
-      setError("country", {
-        type: "manual",
-        message: "Country is required",
-      });
-    }
-    if (data.location.trim() === "") {
+    if (data?.location?.trim() === "") {
       setError("location", {
         type: "manual",
         message: "Location is required",
       });
     }
-
-    if (data.images.trim() === "") {
-      setError("images", {
-        type: "manual",
-        message: "image is required",
+    if (data?.gallery_image?.trim() === "") {
+      setError("gallery_Image", {
+        type: "requred",
+        message: "Gallery Image is required",
       });
     }
-    if (data.city.trim() === "") {
-      setError("city", {
-        type: "manual",
-        message: "City is required",
-      });
-    }
+    console.log("success -->", data);
 
-    if (data.accessibilty.trim() === "") {
-      setError("accessibilty", {
-        type: "manual",
-        message: "accessibilty is required",
-      });
-    }
-
-    data.location = ` ${data.city} ${data.country} `;
-    delete data.images;
-    delete data.city;
-    delete data.country;
-    if (getValues().city && getValues().country && getValues().category) {
+    if (getValues().category) {
       try {
-        const response = await axios.post(Api + "/ads/create", data);
+        const response = await axios.post(
+          Api + `/ads/edit/${draftID.id}`,
+          data
+        );
         toast.success("Successfully created", {
           autoClose: 2000,
           position: toast.POSITION.TOP_RIGHT,
@@ -311,44 +376,6 @@ function Page() {
     }
   };
 
-  // const handleFileChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>,
-  //   setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
-  // ) => {
-  //   const selectedFile = event?.target?.files?.[0];
-
-  //   if (selectedFile) {
-  //     try {
-  //       if (!selectedFile.type.startsWith("image/")) {
-  //         throw new Error("Invalid file type. Please upload an image.");
-  //       }
-
-  //       const formData = new FormData();
-  //       formData.append("profile_pic", selectedFile);
-
-  //       const reader = new FileReader();
-  //       reader.onloadend = () => {
-  //         const dataUrl = reader?.result as string;
-  //         setValue("images", dataUrl);
-  //         setSelectedImage(dataUrl);
-  //       };
-
-  //       reader.readAsDataURL(selectedFile);
-  //     } catch (error) {
-  //       console.error("Error handling file change:");
-  //     }
-  //   }
-  // };
-
-  // const updateDropdownValue = (name: any, selectedOption: any) => {
-  //   if (selectedOption.name) {
-  //     setValue(name, selectedOption._id);
-  //   } else {
-  //     setValue(name, selectedOption);
-  //   }
-  //   clearErrors(name);
-  // };
-
   const updateDropdownValue = (name: any, selectedOption: any) => {
     const selectedValues = Array.isArray(selectedOption)
       ? selectedOption.map((option) => option._id || option)
@@ -358,8 +385,15 @@ function Page() {
   };
 
   const calculateProfileCompletion = (fields: any) => {
-    const totalFields = 19;
+    const totalFields = 18;
     delete fields?.user_id;
+    delete fields?.businessHours;
+    delete fields?.products;
+    delete fields?.hasBusinessHours;
+    delete fields?.status;
+    delete fields?.category;
+    delete fields?.isProduct;
+    delete fields?.input_Location;
     if (fields) {
       const filterdata = Object.values(fields).filter((items: any) => items);
       const completionPercentage = (filterdata?.length / totalFields) * 100;
@@ -374,6 +408,24 @@ function Page() {
       </div>
     );
   }
+
+  const checkHours = (daysArray: any) => {
+    const hasOpeningHours = daysArray.some(
+      (day: any) =>
+        !day.isChecked && day.timing.length > 0 && day.timing[0].openingHours
+    );
+    const allChecked = daysArray.every((day: any) => day.isChecked);
+    setVal("hasBusinessHours", hasOpeningHours || allChecked);
+  };
+
+  // useEffect(() => {
+  //   checkHours(days);
+  // }, [days])
+
+  const setVal = (key: any, val: any) => {
+    setValue(key, val);
+    console.log(getValues());
+  };
 
   return (
     <main>
@@ -459,6 +511,7 @@ function Page() {
                 register={register}
                 getValues={getValues}
                 setValue={setValue}
+                setVal={setVal}
                 errors={errors}
                 err={err}
                 draftId={draftID}
@@ -503,60 +556,73 @@ function Page() {
             </div> */}
           </form>
           <div className="col-span-1 mt-4">
-            <h1 className="text-base md:text-xl font-semibold mb-3">
-              {percentageComplete} % content filled
-            </h1>
-            <ProgressBar
-              progress={percentageComplete}
-              className={"bg-[#F23C49]"}
-            />
-            <div className="space-y-4 mt-4">
-              {[
-                "Basic info",
-                "Location",
-                "Description",
-                "Timing",
-                "Photos",
-                "Contact details",
-              ].map((items, index) => (
-                <div key={index} className="flex gap-4 items-center">
-                  <CheckmarkIcon items={items} getValues={getValues} />
-                  <p
-                    className={`font-semibold  text-gray-500
+            <div className="col-span-1 mt-4">
+              <h1 className="text-base md:text-xl font-semibold mb-3">
+                {percentageComplete} % content filled
+              </h1>
+              <ProgressBar
+                progress={percentageComplete}
+                className={"bg-[#F23C49]"}
+              />
+              <div className="space-y-4 mt-4">
+                {[
+                  "Basic info",
+                  "Description",
+                  "Location",
+                  "Photos",
+                  "Timing",
+                  "Contact details",
+                  "More",
+                ].map((items, index) => (
+                  <div key={index} className="flex gap-4 items-center">
+                    <CheckmarkIcon items={items} getValues={getValues} />
+                    <p
+                      className={`font-semibold  text-gray-500
                                      ${
                                        items === "Basic info" &&
+                                       getValues().business_image &&
                                        getValues().business_name &&
-                                       getValues().category &&
-                                       getValues().company_type
+                                       getValues().category.length &&
+                                       getValues().description &&
+                                       getValues().company_type &&
+                                       getValues().isProduct.length &&
+                                       getValues().products.length
+                                         ? "text-primary"
+                                         : items === "Photos" &&
+                                           getValues().gallery_Image
                                          ? "text-primary"
                                          : items === "Location" &&
-                                           getValues().country &&
-                                           getValues().city
-                                         ? "text-primary"
-                                         : items === "Photos / video" &&
-                                           getValues().images
+                                           getValues().location_type &&
+                                           getValues().input_Location.length
                                          ? "text-primary"
                                          : items === "Description" &&
                                            getValues().description
                                          ? "text-primary"
-                                         : //  : items === "Timing" &&
-                                         //    getValues().opening_time &&
-                                         //    getValues().closing_time
-                                         //  ? "text-primary"
-                                         items === "Timing" &&
-                                           getValues().businessHours.length > 0
+                                         : items === "Timing" &&
+                                           getValues().hasBusinessHours
                                          ? "text-primary"
                                          : items === "Contact details" &&
                                            getValues().email &&
-                                           getValues().phone
+                                           getValues().phone &&
+                                           getValues().web &&
+                                           getValues().facebook &&
+                                           getValues().linkedin &&
+                                           getValues().twitter
+                                         ? "text-primary"
+                                         : items === "More" &&
+                                           getValues().accessibilty &&
+                                           getValues().amenties &&
+                                           getValues().plannig &&
+                                           getValues().serviceOption
                                          ? "text-primary"
                                          : "text-black"
                                      }`}
-                  >
-                    {items}
-                  </p>
-                </div>
-              ))}
+                    >
+                      {items}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

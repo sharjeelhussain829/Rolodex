@@ -22,9 +22,9 @@ import ProductTextFeild from "@/components/forms/ProductTextField";
 // import AddProductModal from "@/components/modals/AddProductModal";
 import Button from "@/components/ui/Button";
 import ServiceTextFeild from "@/components/forms/serviceTextField";
-import { FaMinus } from "react-icons/fa6";
 import ProductModal from "@/components/forms/modal";
 import { IoIosClose } from "react-icons/io";
+import ProductUpdate from "@/components/productUpdate";
 
 function BasicInfo({
   register,
@@ -34,7 +34,8 @@ function BasicInfo({
   getValues,
   setValue,
   addProduct,
-  draftId
+  setVal,
+  draftId,
 }: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
@@ -47,6 +48,11 @@ function BasicInfo({
   const [selectedCompanyNature, setSelectedCompanyNature] = React.useState<
     string[]
   >([]);
+
+  useEffect(() => {
+    setVal("isProduct", selectedCompanyNature);
+  }, []);
+
   const [selectedCategories, setselectedCategories] = useState<any>([
     "Option 1",
     "Option 2",
@@ -205,6 +211,7 @@ function BasicInfo({
 
   function handleOptionClick(v: string | null) {
     setSelectedOption(v);
+    setVal("company_type", v)
     console.log(v);
   }
 
@@ -220,15 +227,39 @@ function BasicInfo({
     }
   }
 
-  // const { setValue } = useForm();
+  const [arr, setArr] = useState<any>([
+    {
+      id: 1,
+      src: "https://images.unsplash.com/photo-1664575602276-acd073f104c1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      product_name: "Product 1",
+      category: "IT",
+      price: 200,
+    },
+    {
+      id: 2,
+      src: "https://images.unsplash.com/photo-1665686307516-1915b9616526?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      product_name: "Product 2",
+      category: "information technology",
+      price: 500,
+    },
+    {
+      id: 3,
+      src: "https://images.unsplash.com/photo-1664575602276-acd073f104c1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      product_name: "Product 3",
+      category: "information technology",
+      price: 450,
+    },
+  ]);
 
-  // const [selectedCompanyImage1, setSelectedCompanyImage1] = useState<any>();
-  // const fileInputRef1 = useRef<any>(null);
+  const deleteItem = (index: number) => {
+    const newArray = [...arr]; // Create a copy of the original array
+    newArray.splice(index, 1); // Remove the element at the specified index
+    setArr(newArray); // Update the state with the new array
+  };
 
-  // const handleImageClick1 = (fileInputRef: any) => {
-  //   fileInputRef?.current?.click();
-  // };
-
+  useEffect(() => {
+    console.log(getValues());
+  }, [getValues()]);
 
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
@@ -408,7 +439,7 @@ function BasicInfo({
                 }
                 type="button"
                 onClick={() => handleOptionClick("Registered business")}
-                className={`px-5 py-2 rounded w-40 h-10 text-sm font-bold sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-5 py-2 rounded w-48 h-10 text-sm font-bold sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedOption === "Registered business"
                     ? "bg-[#25AAE1] text-white shadow-lg-inner inset-0 "
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -441,7 +472,7 @@ function BasicInfo({
                 }
                 type="button"
                 onClick={() => handleOptionClick("Private seller")}
-                className={`px-4 py-2 font-bold h-10 rounded w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-4 py-2 font-bold h-10 rounded w-48 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedOption === "Private seller"
                     ? "bg-[#25AAE1] text-white shadow-lg-inner inset-0 "
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -479,7 +510,7 @@ function BasicInfo({
                       }
                     : undefined
                 }
-                className={`px-4 font-bold py-2 h-10 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
+                className={`px-4 font-bold py-2 h-10 rounded cursor-pointer w-48 text-sm sm:text-[16px] sm:w-60  text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Product")
                     ? "bg-[#25AAE1] text-white shadow-inner"
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -507,7 +538,7 @@ function BasicInfo({
                       }
                     : undefined
                 }
-                className={`px-4 font-bold py-2 h-10 rounded cursor-pointer w-40 text-sm sm:text-[16px] sm:w-60 text-center transition-duration-200 ${
+                className={`px-4 font-bold py-2 h-10 rounded cursor-pointer w-48 text-sm sm:text-[16px] sm:w-60 text-center transition-duration-200 ${
                   selectedCompanyNature.includes("Services")
                     ? "bg-[#25AAE1] text-white shadow-inner"
                     : "bg-white drop-shadow-lg hover:scale-110"
@@ -517,7 +548,6 @@ function BasicInfo({
               </span>
             </label>
           </div>
-
           <ProductModal
             open={open}
             isOpen={isOpen}
@@ -541,6 +571,7 @@ function BasicInfo({
                 </button>
               </div>
             )}
+
             <Modal open={serviceOpen} onClose={onServiceCloseModal} center>
               <div className="flex gap-4 flex-wrap">
                 <div className="mb-2">
@@ -614,7 +645,19 @@ function BasicInfo({
               )}
             </span>
           </div>
-
+          <div className="w-[100%] sm:w-[65%] md:w-[85%] flex flex-wrap justify-between">
+            {getValues()?.products?.map((val: any, ind: any) => (
+              <ProductUpdate
+                key={ind}
+                deleteItem={deleteItem}
+                id={ind}
+                src={val.product_images[0]}
+                p_name={val.product_name}
+                category={val.product_category}
+                price={val.product_price}
+              />
+            ))}
+          </div>
           <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
             {errors?.sevice_type?.message}
           </span>

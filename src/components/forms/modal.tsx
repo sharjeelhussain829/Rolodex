@@ -8,7 +8,7 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import ProductTextFeild from "@/components/forms/ProductTextField";
 import ProductImageInput from "@/components/forms/productImageIput";
-import Notification from './../../app/account/Notification/notification';
+import Notification from "./../../app/account/Notification/notification";
 
 export default function ProductModal({
   open,
@@ -19,7 +19,7 @@ export default function ProductModal({
 }: any) {
   const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
   const fileInputRef2 = useRef<any>(null);
-  const [file, setFile] = useState<File>([]);
+  const [file, setFile] = useState<any>([]);
   const [formData, setFormData] = useState({
     product_name: "",
     product_description: "",
@@ -75,6 +75,7 @@ export default function ProductModal({
     fd.append("product_category2", formData.product_category2.trim());
     fd.append("product_images", file); // Assuming file is already defined
     fd.append("busniess_id", draftId.id);
+   
     setErr({
       product_name: false,
       product_category2: false,
@@ -84,6 +85,13 @@ export default function ProductModal({
     addProduct(fd);
 
     setFormData({
+      // product_name: "",
+      // product_description: "",
+      // product_category: "",
+      // product_price: "",
+      // product_url: "",
+      // product_category2: "",
+      // image: "",
       product_name: "",
       product_description: "",
       product_category: "",
@@ -91,6 +99,7 @@ export default function ProductModal({
       product_url: "",
       product_category2: "",
       image: "",
+      product_images: [""],
     });
 
     isOpen();
