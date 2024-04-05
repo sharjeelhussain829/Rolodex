@@ -34,6 +34,7 @@ function BasicInfo({
   getValues,
   setValue,
   addProduct,
+  draftId
 }: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
@@ -522,6 +523,7 @@ function BasicInfo({
             isOpen={isOpen}
             categories={categories}
             addProduct={addProduct}
+            draftId={draftId}
           />
 
           <div className="flex flex-wrap mt-2">

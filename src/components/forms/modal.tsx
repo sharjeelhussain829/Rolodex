@@ -8,15 +8,18 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import ProductTextFeild from "@/components/forms/ProductTextField";
 import ProductImageInput from "@/components/forms/productImageIput";
+import Notification from './../../app/account/Notification/notification';
 
 export default function ProductModal({
   open,
   isOpen,
   addProduct,
   categories,
+  draftId,
 }: any) {
   const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
   const fileInputRef2 = useRef<any>(null);
+  const [file, setFile] = useState<File>([]);
   const [formData, setFormData] = useState({
     product_name: "",
     product_description: "",
@@ -25,8 +28,10 @@ export default function ProductModal({
     product_url: "",
     product_category2: "",
     image: "",
+    product_images: [""],
   });
-
+  // Create a new FormData object
+  const fd = new FormData();
   const [err, setErr] = useState<any>({
     product_name: false,
     product_category2: false,
@@ -40,9 +45,8 @@ export default function ProductModal({
       [name]: value,
     });
     setErr((prevErr: any) => ({ ...prevErr, [name]: false }));
-
   };
-  
+
   const handleSubmitProductModalForm = (e: any) => {
     e.preventDefault();
     if (formData.product_name.trim() === "") {
@@ -62,15 +66,22 @@ export default function ProductModal({
       return;
     }
 
-    formData.image = selectedProductImage1;
-
+    // Append form fields to the FormData object
+    fd.append("product_name", formData.product_name.trim());
+    fd.append("product_description", formData.product_description.trim());
+    fd.append("product_category", formData.product_category.trim());
+    fd.append("product_price", formData.product_price.trim());
+    fd.append("product_url", formData.product_url.trim());
+    fd.append("product_category2", formData.product_category2.trim());
+    fd.append("product_images", file); // Assuming file is already defined
+    fd.append("busniess_id", draftId.id);
     setErr({
       product_name: false,
       product_category2: false,
       image: false,
     });
-
-    addProduct(formData);
+    //
+    addProduct(fd);
 
     setFormData({
       product_name: "",
@@ -81,7 +92,7 @@ export default function ProductModal({
       product_category2: "",
       image: "",
     });
-    
+
     isOpen();
     setSelectedProductImage1("");
   };
@@ -95,19 +106,19 @@ export default function ProductModal({
     setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
   ) => {
     const selectedFile = event?.target?.files?.[0];
-
+    console.log(selectedFile, "selectedFile");
     if (selectedFile) {
       try {
         if (!selectedFile.type.startsWith("image/")) {
           throw new Error("Invalid file type. Please upload an image.");
         }
 
-        const formData = new FormData();
-        formData.append("profile_pic", selectedFile);
-
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
+          // Convert file to Blob
+          setFile(selectedFile); // Set the selected file directly
+          // Add original file name to Blob
           setSelectedImage(dataUrl);
           setSelectedProductImage1(dataUrl);
           setErr((prevErr: any) => ({ ...prevErr, image: false }));
