@@ -255,6 +255,8 @@ function BasicInfo({
   };
 
 
+  
+
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
       <h1 className="text-2xl md:2text-xl font-bold flex">
@@ -644,10 +646,11 @@ function BasicInfo({
               <ProductUpdate
                 key={ind}
                 deleteItem={deleteItem}
-                id={ind}
+                id={val._id}
+                index={ind}
                 src={val.product_images[0]}
                 p_name={val.product_name}
-                category={val.product_category}
+                category={val}
                 price={val.product_price}
               />
             ))}
