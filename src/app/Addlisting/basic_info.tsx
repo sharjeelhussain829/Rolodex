@@ -55,7 +55,7 @@ function BasicInfo({
     "Option 3",
   ]);
 
-console.log(serviceCategory)
+// console.log(serviceCategory)
 
   // drag company logo image functions start
   const [selectedCompanyImage, setSelectedCompanyImage] = useState<any>();
@@ -210,7 +210,6 @@ console.log(serviceCategory)
     setSelectedOption(v);
     setVal("company_type", v)
     clearErrors("company_type")
-    console.log(v);
   }
 
   function handleNatureClick(value: string) {
@@ -255,9 +254,6 @@ console.log(serviceCategory)
     setArr(newArray); // Update the state with the new array
   };
 
-
-
-console.log(allProducts)
 
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">

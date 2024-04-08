@@ -42,7 +42,7 @@ function Page() {
     axios
       .get(Api + "/ads/draft" + "?user_id=" + GetUser()?._id)
       .then((res: any) => {
-        console.log(res, "jjjjjjj");
+        // console.log("response", res);
         setdraftID(res.data);
       });
     const handleScroll = () => {
@@ -167,6 +167,7 @@ function Page() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [err, setImageError] = useState(false);
+  const [isTimingTrue, setIsTimingTrue] = useState<any>(null);
 
   const Ad_STATUS = {
     PUBLISHED: "published",
@@ -213,33 +214,47 @@ function Page() {
       amenties: "",
       plannig: "",
       serviceOption: "",
-      hasBusinessHours: false,
       status: Ad_STATUS.PUBLISHED,
     },
   });
+
   const [allProducts, setAllProducts] = useState<any>([]);
 
   const addProduct = async (product: any) => {
     // need to call api for creating product
     // axios.post(Api + "/products/create", product);
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const response = await axios.post(Api + "/products/create", product);
       toast.success("Added Product", {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
       });
-      setIsLoading(false)
-      setAllProducts((prev: any) => [...prev, response.data])
+      setIsLoading(false);
+      setAllProducts((prev: any) => [...prev, response.data]);
     } catch (error) {
       // console.log(error);
-      setIsLoading(false)
+      setIsLoading(false);
       toast.error("Failed to add product", {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
       });
     }
   };
+
+  // business hours filled properly
+  const checkHours = (daysArray: any) => {
+    const hasOpeningHours = daysArray.some(
+      (day: any) =>
+        !day.isChecked && day.timing.length > 0 && day.timing[0].openingHours
+    );
+    const allChecked = daysArray.every((day: any) => day.isChecked);
+    setIsTimingTrue(hasOpeningHours || allChecked);
+  };
+
+  useEffect(() => {
+    checkHours(days);
+  }, [days]);
 
   const onSubmit = async (data: any) => {
     if (data?.business_image?.trim() === "") {
@@ -273,28 +288,27 @@ function Page() {
       });
     }
 
-
-
-    setIsLoading(true)
-    try {
+    if (isTimingTrue) {
+      setIsLoading(true);
+      try {
         const response = await axios.post(
           Api + `/ads/edit/${draftID.id}`,
           data
         );
-        setIsLoading(false)
+        setIsLoading(false);
         toast.success("Successfully created", {
           autoClose: 2000,
           position: toast.POSITION.TOP_RIGHT,
         });
       } catch (error) {
-        setIsLoading(false)
+        setIsLoading(false);
         toast.error("Failed to created", {
           autoClose: 2000,
           position: toast.POSITION.TOP_CENTER,
         });
         console.log(error);
       }
-
+    }
   };
 
   const updateDropdownValue = (name: any, selectedOption: any) => {
@@ -306,17 +320,22 @@ function Page() {
   };
 
   const calculateProfileCompletion = (fields: any) => {
-    const totalFields = 18;
+    const totalFields = 16;
+    // const isFilledInputLocation =
+    //   Array.isArray(fields?.input_Location) &&
+    //   fields?.input_Location.every((element: any) => element !== "");
+
     delete fields?.user_id;
-    delete fields?.businessHours;
-    delete fields?.hasBusinessHours;
     delete fields?.status;
+    delete fields?.input_Location;
+    delete fields?.businessHours;
     delete fields?.category;
     delete fields?.isProduct;
-    delete fields?.input_Location;
+
     if (fields) {
       const filterdata = Object.values(fields).filter((items: any) => items);
       const completionPercentage = (filterdata?.length / totalFields) * 100;
+      console.log(completionPercentage);
       return Math.floor(completionPercentage);
     }
   };
@@ -328,19 +347,6 @@ function Page() {
       </div>
     );
   }
-
-  const checkHours = (daysArray: any) => {
-    const hasOpeningHours = daysArray.some(
-      (day: any) =>
-        !day.isChecked && day.timing.length > 0 && day.timing[0].openingHours
-    );
-    const allChecked = daysArray.every((day: any) => day.isChecked);
-    setVal("hasBusinessHours", hasOpeningHours || allChecked);
-  };
-
-  // useEffect(() => {
-  //   checkHours(days);
-  // }, [days])
 
   const setVal = (key: any, val: any) => {
     setValue(key, val);
@@ -443,7 +449,12 @@ function Page() {
                 updateDropdownValue={updateDropdownValue}
               />
             </div>
-            <AddPhoto errors={errors} setValue={setValue} register={register} clearErrors={clearErrors} />
+            <AddPhoto
+              errors={errors}
+              setValue={setValue}
+              register={register}
+              clearErrors={clearErrors}
+            />
             <div ref={locationRef}>
               <Location
                 clearErrors={clearErrors}
@@ -472,12 +483,6 @@ function Page() {
             <div ref={moreRef}>
               <More setValue={setValue} />
             </div>
-
-            {/* <div className="flex gap-4 mt-20">
-              <Button type={"submit"} className={"!px-12   !rounded-full"}>
-                Save
-              </Button>
-            </div> */}
           </form>
           <div className="col-span-1 mt-4">
             <div className="col-span-1 mt-4">
@@ -521,8 +526,7 @@ function Page() {
                                          : items === "Description" &&
                                            getValues().description
                                          ? "text-primary"
-                                         : items === "Timing" &&
-                                           getValues().hasBusinessHours
+                                         : items === "Timing" && isTimingTrue
                                          ? "text-primary"
                                          : items === "Contact details" &&
                                            getValues().email &&
