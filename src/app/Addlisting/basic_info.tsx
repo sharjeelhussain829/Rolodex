@@ -2,8 +2,6 @@
 import TextFeild from "@/components/forms/TextFeild";
 import MultiSelect from "@/components/forms/multiselect";
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import RadioInput from "@/components/forms/radioinput";
 import Dropdown from "@/components/ui/custom_dropdown";
 import axios from "axios";
 import { Api } from "@/utils/api";
@@ -14,14 +12,9 @@ import {
 } from "react-icons/io";
 import { MdAddBox } from "react-icons/md";
 import FileInput from "@/components/forms/fileInput";
-// import ImageInput from "@/components/forms/imageInput";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
-import { useForm } from "react-hook-form";
-import ProductTextFeild from "@/components/forms/ProductTextField";
-// import AddProductModal from "@/components/modals/AddProductModal";
 import Button from "@/components/ui/Button";
-import ServiceTextFeild from "@/components/forms/serviceTextField";
 import ProductModal from "@/components/forms/modal";
 import { IoIosClose } from "react-icons/io";
 import ProductUpdate from "@/components/productUpdate";
@@ -30,6 +23,7 @@ function BasicInfo({
   register,
   errors,
   watch,
+  clearErrors,
   updateDropdownValue,
   getValues,
   setValue,
@@ -87,6 +81,7 @@ function BasicInfo({
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
           setValue("business_image", dataUrl);
+          clearErrors("business_image")
           setSelectedImage(dataUrl);
         };
 
@@ -212,6 +207,7 @@ function BasicInfo({
   function handleOptionClick(v: string | null) {
     setSelectedOption(v);
     setVal("company_type", v)
+    clearErrors("company_type")
     console.log(v);
   }
 

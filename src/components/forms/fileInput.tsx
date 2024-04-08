@@ -124,9 +124,9 @@ const FileInput = ({
         This image can only be your company logo or business card{" "}
       </p>
       <div className="w-full mt-1">
-        {errors?.business_card_image && (
-          <p className="text-red-500 text-xs">
-            {errors?.business_card_image?.message}
+        {errors?.business_image && (
+          <p className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
+            {errors?.business_image?.message}
           </p>
         )}
       </div>
