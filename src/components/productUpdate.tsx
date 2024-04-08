@@ -16,7 +16,7 @@ function ProductUpdate({ src, p_name, category, price, id, deleteItem }: any) {
         <Image
           className="h-[100%] rounded w-[100%] object-cover"
           src={src}
-          alt={"Business image"}
+          alt={p_name}
           width={100}
           height={100}
         />

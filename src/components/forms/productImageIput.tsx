@@ -14,8 +14,10 @@ const ProductImageInput = ({
   handleFileChange,
   setSelectedImage,
 }: any) => {
+
   const [isDragging, setIsDragging] = useState(false);
 
+  
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(true);

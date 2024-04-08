@@ -17,7 +17,7 @@ export default function ProductModal({
   categories,
   draftId,
 }: any) {
-  const [selectedProductImage1, setSelectedProductImage1] = useState<any>();
+  const [selectedProductImage, setselectedProductImage] = useState<any>();
   const fileInputRef2 = useRef<any>(null);
   const [file, setFile] = useState<any>([]);
   const [formData, setFormData] = useState({
@@ -61,7 +61,7 @@ export default function ProductModal({
     //   setErr({ ...err, product_category: true });
     //   return;
     // }
-    if (selectedProductImage1 === "") {
+    if (selectedProductImage === "") {
       setErr({ ...err, image: true });
       return;
     }
@@ -103,7 +103,7 @@ export default function ProductModal({
     });
 
     isOpen();
-    setSelectedProductImage1("");
+    setselectedProductImage("");
   };
 
   const handleImageClick = (fileInputRef: any) => {
@@ -129,7 +129,7 @@ export default function ProductModal({
           setFile(selectedFile); // Set the selected file directly
           // Add original file name to Blob
           setSelectedImage(dataUrl);
-          setSelectedProductImage1(dataUrl);
+          setselectedProductImage(dataUrl);
           setErr((prevErr: any) => ({ ...prevErr, image: false }));
         };
 
@@ -248,8 +248,8 @@ export default function ProductModal({
               {[
                 {
                   fileInputRef: fileInputRef2,
-                  selectedImage: selectedProductImage1,
-                  setSelectedImage: setSelectedProductImage1,
+                  selectedImage: selectedProductImage,
+                  setSelectedImage: setselectedProductImage,
                 },
               ].map((items, index) => (
                 <ProductImageInput

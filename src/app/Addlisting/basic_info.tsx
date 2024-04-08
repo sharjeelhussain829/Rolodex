@@ -257,8 +257,10 @@ function BasicInfo({
     setArr(newArray); // Update the state with the new array
   };
 
+  const [allDetails, setAllDetails] = useState<any>({})
   useEffect(() => {
-    console.log(getValues());
+    setAllDetails(getValues())
+    console.log(allDetails);
   }, [getValues()]);
 
   return (
@@ -646,7 +648,7 @@ function BasicInfo({
             </span>
           </div>
           <div className="w-[100%] sm:w-[65%] md:w-[85%] flex flex-wrap justify-between">
-            {getValues()?.products?.map((val: any, ind: any) => (
+            {allDetails?.products?.map((val: any, ind: any) => (
               <ProductUpdate
                 key={ind}
                 deleteItem={deleteItem}
