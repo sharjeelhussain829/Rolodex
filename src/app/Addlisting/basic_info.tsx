@@ -30,6 +30,7 @@ function BasicInfo({
   addProduct,
   setVal,
   draftId,
+  allProducts,
 }: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
@@ -45,16 +46,18 @@ function BasicInfo({
 
   useEffect(() => {
     setVal("isProduct", selectedCompanyNature);
-  }, []);
+  }, [selectedCompanyNature]);
 
+  const [serviceCategory, setServiceCategory] = useState<any>([]); // it takes service modal values what user added for
   const [selectedCategories, setselectedCategories] = useState<any>([
     "Option 1",
     "Option 2",
     "Option 3",
   ]);
 
-  // drag company logo image functions start
+console.log(serviceCategory)
 
+  // drag company logo image functions start
   const [selectedCompanyImage, setSelectedCompanyImage] = useState<any>();
   const fileInputRef = useRef<any>(null);
 
@@ -94,7 +97,6 @@ function BasicInfo({
   // drag company logo image functions end
 
   // Dropdown for category
-  const [serviceCategory, setServiceCategory] = useState<any>([]); // it takes service modal values what user added for
   const [inputValue, setInputValue] = useState<string>("");
   const [selectedCategoryValues, setSelectedCategoryValues] = useState<any>([]);
   const [inputNewErr, setInputNewErr] = useState<any>(false);
@@ -253,13 +255,9 @@ function BasicInfo({
     setArr(newArray); // Update the state with the new array
   };
 
-  const [allDetails, setAllDetails] = useState<any>({})
-  // useEffect(() => {
-  //   setAllDetails(getValues())
-  //   console.log(allDetails);
-  // }, [getValues()]);
 
-console.log(errors)
+
+console.log(allProducts)
 
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
@@ -646,7 +644,7 @@ console.log(errors)
             </span>
           </div>
           <div className="w-[100%] sm:w-[65%] md:w-[85%] flex flex-wrap justify-between">
-            {arr?.products?.map((val: any, ind: any) => (
+            {allProducts?.map((val: any, ind: any) => (
               <ProductUpdate
                 key={ind}
                 deleteItem={deleteItem}

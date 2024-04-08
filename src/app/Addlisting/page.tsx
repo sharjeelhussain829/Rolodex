@@ -191,7 +191,6 @@ function Page() {
   } = useForm({
     defaultValues: {
       user_id: GetUser()?._id,
-      products: [],
       isProduct: "",
       business_name: "",
       business_image: "",
@@ -220,32 +219,26 @@ function Page() {
   });
   const [allProducts, setAllProducts] = useState<any>([]);
 
-  useEffect(() => {
-    setValue("products", allProducts);
-  }, [allProducts]);
-
-  const addProduct = (product: any) => {
-    // const productLength: number = getValues().products.length;
+  const addProduct = async (product: any) => {
     // need to call api for creating product
     // axios.post(Api + "/products/create", product);
-    const productName = product.get("product_name");
-    const productDescription = product.get("product_description");
-    const productCategory = product.get("product_category");
-    const productPrice = product.get("product_price");
-    const productUrl = product.get("product_url");
-    const productCategory2 = product.get("product_category2");
-    const productImages = product.getAll("product_images");
-
-    const formDataObject = {
-      product_name: productName,
-      product_description: productDescription,
-      product_category: productCategory,
-      product_price: productPrice,
-      product_url: productUrl,
-      product_category2: productCategory2,
-      product_images: productImages,
-    };
-    setAllProducts([...allProducts, formDataObject]);
+    setIsLoading(true)
+    try {
+      const response = await axios.post(Api + "/products/create", product);
+      toast.success("Added Product", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+      setIsLoading(false)
+      setAllProducts((prev: any) => [...prev, response.data])
+    } catch (error) {
+      // console.log(error);
+      setIsLoading(false)
+      toast.error("Failed to add product", {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
   };
 
   const onSubmit = async (data: any) => {
@@ -273,33 +266,35 @@ function Page() {
         message: "Location is required",
       });
     }
-    // if (data?.gallery_image?.trim() === "") {
-    //   setError("gallery_Image", {
-    //     type: "requred",
-    //     message: "Gallery Image is required",
-    //   });
-    // }
-
-    if (getValues().category.length) {
-      console.log("success -->", data);
-    } else {
-      console.log("Data is missing -->", data);
+    if (data?.gallery_Image?.trim() === "") {
+      setError("gallery_Image", {
+        type: "required",
+        message: "Gallery Image is required",
+      });
     }
 
-    // if (getValues().category) {
-    //   try {
-    //     const response = await axios.post(
-    //       Api + `/ads/edit/${draftID.id}`,
-    //       data
-    //     );
-    //     toast.success("Successfully created", {
-    //       autoClose: 2000,
-    //       position: toast.POSITION.TOP_RIGHT,
-    //     });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+
+
+    setIsLoading(true)
+    try {
+        const response = await axios.post(
+          Api + `/ads/edit/${draftID.id}`,
+          data
+        );
+        setIsLoading(false)
+        toast.success("Successfully created", {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } catch (error) {
+        setIsLoading(false)
+        toast.error("Failed to created", {
+          autoClose: 2000,
+          position: toast.POSITION.TOP_CENTER,
+        });
+        console.log(error);
+      }
+
   };
 
   const updateDropdownValue = (name: any, selectedOption: any) => {
@@ -314,7 +309,6 @@ function Page() {
     const totalFields = 18;
     delete fields?.user_id;
     delete fields?.businessHours;
-    delete fields?.products;
     delete fields?.hasBusinessHours;
     delete fields?.status;
     delete fields?.category;
@@ -350,7 +344,7 @@ function Page() {
 
   const setVal = (key: any, val: any) => {
     setValue(key, val);
-    console.log("set value func --->", getValues());
+    console.log("value func --->", getValues());
     console.log("Errors --->", errors);
   };
 
@@ -444,11 +438,12 @@ function Page() {
                 err={err}
                 draftId={draftID}
                 addProduct={addProduct}
+                allProducts={allProducts}
                 // addCategories={addCategories}
                 updateDropdownValue={updateDropdownValue}
               />
             </div>
-            <AddPhoto errors={errors} setValue={setValue} register={register} />
+            <AddPhoto errors={errors} setValue={setValue} register={register} clearErrors={clearErrors} />
             <div ref={locationRef}>
               <Location
                 clearErrors={clearErrors}
@@ -514,8 +509,7 @@ function Page() {
                                        getValues().category.length &&
                                        getValues().description &&
                                        getValues().company_type &&
-                                       getValues().isProduct.length &&
-                                       getValues().products.length
+                                       getValues().isProduct.length
                                          ? "text-primary"
                                          : items === "Photos" &&
                                            getValues().gallery_Image

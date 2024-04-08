@@ -115,7 +115,7 @@ export default function ProductModal({
     setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>
   ) => {
     const selectedFile = event?.target?.files?.[0];
-    console.log(selectedFile, "selectedFile");
+    // console.log(selectedFile, "selectedFile");
     if (selectedFile) {
       try {
         if (!selectedFile.type.startsWith("image/")) {
