@@ -248,84 +248,13 @@ function Page() {
     setAllProducts([...allProducts, formDataObject]);
   };
 
-  // const addProduct = (product: any) => {
-  //   const prevProduct = getValues().products;
-  //   setValue("products", [...prevProduct, product]);
-  //   console.log(getValues());
-  // };
-
-  // const onSubmit = async (data: any) => {
-  //   console.log("successfully submit", data);
-
-  //   if (data.business_card_image.trim() === "") {
-  //     setError("business_card_image", {
-  //       type: "required",
-  //       message: "Business card is required",
-  //     });
-  //     return;
-  //   }
-  //   if (data.category.length === 0) {
-  //     setError("category", {
-  //       type: "manual",
-  //       message: "Category is required",
-  //     });
-  //     return;
-  //   }
-
-  //   if (data.businessHours) {
-  //     data.businessHours = days;
-  //   }
-  //   if (data.country.trim() === "") {
-  //     setError("country", {
-  //       type: "manual",
-  //       message: "Country is required",
-  //     });
-  //   }
-  //   if (data.location.trim() === "") {
-  //     setError("location", {
-  //       type: "manual",
-  //       message: "Location is required",
-  //     });
-  //   }
-
-  //   if (data.images.trim() === "") {
-  //     setError("images", {
-  //       type: "manual",
-  //       message: "image is required",
-  //     });
-  //   }
-  //   if (data.city.trim() === "") {
-  //     setError("city", {
-  //       type: "manual",
-  //       message: "City is required",
-  //     });
-  //   }
-
-  //   if (data.accessibilty.trim() === "") {
-  //     setError("accessibilty", {
-  //       type: "manual",
-  //       message: "accessibilty is required",
-  //     });
-  //   }
-
-  //   data.location = ` ${data.city} ${data.country} `;
-  //   delete data.images;
-  //   delete data.city;
-  //   delete data.country;
-  //   if (getValues().city && getValues().country && getValues().category) {
-  //     try {
-  //       const response = await axios.post(Api + "/ads/create", data);
-  //       toast.success("Successfully created", {
-  //         autoClose: 2000,
-  //         position: toast.POSITION.TOP_RIGHT,
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
   const onSubmit = async (data: any) => {
+    if (data?.business_image?.trim() === "") {
+      setError("business_image", {
+        type: "required",
+        message: "Image is required",
+      });
+    }
     if (data?.category?.length === 0) {
       setError("category", {
         type: "required",
@@ -335,7 +264,10 @@ function Page() {
     if (data?.businessHours) {
       data.businessHours = days;
     }
-    if (Array.isArray(data?.input_Location) && data?.input_Location.every((element: any) => element === "")) {
+    if (
+      Array.isArray(data?.input_Location) &&
+      data?.input_Location.every((element: any) => element === "")
+    ) {
       setError("input_Location", {
         type: "required",
         message: "Location is required",
@@ -419,6 +351,7 @@ function Page() {
   const setVal = (key: any, val: any) => {
     setValue(key, val);
     console.log("set value func --->", getValues());
+    console.log("Errors --->", errors);
   };
 
   return (
@@ -506,6 +439,7 @@ function Page() {
                 getValues={getValues}
                 setValue={setValue}
                 setVal={setVal}
+                clearErrors={clearErrors}
                 errors={errors}
                 err={err}
                 draftId={draftID}
@@ -517,6 +451,7 @@ function Page() {
             <AddPhoto errors={errors} setValue={setValue} register={register} />
             <div ref={locationRef}>
               <Location
+                clearErrors={clearErrors}
                 watch={watch}
                 Values={getValues}
                 register={register}

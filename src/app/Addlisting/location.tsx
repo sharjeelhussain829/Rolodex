@@ -4,8 +4,8 @@ import { FaTrash } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 
 
-function Location({ setValue, errors, Values }: any) {
-  console.log(errors)
+function Location({ setValue, errors, Values, clearErrors }: any) {
+
   const [areaLocation, setLocationArea] = useState<string>("");
   const [inputLocations, setInputLocations] = useState([""]); // Initial input field
   const [inputErrors, setInputErrors] = useState<boolean[]>([false]); // Tracks if each input has error
@@ -46,6 +46,7 @@ function Location({ setValue, errors, Values }: any) {
   // Triggering handlechange whenever inputLocations changes
   useEffect(() => {
     setValue("input_Location", inputLocations);
+    clearErrors("input_Location")
   }, [inputLocations]);
 
   const handlechange = (name: any, value: any) => {
