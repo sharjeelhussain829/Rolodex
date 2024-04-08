@@ -155,10 +155,10 @@ const Dropdown = ({
           </div>
         )}
       </div>
-      <div className="text-red-400 block text-[12px] font-poppin font-normal">
+      {/* <div className="text-red-400 block text-[12px] font-poppin font-normal">
         {" "}
         {error}
-      </div>
+      </div> */}
     </div>
   );
 };

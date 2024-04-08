@@ -3,7 +3,9 @@ import { FaPlus } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 
+
 function Location({ setValue, errors, Values }: any) {
+  console.log(errors)
   const [areaLocation, setLocationArea] = useState<string>("");
   const [inputLocations, setInputLocations] = useState([""]); // Initial input field
   const [inputErrors, setInputErrors] = useState<boolean[]>([false]); // Tracks if each input has error
@@ -134,7 +136,7 @@ function Location({ setValue, errors, Values }: any) {
               value={location}
               onChange={(e) => handleInputChange(index, e.target.value)}
               placeholder="Please input your location"
-              className="md:w-[96%] w-[87%] border-color: rgba(213, 210, 220, 1); mt-2 rounded-lg"
+              className="md:w-[96%] w-[87%] outline-none focus:border-[#25AEE1] mt-2 rounded-lg"
             />
               {inputErrors[index] && ( // Display error message if input is empty
                 <p className="text-[red] pt-2 text-[14px]">Please input your location</p>
@@ -161,6 +163,7 @@ function Location({ setValue, errors, Values }: any) {
           </div>
         ))}
       </div>
+      <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">{errors?.input_Location?.message}</span>
     </div>
   );
 }

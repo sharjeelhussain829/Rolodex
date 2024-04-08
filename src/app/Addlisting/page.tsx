@@ -198,9 +198,6 @@ function Page() {
       category: [],
       company_type: "",
       location: "",
-      // images: "",
-      // country: "",
-      // city: "",
       gallery_Image: "",
       input_Location: "",
       location_type: "",
@@ -213,7 +210,6 @@ function Page() {
       facebook: "",
       linkedin: "",
       twitter: "",
-      // timeshipt: "",
       accessibilty: "",
       amenties: "",
       plannig: "",
@@ -222,12 +218,11 @@ function Page() {
       status: Ad_STATUS.PUBLISHED,
     },
   });
-const [allProducts, setAllProducts] = useState<any>([])
+  const [allProducts, setAllProducts] = useState<any>([]);
 
-useEffect(() => {
-setValue("products", allProducts)
-}, [allProducts])
-
+  useEffect(() => {
+    setValue("products", allProducts);
+  }, [allProducts]);
 
   const addProduct = (product: any) => {
     // const productLength: number = getValues().products.length;
@@ -250,7 +245,7 @@ setValue("products", allProducts)
       product_category2: productCategory2,
       product_images: productImages,
     };
-    setAllProducts([...allProducts, formDataObject])
+    setAllProducts([...allProducts, formDataObject]);
   };
 
   // const addProduct = (product: any) => {
@@ -331,12 +326,6 @@ setValue("products", allProducts)
   // };
 
   const onSubmit = async (data: any) => {
-    if (data?.business_image?.trim() === "") {
-      setError("business_image", {
-        type: "required",
-        message: "image is required",
-      });
-    }
     if (data?.category?.length === 0) {
       setError("category", {
         type: "required",
@@ -346,34 +335,39 @@ setValue("products", allProducts)
     if (data?.businessHours) {
       data.businessHours = days;
     }
-    if (data?.location?.trim() === "") {
-      setError("location", {
-        type: "manual",
+    if (Array.isArray(data?.input_Location) && data?.input_Location.every((element: any) => element === "")) {
+      setError("input_Location", {
+        type: "required",
         message: "Location is required",
       });
     }
-    if (data?.gallery_image?.trim() === "") {
-      setError("gallery_Image", {
-        type: "requred",
-        message: "Gallery Image is required",
-      });
-    }
-    console.log("success -->", data);
+    // if (data?.gallery_image?.trim() === "") {
+    //   setError("gallery_Image", {
+    //     type: "requred",
+    //     message: "Gallery Image is required",
+    //   });
+    // }
 
-    if (getValues().category) {
-      try {
-        const response = await axios.post(
-          Api + `/ads/edit/${draftID.id}`,
-          data
-        );
-        toast.success("Successfully created", {
-          autoClose: 2000,
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+    if (getValues().category.length) {
+      console.log("success -->", data);
+    } else {
+      console.log("Data is missing -->", data);
     }
+
+    // if (getValues().category) {
+    //   try {
+    //     const response = await axios.post(
+    //       Api + `/ads/edit/${draftID.id}`,
+    //       data
+    //     );
+    //     toast.success("Successfully created", {
+    //       autoClose: 2000,
+    //       position: toast.POSITION.TOP_RIGHT,
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
   };
 
   const updateDropdownValue = (name: any, selectedOption: any) => {
@@ -424,7 +418,7 @@ setValue("products", allProducts)
 
   const setVal = (key: any, val: any) => {
     setValue(key, val);
-    console.log(getValues());
+    console.log("set value func --->", getValues());
   };
 
   return (
@@ -520,7 +514,7 @@ setValue("products", allProducts)
                 updateDropdownValue={updateDropdownValue}
               />
             </div>
-            <AddPhoto errors={errors} setValue={setValue} />
+            <AddPhoto errors={errors} setValue={setValue} register={register} />
             <div ref={locationRef}>
               <Location
                 watch={watch}

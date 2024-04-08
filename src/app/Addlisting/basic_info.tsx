@@ -86,7 +86,7 @@ function BasicInfo({
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
-          setValue("business_card_image", dataUrl);
+          setValue("business_image", dataUrl);
           setSelectedImage(dataUrl);
         };
 
@@ -258,10 +258,12 @@ function BasicInfo({
   };
 
   const [allDetails, setAllDetails] = useState<any>({})
-  useEffect(() => {
-    setAllDetails(getValues())
-    console.log(allDetails);
-  }, [getValues()]);
+  // useEffect(() => {
+  //   setAllDetails(getValues())
+  //   console.log(allDetails);
+  // }, [getValues()]);
+
+console.log(errors)
 
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
@@ -279,7 +281,7 @@ function BasicInfo({
         ].map((items, index) => (
           <FileInput
             required
-            name={"business_card_image"}
+            name={"business_image"}
             label={"Company Logo*"}
             register={register}
             key={index}
@@ -290,7 +292,7 @@ function BasicInfo({
             selectedImage={items.selectedImage}
             handleImageClick={handleImageClick}
             handleFileChange={handleFileChange}
-            fileInputRef={items}
+            fileInputRef={items.fileInputRef}
           />
         ))}
       </div>
@@ -369,7 +371,7 @@ function BasicInfo({
                   </span>
                 </div>
               )}
-              <span className="text-red-500 text-[14px]">
+              <span className="text-red-400 block text-[12px] mt-1  font-poppin font-normal">
                 {errors?.category?.message ||
                   (isValueNotExist == "error" && !isValueNotExist) ||
                   (isValueNotExist == "error" && "Please select your category")}
@@ -648,7 +650,7 @@ function BasicInfo({
             </span>
           </div>
           <div className="w-[100%] sm:w-[65%] md:w-[85%] flex flex-wrap justify-between">
-            {allDetails?.products?.map((val: any, ind: any) => (
+            {arr?.products?.map((val: any, ind: any) => (
               <ProductUpdate
                 key={ind}
                 deleteItem={deleteItem}

@@ -116,15 +116,11 @@ const FileInput = ({
             handleFileChange(e, setSelectedImage);
           }}
           // {...register(name, {
-          //   ...(required ? { required: ` ${label} is required` } : {}),
-          //   validate,
+          //   ...(required ? { required: ` ${label} is required` } : {})
           // })}
         />
       </div>
-      <p
-        className="text-[8px] text-[
-#7F8E9D] "
-      >
+      <p className="text-[8px] text-[#7F8E9D]">
         This image can only be your company logo or business card{" "}
       </p>
       <div className="w-full mt-1">
