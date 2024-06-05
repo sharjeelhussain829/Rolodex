@@ -148,7 +148,7 @@ const Dropdown = ({
                   onClick={() => handleOptionClick(items)}
                   className={`block px-4 py-2 hover:bg-gray-100 font-semibold ${styleTitle}`}
                 >
-                  {items?.name ? items?.name : items}
+                  {items?.name}
                 </li>
               ))}
             </ul>

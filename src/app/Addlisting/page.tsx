@@ -28,7 +28,7 @@ function Page() {
 
   const [underline, setUnderline] = useState("about");
   const [draftID, setdraftID] = useState<any>(null);
-
+  const [postId,setPostId]=useState<any>(null)
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
       window.scrollTo({
@@ -42,8 +42,9 @@ function Page() {
     axios
       .get(Api + "/ads/draft" + "?user_id=" + GetUser()?._id)
       .then((res: any) => {
-        // console.log("response", res);
+        console.log("response", res);
         setdraftID(res.data);
+        setPostId(res.data._id)
       });
     const handleScroll = () => {
       const aboutOffset = aboutRef.current?.offsetTop;
@@ -292,10 +293,11 @@ data.services=services
     if (isTimingTrue) {
       setIsLoading(true);
       try {
-        const response = await axios.post(
+        const response = await axios.patch(
           Api + `/ads/edit/${draftID.id}`,
           data
         );
+        console.log(draftID,"draaa")
         setIsLoading(false);
         toast.success("Successfully created", {
           autoClose: 2000,
