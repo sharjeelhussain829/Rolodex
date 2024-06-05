@@ -31,6 +31,8 @@ function BasicInfo({
   setVal,
   draftId,
   allProducts,
+ services, 
+ setServices
 }: any) {
   const [open, setOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
@@ -49,13 +51,9 @@ function BasicInfo({
   }, [selectedCompanyNature]);
 
   const [serviceCategory, setServiceCategory] = useState<any>([]); // it takes service modal values what user added for
-  const [selectedCategories, setselectedCategories] = useState<any>([
-    "Option 1",
-    "Option 2",
-    "Option 3",
-  ]);
+  const [selectedCategories, setselectedCategories] = useState<any[]>([]);
 
-// console.log(serviceCategory)
+  // console.log(serviceCategory)
 
   // drag company logo image functions start
   const [selectedCompanyImage, setSelectedCompanyImage] = useState<any>();
@@ -83,8 +81,8 @@ function BasicInfo({
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader?.result as string;
-          setValue("business_image", dataUrl);
-          clearErrors("business_image")
+          setValue("business_image", selectedFile);
+          clearErrors("business_image");
           setSelectedImage(dataUrl);
         };
 
@@ -128,8 +126,19 @@ function BasicInfo({
   };
 
   const addServiceCategory = (index: any) => {
-    setServiceCategory([...serviceCategory, selectedCategories[index]]);
+    // Assuming selectedCategories[index] is an object
+    const categoryToAdd = selectedCategories[index];
+
+    // Update serviceCategory with the necessary properties of the object
+    setServiceCategory([
+      ...serviceCategory,
+      { _id: categoryToAdd._id, name: categoryToAdd.name },
+    ]);
+
+    // Update selectedCategories by removing the object at the given index
     const updatedSelectedCategories = [...selectedCategories];
+
+    setServices(updatedSelectedCategories)
     updatedSelectedCategories.splice(index, 1);
     setselectedCategories(updatedSelectedCategories);
   };
@@ -139,6 +148,8 @@ function BasicInfo({
     const updatedServiceCategory = [...serviceCategory];
     updatedServiceCategory.splice(index, 1);
     setServiceCategory(updatedServiceCategory);
+        setServices(updatedServiceCategory)
+
   };
 
   const [isValueNotExist, setIsValueNotExist] = useState<any>(false);
@@ -196,7 +207,30 @@ function BasicInfo({
     setOpen(!open);
   }
 
-  const onServiceOpenModal = () => setServiceOpen(true);
+  const onServiceOpenModal = async () => {
+    await axios
+      .get(`${Api}/services`)
+      .then((data) => {
+        console.log(data.data.data, "ggg");
+        setselectedCategories(data.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setServiceOpen(true);
+  };
+
+  const fetchServices = async (query:any) => {
+       axios
+        .get(`${Api}/services?query=${query}&catId=${""}`)
+        .then((data) => {
+          console.log(data.data.data, "ggg");
+          setselectedCategories(data.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
   const onServiceCloseModal = () => setServiceOpen(false);
 
   // const [services, setServices] = useState<any>([]);
@@ -208,8 +242,8 @@ function BasicInfo({
 
   function handleOptionClick(v: string | null) {
     setSelectedOption(v);
-    setVal("company_type", v)
-    clearErrors("company_type")
+    setVal("company_type", v);
+    clearErrors("company_type");
   }
 
   function handleNatureClick(value: string) {
@@ -254,9 +288,9 @@ function BasicInfo({
     setArr(newArray); // Update the state with the new array
   };
 
-
-  
-
+  const handleSearch = async (val:any) => {
+    fetchServices(val);
+  }
   return (
     <div className="flex flex-col  rounded-lg shadow-md p-6 ">
       <h1 className="text-2xl md:2text-xl font-bold flex">
@@ -579,13 +613,14 @@ function BasicInfo({
                       <label>
                         Start typing to search for service or type your service{" "}
                       </label>
+                      <input type="text" onChange={e => handleSearch(e.target.value)}/>
                       <div className="flex">
-                        {serviceCategory.map((v: any, i: any) => (
+                        {serviceCategory?.map((v: any, i: any) => (
                           <span
                             key={i}
                             className="flex items-center mt-4 px-4 py-2 me-2 text-white rounded-[20px] bg-[#25AAE1]"
                           >
-                            {v}{" "}
+                            {v.name}
                             <IoMdClose
                               className="ms-4 cursor-pointer text-[25px] transition-all hover:text-[30px]"
                               onClick={() => removeServiceCategory(i)}
@@ -595,20 +630,23 @@ function BasicInfo({
                       </div>
                     </div>
                     <div className="">
-                      {selectedCategories.map((val: any, index: any) => (
-                        <span
-                          key={index}
-                          className="flex items-center my-2 w-fit"
-                        >
-                          <span className=" px-4 py-2 text-white rounded-[20px] bg-[#25AAE1]">
-                            {val}{" "}
+                      {selectedCategories &&
+                        Array.isArray(selectedCategories) &&
+                        selectedCategories.map((dataval, index) => (
+                          <span
+                            key={index}
+                            className="flex items-center my-2 w-fit"
+                          >
+                            <span className="px-4 py-2 text-white rounded-[20px] bg-[#25AAE1]">
+                              {dataval.name}
+                              {" m"}
+                            </span>
+                            <IoMdAdd
+                              onClick={() => addServiceCategory(index)}
+                              className="ms-2 cursor-pointer text-[25px] transition-all hover:text-[30px]"
+                            />
                           </span>
-                          <IoMdAdd
-                            onClick={() => addServiceCategory(index)}
-                            className="ms-2 cursor-pointer text-[25px] transition-all hover:text-[30px]"
-                          />
-                        </span>
-                      ))}
+                        ))}
                     </div>
                   </div>
 

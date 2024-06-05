@@ -168,6 +168,7 @@ function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [err, setImageError] = useState(false);
   const [isTimingTrue, setIsTimingTrue] = useState<any>(null);
+  const [services, setServices] = useState<any>([]);
 
   const Ad_STATUS = {
     PUBLISHED: "published",
@@ -223,7 +224,7 @@ function Page() {
   const addProduct = async (product: any) => {
     // need to call api for creating product
     // axios.post(Api + "/products/create", product);
-    setIsLoading(true);
+   // setIsLoading(true);
     try {
       const response = await axios.post(Api + "/products/create", product);
       toast.success("Added Product", {
@@ -257,7 +258,7 @@ function Page() {
   }, [days]);
 
   const onSubmit = async (data: any) => {
-    if (data?.business_image?.trim() === "") {
+    if (!data?.business_image) {
       setError("business_image", {
         type: "required",
         message: "Image is required",
@@ -287,7 +288,7 @@ function Page() {
         message: "Gallery Image is required",
       });
     }
-
+data.services=services
     if (isTimingTrue) {
       setIsLoading(true);
       try {
@@ -447,6 +448,8 @@ function Page() {
                 allProducts={allProducts}
                 // addCategories={addCategories}
                 updateDropdownValue={updateDropdownValue}
+                services={services}
+                setServices={setServices}
               />
             </div>
             <AddPhoto
